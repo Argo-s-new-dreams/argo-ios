@@ -22,7 +22,13 @@ for f in "$@"; do
 done
 
 echo "1/3 · Compilo il calcolatore FluidAudio (la prima volta scarica il pacchetto)…"
-swift build -c release --product impronta-fluid 2>&1 | tail -3
+if ! swift build -c release --product impronta-fluid > "$LAVORO/build.log" 2>&1; then
+  echo "Compilazione non riuscita. Errori:"
+  grep -E "error:|warning: .*FluidAudio" "$LAVORO/build.log" | grep -v "^Failed frontend" | head -20
+  cp "$LAVORO/build.log" ./build.log
+  echo "Log completo in $(pwd)/build.log"
+  exit 1
+fi
 
 echo "2/3 · Impronte FluidAudio (motore iPhone)…"
 .build/release/impronta-fluid "${WAV[@]}" > "$LAVORO/fluid.json"

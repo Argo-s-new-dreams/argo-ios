@@ -31,7 +31,9 @@ enum ArchivioVoce {
     }
 }
 
-/// Calcola impronte vocali e trova la tua voce tra i parlanti di un incontro.
+/// Calcola l'impronta della tua voce e la cerca tra i parlanti di un incontro.
+/// Usa lo stesso modello della divisione delle voci (pipeline offline di FluidAudio):
+/// `embedSpans` produce vettori dello stesso tipo di `DiarizationResult.speakerDatabase`.
 enum RiconoscitoreVoce {
 
     /// Somiglianza coseno minima per dire «è la tua voce». Prudente: meglio non riconoscere che sbagliare.
@@ -42,60 +44,26 @@ enum RiconoscitoreVoce {
     static func impronta(file url: URL) async throws -> [Float] {
         let campioni = try AudioConverter().resampleAudioFile(path: url.path)
         guard campioni.count >= campioniAlSecondo * 10 else { throw ErroreVoce.registrazioneCorta }
-        let estrattore = try await preparaEstrattore()
-        return try await estrai(campioni, con: estrattore)
+        let durata = Double(campioni.count) / Double(campioniAlSecondo)
+        let gestore = try await Diarizzatore.gestorePronto()
+        let impronte = try await gestore.embedSpans(
+            audioSource: ArrayAudioSampleSource(samples: campioni),
+            spans: [0..<durata]
+        )
+        guard let impronta = impronte.first, !impronta.isEmpty else { throw ErroreVoce.impronta }
+        return impronta
     }
 
-    /// Restituisce l'id (P1, P2…) del parlante che corrisponde al profilo, se c'è.
-    static func trova(
-        _ profilo: ProfiloVoce,
-        turni: [Diarizzatore.Turno],
-        file url: URL
-    ) async throws -> String? {
-        let campioni = try AudioConverter().resampleAudioFile(path: url.path)
-        let estrattore = try await preparaEstrattore()
-        var migliore: (parlante: String, somiglianza: Float)?
-
-        for parlante in Set(turni.map(\.parlante)) {
-            // Fino a 30 secondi di parlato di questa voce, dai turni più lunghi di un secondo.
-            var spezzone: [Float] = []
-            for turno in turni where turno.parlante == parlante && turno.fine - turno.inizio >= 1 {
-                let da = max(0, Int(turno.inizio * Double(campioniAlSecondo)))
-                let a = min(campioni.count, Int(turno.fine * Double(campioniAlSecondo)))
-                if a > da { spezzone.append(contentsOf: campioni[da..<a]) }
-                if spezzone.count >= campioniAlSecondo * 30 { break }
-            }
-            guard spezzone.count >= campioniAlSecondo * 3 else { continue }
-
-            let impronta = try await estrai(spezzone, con: estrattore)
-            let somiglianza = coseno(impronta, profilo.impronta)
-            if somiglianza > (migliore?.somiglianza ?? -1) {
-                migliore = (parlante, somiglianza)
-            }
-        }
-
+    /// Id (P1, P2…) del parlante che corrisponde al profilo, se la somiglianza supera la soglia.
+    static func trova(_ profilo: ProfiloVoce, tra impronte: [String: [Float]]) -> String? {
+        let migliore = impronte
+            .map { (parlante: $0.key, somiglianza: coseno($0.value, profilo.impronta)) }
+            .max { $0.somiglianza < $1.somiglianza }
         guard let migliore, migliore.somiglianza >= soglia else { return nil }
         return migliore.parlante
     }
 
-    // MARK: FluidAudio
-
-    // `try await` anche dove la libreria potrebbe essere sincrona: al massimo un avviso,
-    // mai un errore di compilazione se FluidAudio cambia firma tra una versione e l'altra.
-
-    private static func preparaEstrattore() async throws -> DiarizerManager {
-        let modelli = try await DiarizerModels.downloadIfNeeded()
-        let diarizzatore = DiarizerManager()
-        try await diarizzatore.initialize(models: modelli)
-        return diarizzatore
-    }
-
-    private static func estrai(_ campioni: [Float], con diarizzatore: DiarizerManager) async throws -> [Float] {
-        let impronta: [Float] = try await diarizzatore.extractEmbedding(campioni)
-        return impronta
-    }
-
-    private static func coseno(_ a: [Float], _ b: [Float]) -> Float {
+    static func coseno(_ a: [Float], _ b: [Float]) -> Float {
         guard a.count == b.count, !a.isEmpty else { return -1 }
         var prodotto: Float = 0, normaA: Float = 0, normaB: Float = 0
         for i in a.indices {
@@ -109,6 +77,11 @@ enum RiconoscitoreVoce {
 }
 
 enum ErroreVoce: LocalizedError {
-    case registrazioneCorta
-    var errorDescription: String? { "Registrazione troppo corta: servono almeno 10 secondi di parlato." }
+    case registrazioneCorta, impronta
+    var errorDescription: String? {
+        switch self {
+        case .registrazioneCorta: "Registrazione troppo corta: servono almeno 10 secondi di parlato."
+        case .impronta: "Non sono riuscito a calcolare l'impronta della voce. Riprova in un posto più tranquillo."
+        }
+    }
 }

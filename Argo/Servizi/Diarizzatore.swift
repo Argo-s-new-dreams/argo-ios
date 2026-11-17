@@ -12,24 +12,24 @@ enum Diarizzatore {
         let fine: Double
     }
 
+    /// Turni di parola e impronta media di ogni parlante (stesso spazio di `ProfiloVoce`).
     static func turni(
         file url: URL,
         fase: @escaping @MainActor (String) -> Void
-    ) async throws -> [Turno] {
+    ) async throws -> (turni: [Turno], impronte: [String: [Float]]) {
         await fase("Riconosco i parlanti (la prima volta scarico il modello)…")
-        let gestore = OfflineDiarizerManager(config: OfflineDiarizerConfig())
-        try await gestore.prepareModels()
+        let gestore = try await gestorePronto()
 
         await fase("Divido le voci…")
         let campioni = try AudioConverter().resampleAudioFile(path: url.path)
         let risultato = try await gestore.process(audio: campioni)
 
-        // Id della libreria → P1, P2… in ordine di prima apparizione.
+        // Id della libreria (S1, S2…) → P1, P2… in ordine di prima apparizione.
         var mappa: [String: String] = [:]
-        return risultato.segments
+        let turni = risultato.segments
             .sorted { $0.startTimeSeconds < $1.startTimeSeconds }
             .map { segmento in
-                let originale = "\(segmento.speakerId)"
+                let originale = segmento.speakerId
                 let id: String
                 if let esistente = mappa[originale] {
                     id = esistente
@@ -43,6 +43,19 @@ enum Diarizzatore {
                     fine: Double(segmento.endTimeSeconds)
                 )
             }
+
+        var impronte: [String: [Float]] = [:]
+        for (originale, vettore) in risultato.speakerDatabase ?? [:] {
+            if let id = mappa[originale] { impronte[id] = vettore }
+        }
+        return (turni, impronte)
+    }
+
+    /// Gestore offline con i modelli pronti (scaricati la prima volta).
+    static func gestorePronto() async throws -> OfflineDiarizerManager {
+        let gestore = OfflineDiarizerManager(config: .default)
+        try await gestore.prepareModels()
+        return gestore
     }
 
     /// Assegna a ogni frase il parlante con la sovrapposizione maggiore

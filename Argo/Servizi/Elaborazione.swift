@@ -20,25 +20,21 @@ enum Elaborazione {
                 sessione.stato = .inTrascrizione
                 var segmenti = try await Trascrittore.trascrivi(file: url, lingua: sessione.lingua, fase: fase)
 
-                var turni: [Diarizzatore.Turno] = []
+                var impronte: [String: [Float]] = [:]
                 do {
-                    turni = try await Diarizzatore.turni(file: url, fase: fase)
-                    segmenti = Diarizzatore.assegna(turni, a: segmenti)
+                    let voci = try await Diarizzatore.turni(file: url, fase: fase)
+                    impronte = voci.impronte
+                    segmenti = Diarizzatore.assegna(voci.turni, a: segmenti)
                 } catch {
                     avvisi.append("Parlanti non riconosciuti (\(error.localizedDescription)). La trascrizione c'è comunque.")
                 }
 
                 // La tua voce: se hai un profilo, la voce che ti somiglia diventa «Io».
-                if !turni.isEmpty, let profilo = ArchivioVoce.carica() {
-                    fase("Cerco la tua voce…")
-                    do {
-                        if let mio = try await RiconoscitoreVoce.trova(profilo, turni: turni, file: url) {
-                            sessione.nomiParlanti[mio] = profilo.nome
-                        } else {
-                            avvisi.append("Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti.")
-                        }
-                    } catch {
-                        avvisi.append("Riconoscimento della tua voce non riuscito (\(error.localizedDescription)).")
+                if !impronte.isEmpty, let profilo = ArchivioVoce.carica() {
+                    if let mio = RiconoscitoreVoce.trova(profilo, tra: impronte) {
+                        sessione.nomiParlanti[mio] = profilo.nome
+                    } else {
+                        avvisi.append("Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti.")
                     }
                 }
 

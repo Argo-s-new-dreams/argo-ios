@@ -3,6 +3,15 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.4.1] · build 20261117.1059
+
+### Modificato
+- Profilo voce e riconoscimento usano lo stesso modello della divisione delle voci (pipeline offline FluidAudio): impronta del profilo con `embedSpans`, impronte dei parlanti da `speakerDatabase`. Niente secondo modello da scaricare, confronto più coerente e più veloce (nessun ricalcolo sull'audio)
+
+### Corretto
+- API FluidAudio verificate sul sorgente (la guida citava un `extractEmbedding` inesistente)
+- Kit `prova-impronte`: stesso metodo dell'app e messaggi di errore di compilazione leggibili
+
 ## [0.4.0] · build 20261117.1035
 
 ### Aggiunto
