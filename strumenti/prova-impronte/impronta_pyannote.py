@@ -1,4 +1,4 @@
-"""impronta_pyannote.py file1.wav [file2.wav …] > pyannote.json
+"""impronta_pyannote.py uscita.json file1.wav [file2.wav …]
 
 Calcola le impronte esattamente come l'anagrafe voci di Argo desktop (voci_core.iscrivi):
 WhisperX DiarizationPipeline (pyannote community-1), num_speakers=1, return_embeddings=True.
@@ -18,11 +18,13 @@ from whisperx.diarize import DiarizationPipeline  # noqa: E402
 
 pipe = DiarizationPipeline(token=leggi_token(), device="cpu")
 risultati = {}
-for percorso in sys.argv[1:]:
+uscita = Path(sys.argv[1])
+for percorso in sys.argv[2:]:
     _, emb = pipe(percorso, num_speakers=1, return_embeddings=True)
     if not emb:
         sys.exit(f"Nessuna voce trovata in {percorso}")
     vettore = [float(x) for x in next(iter(emb.values()))]
     risultati[Path(percorso).stem] = vettore
     print(f"pyannote · {percorso}: {len(vettore)} valori", file=sys.stderr, flush=True)
-json.dump(risultati, sys.stdout, sort_keys=True)
+# Su file: WhisperX e pyannote possono scrivere sullo standard output.
+uscita.write_text(json.dumps(risultati, sort_keys=True))

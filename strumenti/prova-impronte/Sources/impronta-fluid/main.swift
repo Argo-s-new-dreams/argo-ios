@@ -1,15 +1,18 @@
-// impronta-fluid file1.wav [file2.wav …] > fluid.json
+// impronta-fluid uscita.json file1.wav [file2.wav …]
 // Per ogni file (una sola persona che parla) stampa l'impronta calcolata come fa Argo per iPhone:
 // pipeline offline di FluidAudio, `embedSpans` sull'intero audio (stesso tipo di vettori
 // di `DiarizationResult.speakerDatabase`, usati per riconoscere le voci negli incontri).
 import Foundation
 import FluidAudio
 
-let file = Array(CommandLine.arguments.dropFirst())
-guard !file.isEmpty else {
-    FileHandle.standardError.write(Data("uso: impronta-fluid file.wav [altri…]\n".utf8))
+// Il risultato va su file: la libreria scrive messaggi di diagnostica sullo standard output.
+let argomenti = Array(CommandLine.arguments.dropFirst())
+guard argomenti.count >= 2 else {
+    FileHandle.standardError.write(Data("uso: impronta-fluid uscita.json file.wav [altri…]\n".utf8))
     exit(1)
 }
+let uscita = URL(fileURLWithPath: argomenti[0])
+let file = Array(argomenti.dropFirst())
 
 let gestore = OfflineDiarizerManager(config: .default)
 try await gestore.prepareModels()
@@ -28,4 +31,4 @@ for percorso in file {
 }
 let codificatore = JSONEncoder()
 codificatore.outputFormatting = [.sortedKeys]
-FileHandle.standardOutput.write(try codificatore.encode(risultati))
+try codificatore.encode(risultati).write(to: uscita)

@@ -31,10 +31,11 @@ if ! swift build -c release --product impronta-fluid > "$LAVORO/build.log" 2>&1;
 fi
 
 echo "2/3 · Impronte FluidAudio (motore iPhone)…"
-.build/release/impronta-fluid "${WAV[@]}" > "$LAVORO/fluid.json"
+.build/release/impronta-fluid "$LAVORO/fluid.json" "${WAV[@]}" 2>&1 | grep -v "^\[Profiling\]" || true
 
 echo "3/3 · Impronte pyannote (motore Argo desktop)…"
-"$PY" impronta_pyannote.py "${WAV[@]}" > "$LAVORO/pyannote.json"
+PYTHONWARNINGS=ignore "$PY" impronta_pyannote.py "$LAVORO/pyannote.json" "${WAV[@]}" 2>&1 | grep "valori" || true
+[ -s "$LAVORO/fluid.json" ] && [ -s "$LAVORO/pyannote.json" ] || { echo "Impronte non calcolate: rilancia per vedere gli errori."; exit 1; }
 
 "$PY" confronta.py "$LAVORO/pyannote.json" "$LAVORO/fluid.json" | tee risultato.txt
 echo
