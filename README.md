@@ -47,10 +47,27 @@ xcodegen generate
 open Argo.xcodeproj
 ```
 
-In Xcode: target **Argo** › *Signing & Capabilities* › scegli il tuo Team, collega l'iPhone e premi ▶︎.
-Per non sceglierlo ogni volta, scrivi il tuo Team ID in `project.yml` (`DEVELOPMENT_TEAM`).
+Il Team è già in `project.yml` (`DEVELOPMENT_TEAM: WPR2P5Q2S8`, account Apple Developer di Argo's New Dreams): collega l'iPhone e premi ▶︎. Chi compila con un altro account cambia quel valore con il proprio Team ID.
 
 > `Argo.xcodeproj` non è nel repository: si rigenera con `xcodegen generate` ogni volta che aggiungi file.
+
+## Distribuire con TestFlight
+
+Per installare Argo su altri iPhone (famiglia, colleghi) senza cavo.
+
+**Una volta sola**, in [App Store Connect](https://appstoreconnect.apple.com): *App › + › Nuova app*, piattaforma iOS, bundle ID `blog.argosnewdreams.argo`, uno SKU a scelta (es. `argo-ios`). Il nome sullo Store deve essere unico: per esempio «Argo · Taccuino». Se il bundle ID risulta già usato (registrato a suo tempo dal Personal Team), cambialo in `project.yml`.
+
+**A ogni rilascio:**
+
+1. `strumenti/nuova-build.sh`: nuovo numero di build (AAAAMMGG.HHMM) e progetto rigenerato.
+2. Xcode: destinazione *Any iOS Device (arm64)* › *Product › Archive*.
+3. Organizer: *Distribute App › App Store Connect › Upload*.
+4. App Store Connect › TestFlight: quando la build è elaborata, assegnala a un gruppo.
+   - **Interno**: persone aggiunte in *Utenti e accessi*; nessuna revisione.
+   - **Esterno**: basta l'email (o un link pubblico); la prima build passa una breve revisione beta di Apple.
+5. Chi prova installa **TestFlight** dall'App Store e accetta l'invito; le build successive arrivano da sole.
+
+La crittografia è dichiarata in `Info.plist` (`ITSAppUsesNonExemptEncryption: false`: solo HTTPS/TLS del sistema), quindi App Store Connect non chiede la conformità all'esportazione a ogni build. Le build TestFlight scadono dopo un periodo fisso: caricane una nuova prima della scadenza.
 
 ## Verbale dal Mac (iPhone senza Apple Intelligence)
 

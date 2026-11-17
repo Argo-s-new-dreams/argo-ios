@@ -3,6 +3,15 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.6.0] · build 20261117.1350
+
+Pronta per TestFlight.
+
+### Aggiunto
+- Team Apple Developer in `project.yml`, per archiviare e caricare su App Store Connect senza scegliere il Team a mano
+- `strumenti/nuova-build.sh`: numero di build nuovo a ogni caricamento
+- README: come distribuire con TestFlight
+
 ## [0.6.0] · build 20261117.1135
 
 Ponte con Argo sul computer: niente più AirDrop a mano.
