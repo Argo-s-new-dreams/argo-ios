@@ -8,11 +8,17 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.2.0"
-    CURRENT_PROJECT_VERSION: "20261117.0905"
+    MARKETING_VERSION: "0.3.0"
+    CURRENT_PROJECT_VERSION: "20261117.0941"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
+
+packages:
+  # Diarizzazione on-device (pipeline pyannote in CoreML). Licenze di codice e modelli: da verificare (vedi README)
+  FluidAudio:
+    url: https://github.com/FluidInference/FluidAudio.git
+    from: 0.12.4
 
 targets:
   Argo:
@@ -20,6 +26,8 @@ targets:
     platform: iOS
     sources:
       - path: Argo
+    dependencies:
+      - package: FluidAudio
     settings:
       base:
         PRODUCT_NAME: Argo
@@ -43,6 +51,7 @@ targets:
         UIBackgroundModes:
           - audio
         ITSAppUsesNonExemptEncryption: false
+        NSCameraUsageDescription: "Argo usa la fotocamera per fotografare biglietti da visita e documenti durante un incontro. Le foto restano nell'app."
         NSMicrophoneUsageDescription: "Argo usa il microfono per registrare le riunioni. L'audio resta sul tuo iPhone."
         NSLocalNetworkUsageDescription: "Argo può chiedere al tuo Mac in rete locale (Ollama) di scrivere il verbale."
         NSAppTransportSecurity:

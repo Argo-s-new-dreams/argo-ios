@@ -5,7 +5,10 @@ struct SessioneView: View {
     @AppStorage("eliminaAudio") private var eliminaAudio = true
 
     @State private var fase: String?
-    @State private var trascrizioneAperta = false
+    @State private var cronologiaAperta = false
+    @State private var fotoAperta: FotoSessione?
+    @State private var pacchetto: FileDaCondividere?
+    @State private var erroreEsportazione: String?
 
     private var inCorso: Bool { fase != nil }
 
@@ -45,16 +48,37 @@ struct SessioneView: View {
             }
 
             if !sessione.riassunto.isEmpty {
-                Section("Riassunto") {
-                    Text(sessione.riassunto)
+                Section("Riassunto") { Text(sessione.riassunto) }
+            }
+
+            if !sessione.contatti.isEmpty {
+                Section("Contatti") {
+                    ForEach(sessione.contatti) { contatto in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(contatto.nome).font(.headline)
+                            let dettagli = [contatto.ruolo, contatto.azienda].compactMap { $0 }.filter { !$0.isEmpty }
+                            if !dettagli.isEmpty {
+                                Text(dettagli.joined(separator: " · ")).font(.subheadline)
+                            }
+                            let recapiti = [contatto.email, contatto.telefono].compactMap { $0 }.filter { !$0.isEmpty }
+                            if !recapiti.isEmpty {
+                                Text(recapiti.joined(separator: " · "))
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .textSelection(.enabled)
+                            }
+                            if let note = contatto.note, !note.isEmpty {
+                                Text(note).font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
                 }
             }
 
             if !sessione.puntiChiave.isEmpty {
                 Section("Punti chiave") {
                     ForEach(sessione.puntiChiave, id: \.self) { punto in
-                        Label(punto, systemImage: "circle.fill")
-                            .labelStyle(PuntoElenco())
+                        Label(punto, systemImage: "circle.fill").labelStyle(PuntoElenco())
                     }
                 }
             }
@@ -76,22 +100,59 @@ struct SessioneView: View {
                 }
             }
 
-            if !sessione.trascrizione.isEmpty {
+            if !sessione.parlanti.isEmpty {
                 Section {
-                    DisclosureGroup("Trascrizione", isExpanded: $trascrizioneAperta) {
-                        Text(sessione.trascrizione)
-                            .font(.callout)
-                            .textSelection(.enabled)
+                    ForEach(sessione.parlanti, id: \.self) { id in
+                        HStack {
+                            Circle().fill(Colori.parlante(id)).frame(width: 10, height: 10)
+                            TextField("Parlante \(id.dropFirst())", text: nomeBinding(id))
+                        }
+                    }
+                } header: {
+                    Text("Partecipanti")
+                } footer: {
+                    Text("Dai un nome alle voci (es. «Io», «Mario Rossi»): li userà la relazione. Poi tocca «Rifai la relazione».")
+                }
+            }
+
+            if !sessione.foto.isEmpty {
+                Section("Foto") {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(sessione.foto.sorted { $0.secondo < $1.secondo }) { foto in
+                                Button { fotoAperta = foto } label: {
+                                    VStack(spacing: 4) {
+                                        MiniaturaFoto(foto: foto).frame(width: 84, height: 84)
+                                        Text(Formato.durata(foto.secondo))
+                                            .font(.caption2.monospacedDigit())
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.vertical, 4)
                     }
                 }
             }
 
-            if sessione.stato != .completata, puoElaborare, !inCorso {
+            if sessione.haTrascrizione {
                 Section {
-                    Button(
-                        sessione.trascrizione.isEmpty ? "Trascrivi e crea il verbale" : "Crea il verbale",
-                        systemImage: "sparkles"
-                    ) {
+                    DisclosureGroup("Trascrizione", isExpanded: $cronologiaAperta) {
+                        if sessione.segmenti.isEmpty {
+                            Text(sessione.trascrizione).font(.callout).textSelection(.enabled)
+                        } else {
+                            ForEach(sessione.cronologia) { voce in
+                                RigaCronologia(voce: voce, sessione: sessione) { fotoAperta = $0 }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if puoElaborare, !inCorso {
+                Section {
+                    Button(etichettaElabora, systemImage: "sparkles") {
                         Task { await elabora() }
                     }
                 }
@@ -99,22 +160,41 @@ struct SessioneView: View {
 
             if let motore = sessione.motoreVerbale, sessione.stato == .completata {
                 Section {
-                    Text("Verbale scritto da \(motore). Rileggilo prima di condividerlo.")
+                    Text("Relazione scritta da \(motore). Rileggila prima di condividerla.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
             }
         }
-        .navigationTitle("Sessione")
+        .navigationTitle("Incontro")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if sessione.stato == .completata || sessione.stato == .trascritta {
+            if sessione.haTrascrizione {
                 ToolbarItem(placement: .topBarTrailing) {
-                    ShareLink(item: sessione.markdown, subject: Text(sessione.titolo)) {
+                    Menu {
+                        Button("Pacchetto per il Mac (AirDrop, File…)", systemImage: "shippingbox") {
+                            esporta()
+                        }
+                        ShareLink(item: sessione.markdown, subject: Text(sessione.titolo)) {
+                            Label("Solo testo della relazione", systemImage: "doc.plaintext")
+                        }
+                    } label: {
                         Label("Condividi", systemImage: "square.and.arrow.up")
                     }
+                    .disabled(inCorso)
                 }
             }
+        }
+        .sheet(item: $fotoAperta) { foto in
+            DettaglioFotoView(foto: foto)
+        }
+        .sheet(item: $pacchetto) { file in
+            CondivisioneView(elementi: [file.url])
+        }
+        .alert("Esportazione non riuscita", isPresented: .constant(erroreEsportazione != nil)) {
+            Button("OK") { erroreEsportazione = nil }
+        } message: {
+            Text(erroreEsportazione ?? "")
         }
         .task {
             // Appena registrata: parte da sola.
@@ -123,13 +203,112 @@ struct SessioneView: View {
     }
 
     private var puoElaborare: Bool {
-        !sessione.trascrizione.isEmpty || sessione.urlAudio != nil
+        sessione.haTrascrizione || sessione.urlAudio != nil
+    }
+
+    private var etichettaElabora: String {
+        if !sessione.haTrascrizione { return "Trascrivi e crea la relazione" }
+        return sessione.stato == .completata ? "Rifai la relazione" : "Crea la relazione"
+    }
+
+    private func nomeBinding(_ id: String) -> Binding<String> {
+        Binding(
+            get: { sessione.nomiParlanti[id] ?? "" },
+            set: { sessione.nomiParlanti[id] = $0 }
+        )
     }
 
     private func elabora() async {
         fase = "Preparo…"
         await Elaborazione.esegui(sessione, eliminaAudioDopo: eliminaAudio) { fase = $0 }
         fase = nil
+    }
+
+    private func esporta() {
+        do {
+            pacchetto = FileDaCondividere(url: try Esportatore.pacchetto(di: sessione))
+        } catch {
+            erroreEsportazione = error.localizedDescription
+        }
+    }
+}
+
+private struct FileDaCondividere: Identifiable {
+    let url: URL
+    var id: URL { url }
+}
+
+private struct RigaCronologia: View {
+    let voce: VoceCronologia
+    let sessione: Sessione
+    let apriFoto: (FotoSessione) -> Void
+
+    var body: some View {
+        switch voce {
+        case .parole(let segmento):
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
+                    if let parlante = segmento.parlante {
+                        Text(sessione.nome(di: parlante) ?? parlante)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Colori.parlante(parlante))
+                    }
+                    Text(Formato.durata(segmento.inizio))
+                        .font(.caption2.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
+                Text(segmento.testo).font(.callout).textSelection(.enabled)
+            }
+        case .foto(let foto):
+            Button { apriFoto(foto) } label: {
+                HStack(spacing: 10) {
+                    MiniaturaFoto(foto: foto).frame(width: 44, height: 44)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("📷 \(Formato.durata(foto.secondo))")
+                            .font(.caption2.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                        Text(foto.testoOCR.isEmpty ? "Foto" : foto.testoOCR)
+                            .font(.caption)
+                            .lineLimit(2)
+                    }
+                }
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+private struct DettaglioFotoView: View {
+    let foto: FotoSessione
+    @Environment(\.dismiss) private var chiudi
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    if let immagine = UIImage(contentsOfFile: foto.url.path) {
+                        Image(uiImage: immagine)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    if !foto.riferimenti.isEmpty {
+                        Text("Riferimenti").font(.headline)
+                        ForEach(foto.riferimenti, id: \.self) { Text($0).textSelection(.enabled) }
+                    }
+                    if !foto.testoOCR.isEmpty {
+                        Text("Testo letto").font(.headline)
+                        Text(foto.testoOCR).font(.callout).textSelection(.enabled)
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("Foto a \(Formato.durata(foto.secondo))")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) { Button("Fine") { chiudi() } }
+            }
+        }
     }
 }
 
@@ -141,5 +320,14 @@ private struct PuntoElenco: LabelStyle {
                 .foregroundStyle(.tint)
             configuration.title
         }
+    }
+}
+
+enum Colori {
+    private static let tavolozza: [Color] = [.cyan, .orange, .green, .pink, .yellow, .purple, .mint, .red]
+
+    static func parlante(_ id: String) -> Color {
+        let numero = max(1, Int(id.dropFirst()) ?? 1)
+        return tavolozza[(numero - 1) % tavolozza.count]
     }
 }

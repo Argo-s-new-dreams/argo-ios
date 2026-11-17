@@ -15,10 +15,10 @@ struct InformativaView: View {
                     .font(.largeTitle.bold())
 
                 VStack(alignment: .leading, spacing: 14) {
-                    punto("megaphone", "Avvisa i partecipanti che la riunione viene registrata e trascritta con l'AI.")
-                    punto("iphone", "Audio e trascrizione restano su questo iPhone. Il verbale lo scrive l'iPhone o il tuo Mac in rete locale: mai servizi cloud.")
-                    punto("trash", "Se l'opzione è attiva in Impostazioni, l'audio viene eliminato appena trascritto.")
-                    punto("checkmark.shield", "Il verbale generato dall'AI va riletto prima di condividerlo.")
+                    punto("megaphone", "Avvisa chi hai di fronte che la conversazione viene registrata, trascritta con l'AI e divisa per voci, e chiedi il consenso.")
+                    punto("iphone", "Audio e trascrizione restano su questo iPhone. La relazione la scrive l'iPhone o il tuo Mac in rete locale: mai servizi cloud.")
+                    punto("trash", "Per impostazione predefinita l'audio viene eliminato appena trascritto: restano testo e foto.")
+                    punto("checkmark.shield", "La relazione generata dall'AI va riletta prima di condividerla.")
                 }
 
                 Button(action: alConferma) {

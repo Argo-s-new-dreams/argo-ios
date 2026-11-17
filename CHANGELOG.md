@@ -3,6 +3,24 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.3.0] · build 20261117.0941
+
+Taccuino da fiera: voci, foto e pacchetto per il Mac.
+
+### Aggiunto
+- **Foto durante la registrazione**: pulsante fotocamera nella schermata di registrazione; ogni foto viene agganciata al secondo esatto della conversazione
+- **Testo delle foto** (OCR con Apple Vision, sul dispositivo) con riconoscimento di telefoni, email, siti e indirizzi
+- **Divisione delle voci** sul dispositivo con FluidAudio (pipeline pyannote in CoreML); i parlanti si possono rinominare («Io», «Mario Rossi»)
+- Trascrizione come **cronologia**: frasi con parlante e minuto, intercalate alle foto
+- Relazione con **contatti** (nome, azienda, ruolo, email, telefono, interesse), ricavati soprattutto dai biglietti da visita
+- **Pacchetto Argo** (.zip con `sessione.json`, `relazione.md` e foto) da passare al Mac via AirDrop o File; formato documentato in `docs/FORMATO-PACCHETTO.md`
+- Pulsante «Rifai la relazione» dopo aver dato un nome ai parlanti
+
+### Modificato
+- Le istruzioni del modello spiegano parlanti e foto, per una relazione che colleghi ciò che si dice a ciò che si fotografa
+- Informativa aggiornata: consenso dell'interlocutore, divisione per voci, eliminazione dell'audio
+- Cancellare una sessione elimina anche le sue foto
+
 ## [0.2.0] · build 20261117.0905
 
 Compatibile anche con gli iPhone senza Apple Intelligence.

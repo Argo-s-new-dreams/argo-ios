@@ -20,7 +20,7 @@ struct ElencoSessioniView: View {
                     ContentUnavailableView(
                         "Nessuna sessione",
                         systemImage: "waveform",
-                        description: Text("Registra una riunione: trascrizione e verbale vengono creati sul tuo iPhone, senza cloud.")
+                        description: Text("Registra un incontro e scatta foto a biglietti da visita e documenti: trascrizione, voci e testo delle foto vengono elaborati sul tuo iPhone.")
                     )
                 } else {
                     List {
@@ -57,10 +57,10 @@ struct ElencoSessioniView: View {
                 .padding(.bottom, 8)
             }
             .fullScreenCover(isPresented: $mostraRegistra) {
-                RegistraView { nomeFile, durata in
+                RegistraView { nomeFile, durata, foto in
                     let nuova = Sessione(
-                        titolo: "Riunione del \(Date.now.formatted(date: .abbreviated, time: .shortened))",
-                        lingua: lingua, durata: durata, nomeFileAudio: nomeFile
+                        titolo: "Incontro del \(Date.now.formatted(date: .abbreviated, time: .shortened))",
+                        lingua: lingua, durata: durata, nomeFileAudio: nomeFile, foto: foto
                     )
                     contesto.insert(nuova)
                     percorso = [nuova]
@@ -81,7 +81,7 @@ struct ElencoSessioniView: View {
     private func elimina(_ indici: IndexSet) {
         for indice in indici {
             let sessione = sessioni[indice]
-            sessione.eliminaAudio()
+            sessione.eliminaFile()
             contesto.delete(sessione)
         }
     }
@@ -121,6 +121,14 @@ private struct RigaSessione: View {
                 Text(sessione.creata.formatted(date: .abbreviated, time: .shortened))
                 if sessione.durata > 0 {
                     Text("· \(Formato.durata(sessione.durata))")
+                }
+                if !sessione.foto.isEmpty {
+                    Label("\(sessione.foto.count)", systemImage: "camera")
+                        .labelStyle(.titleAndIcon)
+                }
+                if sessione.parlanti.count > 1 {
+                    Label("\(sessione.parlanti.count)", systemImage: "person.2")
+                        .labelStyle(.titleAndIcon)
                 }
                 Spacer()
                 Image(systemName: icona)

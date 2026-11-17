@@ -16,6 +16,25 @@ struct VerbaleGenerato: Codable {
 
     @Guide(description: "Le azioni da fare emerse dalla riunione; lista vuota se non ce ne sono")
     var azioni: [AzioneGenerata]
+
+    @Guide(description: "Le persone incontrate (esclusa la persona che registra), con i dati presi soprattutto dalle foto di biglietti da visita; lista vuota se nessuna")
+    var contatti: [ContattoGenerato]
+}
+
+@Generable
+struct ContattoGenerato: Codable {
+    @Guide(description: "Nome e cognome")
+    var nome: String
+    @Guide(description: "Azienda, se nota")
+    var azienda: String?
+    @Guide(description: "Ruolo o qualifica, se noto")
+    var ruolo: String?
+    @Guide(description: "Email, solo se letta in una foto o detta esplicitamente")
+    var email: String?
+    @Guide(description: "Telefono, solo se letto in una foto o detto esplicitamente")
+    var telefono: String?
+    @Guide(description: "Cosa interessa a questa persona o cosa ha chiesto, in una frase")
+    var note: String?
 }
 
 @Generable
@@ -61,16 +80,22 @@ protocol MotoreVerbale: Sendable {
 enum Verbalista {
 
     static let istruzioniNote = """
-    Sei l'assistente che prende appunti in una riunione di lavoro.
-    Ricevi una parte di trascrizione. Scrivi appunti sintetici e fedeli: decisioni,
-    problemi, numeri, nomi, azioni da fare con responsabili e scadenze.
+    Sei l'assistente che prende appunti in un incontro di lavoro (riunione o fiera).
+    Ricevi una parte di trascrizione: ogni riga ha il minuto e chi parla.
+    Le righe «📷 FOTO» contengono il testo letto da una foto scattata in quel momento
+    (biglietto da visita, brochure, documento, cartellino di un prodotto).
+    Scrivi appunti sintetici e fedeli: chi è chi, aziende, prodotti, richieste, numeri,
+    decisioni, azioni da fare. Conserva nomi, email e telefoni letti nelle foto.
     Non inventare nulla. Rispondi nella stessa lingua della trascrizione.
     """
 
     static let istruzioniVerbale = """
-    Sei l'assistente che redige il verbale di una riunione di lavoro.
-    Usa solo le informazioni presenti nel testo ricevuto, senza inventare
-    nomi, date o decisioni. Rispondi nella stessa lingua del testo.
+    Sei l'assistente che redige la relazione di un incontro di lavoro (riunione o fiera).
+    Ogni riga del testo ha il minuto e chi parla. Le righe «📷 FOTO» sono testi letti da
+    foto scattate durante l'incontro: usale per dare un nome, un'azienda e dei recapiti
+    alle persone, e collega ciò che si vede nelle foto a ciò che viene detto in quel momento.
+    Usa solo le informazioni presenti, senza inventare nomi, date, recapiti o decisioni.
+    Rispondi nella stessa lingua del testo.
     """
 
     static var appleDisponibile: Bool {

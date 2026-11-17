@@ -1,18 +1,22 @@
 # Argo per iPhone
 
-Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com/Argo-s-new-dreams/argo-ai): **registra una riunione, la trascrive e crea il verbale, tutto sul tuo iPhone**. Niente cloud, niente server, niente account.
+Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com/Argo-s-new-dreams/argo-ai): **un taccuino per riunioni e fiere**. Registri la conversazione, fotografi biglietti da visita e documenti mentre parli, e Argo trascrive, divide le voci, legge le foto e scrive una relazione coerente. L'audio non resta sul telefono. Niente cloud, niente account.
 
 🔒 100% locale · iOS 26 · SwiftUI
 
-## Cosa fa (v0.1)
+## Cosa fa
 
 | Funzione | Come | Dove gira |
 |---|---|---|
 | **Registra** | Microfono, AAC mono 16 kHz, continua anche a schermo bloccato | iPhone |
+| **Foto** | Scatti durante la registrazione, agganciati al secondo della conversazione | iPhone |
+| **Testo delle foto** | OCR con Apple Vision + riconoscimento di telefoni, email, siti | iPhone |
+| **Voci** | Diarizzazione con [FluidAudio](https://github.com/FluidInference/FluidAudio) (pyannote in CoreML), parlanti rinominabili | iPhone |
 | **Trascrivi** | `SpeechAnalyzer` + `SpeechTranscriber` (framework Speech, iOS 26) con marche temporali | iPhone |
 | **Verbale** | Foundation Models (Apple Intelligence) con guided generation: titolo, riassunto, punti chiave, azioni | iPhone con Apple Intelligence |
 | **Verbale dal Mac** | Ollama sul tuo Mac in rete locale, output JSON strutturato | Mac (Wi-Fi di casa/ufficio) |
-| **Condividi** | Verbale in Markdown verso Mail, Note, Teams, File… | — |
+| **Pacchetto Argo** | .zip con `sessione.json`, relazione e foto, via AirDrop/File verso Argo desktop ([formato](docs/FORMATO-PACCHETTO.md)) | — |
+| **Condividi** | Relazione in Markdown verso Mail, Note, Teams… | — |
 | **Importa** | Qualsiasi file audio (Memo Vocali, File) | iPhone |
 
 **Privacy by design**, come Argo sul Mac:
@@ -73,9 +77,18 @@ Argo/
 └── Risorse/Assets.xcassets         icona e colore d'accento
 ```
 
+## Il caso d'uso: la fiera
+
+1. Allo stand avvii la registrazione e informi l'interlocutore.
+2. Ti dà un biglietto da visita o una brochure: tocchi 📷 e scatti, senza fermare la registrazione.
+3. A fine incontro premi stop: l'iPhone trascrive, divide le voci, legge le foto ed **elimina l'audio**.
+4. In albergo condividi il **pacchetto Argo** al Mac via AirDrop; Argo desktop scrive la relazione e, in futuro, la carica su Dynamics 365 Sales.
+
 ## Note tecniche
 
 - **Contesto del modello on-device:** circa 4.000 token. Le trascrizioni lunghe vengono riassunte a blocchi da circa 5.000 caratteri, poi unite nel verbale finale (fino a tre passaggi).
+- **Primo utilizzo:** il modello della lingua (Apple) e quelli di diarizzazione (FluidAudio, da Hugging Face) si scaricano la prima volta; poi tutto funziona offline. Conviene fare una prova prima di partire per la fiera.
+- **Licenze:** prima della distribuzione verificare le licenze di FluidAudio e dei modelli di diarizzazione che scarica (vedi Fase 4 della roadmap Argo Pro).
 - **Call Teams:** iOS non permette di registrare l'audio di altre app. Argo registra il microfono, quindi va bene per riunioni in presenza o in vivavoce, non per una call in cuffia.
 
 ## Da fare
@@ -86,7 +99,11 @@ Argo/
 - [x] Verbale dal Mac con Ollama in rete locale
 - [ ] Trascrizione dal Mac con Argo desktop (WhisperX + diarizzazione)
 - [ ] Modello linguistico piccolo direttamente sull'iPhone (MLX) per i telefoni senza Apple Intelligence, anche lontano dal Mac
-- [ ] Riconoscimento dei parlanti
+- [x] Riconoscimento dei parlanti
+- [x] Foto durante la registrazione, OCR, pacchetto per il Mac
+- [ ] Import del pacchetto in Argo desktop (Mac, poi Windows) e relazione con modello vision
+- [ ] Connettore Dynamics 365 Sales
+- [ ] App Android che produce lo stesso pacchetto
 - [ ] TestFlight per i colleghi del CC AI
 
 ## Licenza

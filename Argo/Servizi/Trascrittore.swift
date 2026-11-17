@@ -18,7 +18,7 @@ enum Trascrittore {
         file url: URL,
         lingua codice: String,
         fase: @escaping @MainActor (String) -> Void
-    ) async throws -> String {
+    ) async throws -> [Segmento] {
         guard await autorizzazione() else { throw ErroreTrascrizione.nonAutorizzato }
         guard let locale = await SpeechTranscriber.supportedLocale(equivalentTo: Locale(identifier: codice)) else {
             throw ErroreTrascrizione.linguaNonSupportata(codice)
@@ -40,17 +40,22 @@ enum Trascrittore {
         let analyzer = SpeechAnalyzer(modules: [transcriber])
         let file = try AVAudioFile(forReading: url)
 
-        let raccolta = Task { () throws -> [String] in
-            var righe: [String] = []
+        let raccolta = Task { () throws -> [Segmento] in
+            var segmenti: [Segmento] = []
             for try await risultato in transcriber.results {
                 let testo = String(risultato.text.characters)
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !testo.isEmpty else { continue }
                 let inizio = risultato.range.start.seconds
-                let marca = inizio.isFinite ? "[\(Formato.durata(inizio))] " : ""
-                righe.append(marca + testo)
+                let fine = risultato.range.end.seconds
+                let ultimaFine = segmenti.last?.fine ?? 0
+                segmenti.append(Segmento(
+                    inizio: inizio.isFinite ? inizio : ultimaFine,
+                    fine: fine.isFinite ? fine : ultimaFine,
+                    testo: testo
+                ))
             }
-            return righe
+            return segmenti
         }
 
         if let ultimoCampione = try await analyzer.analyzeSequence(from: file) {
@@ -59,9 +64,9 @@ enum Trascrittore {
             await analyzer.cancelAndFinishNow()
         }
 
-        let righe = try await raccolta.value
-        guard !righe.isEmpty else { throw ErroreTrascrizione.nessunParlato }
-        return righe.joined(separator: "\n")
+        let segmenti = try await raccolta.value
+        guard !segmenti.isEmpty else { throw ErroreTrascrizione.nessunParlato }
+        return segmenti
     }
 
     /// Permesso di riconoscimento vocale (chiesto una sola volta dal sistema).

@@ -135,9 +135,24 @@ struct MotoreOllama: MotoreVerbale {
                     ],
                     "required": ["descrizione"]
                 ]
+            ],
+            "contatti": [
+                "type": "array",
+                "items": [
+                    "type": "object",
+                    "properties": [
+                        "nome": ["type": "string"],
+                        "azienda": ["type": "string"],
+                        "ruolo": ["type": "string"],
+                        "email": ["type": "string"],
+                        "telefono": ["type": "string"],
+                        "note": ["type": "string"]
+                    ],
+                    "required": ["nome"]
+                ]
             ]
         ],
-        "required": ["titolo", "riassunto", "puntiChiave", "azioni"]
+        "required": ["titolo", "riassunto", "puntiChiave", "azioni", "contatti"]
     ]
 }
 
