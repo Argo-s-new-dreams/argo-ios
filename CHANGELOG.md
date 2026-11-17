@@ -3,6 +3,15 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.3.1] · build 20261117.1000
+
+### Corretto
+- Scattare una foto metteva in pausa la registrazione: la fotocamera di sistema prendeva il controllo dell'audio. Ora Argo usa una fotocamera interna (solo video, `automaticallyConfiguresApplicationAudioSession = false`) e la registrazione continua
+
+### Aggiunto
+- Più foto di fila senza uscire dalla fotocamera (es. fronte e retro del biglietto)
+- Timer della registrazione visibile mentre scatti; ogni foto prende il secondo esatto dello scatto
+
 ## [0.3.0] · build 20261117.0941
 
 Taccuino da fiera: voci, foto e pacchetto per il Mac.

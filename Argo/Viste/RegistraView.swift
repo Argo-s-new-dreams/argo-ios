@@ -12,7 +12,6 @@ struct RegistraView: View {
     @State private var confermaAnnulla = false
     @State private var foto: [FotoSessione] = []
     @State private var mostraFotocamera = false
-    @State private var secondoScatto: Double = 0
 
     var body: some View {
         NavigationStack {
@@ -51,15 +50,14 @@ struct RegistraView: View {
         }
         .interactiveDismissDisabled(registratore.staRegistrando)
         .fullScreenCover(isPresented: $mostraFotocamera) {
-            FotocameraView { immagine in
+            FotocameraView(registratore: registratore) { immagine, secondo in
                 do {
                     let nome = try LettoreFoto.salva(immagine)
-                    foto.append(FotoSessione(nomeFile: nome, secondo: secondoScatto))
+                    foto.append(FotoSessione(nomeFile: nome, secondo: secondo))
                 } catch {
                     errore = error.localizedDescription
                 }
             }
-            .ignoresSafeArea()
         }
     }
 
@@ -120,8 +118,6 @@ struct RegistraView: View {
                 .clipShape(Circle())
 
                 Button {
-                    // Il secondo dello scatto è quello in cui si apre la fotocamera.
-                    secondoScatto = registratore.durata
                     mostraFotocamera = true
                 } label: {
                     Image(systemName: "camera.fill")
