@@ -40,7 +40,11 @@ struct RegistraView: View {
                 }
             }
             .alert("Errore", isPresented: .constant(errore != nil)) {
-                Button("OK") { errore = nil; chiudi() }
+                Button("OK") {
+                    errore = nil
+                    // Un errore su una foto non deve chiudere una registrazione in corso.
+                    if !registratore.staRegistrando { chiudi() }
+                }
             } message: {
                 Text(errore ?? "")
             }
