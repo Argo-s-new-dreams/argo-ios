@@ -3,6 +3,16 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.4.0] · build 20261117.1035
+
+### Aggiunto
+- **Profilo voce**: in *Impostazioni › La mia voce* registri una volta 20 secondi leggendo un testo; Argo ne calcola l'impronta (FluidAudio) e cancella subito l'audio
+- Negli incontri la voce più simile al profilo (somiglianza coseno ≥ 0,55) prende il tuo nome, le altre restano «Parlante N»
+- La relazione sa chi registra e non lo mette tra i contatti
+
+### Privacy
+- L'impronta vocale è un dato biometrico: salvata solo sull'iPhone con protezione completa del file, mai inclusa nel pacchetto Argo, eliminabile dalle impostazioni
+
 ## [0.3.1] · build 20261117.1000
 
 ### Corretto

@@ -20,11 +20,26 @@ enum Elaborazione {
                 sessione.stato = .inTrascrizione
                 var segmenti = try await Trascrittore.trascrivi(file: url, lingua: sessione.lingua, fase: fase)
 
+                var turni: [Diarizzatore.Turno] = []
                 do {
-                    let turni = try await Diarizzatore.turni(file: url, fase: fase)
+                    turni = try await Diarizzatore.turni(file: url, fase: fase)
                     segmenti = Diarizzatore.assegna(turni, a: segmenti)
                 } catch {
                     avvisi.append("Parlanti non riconosciuti (\(error.localizedDescription)). La trascrizione c'è comunque.")
+                }
+
+                // La tua voce: se hai un profilo, la voce che ti somiglia diventa «Io».
+                if !turni.isEmpty, let profilo = ArchivioVoce.carica() {
+                    fase("Cerco la tua voce…")
+                    do {
+                        if let mio = try await RiconoscitoreVoce.trova(profilo, turni: turni, file: url) {
+                            sessione.nomiParlanti[mio] = profilo.nome
+                        } else {
+                            avvisi.append("Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti.")
+                        }
+                    } catch {
+                        avvisi.append("Riconoscimento della tua voce non riuscito (\(error.localizedDescription)).")
+                    }
                 }
 
                 sessione.segmenti = segmenti
@@ -48,7 +63,11 @@ enum Elaborazione {
             case .nonDisponibile(let motivo):
                 avvisi.append(motivo)
             case .pronto(let motore):
-                let relazione = try await motore.genera(da: sessione.testoCompleto, fase: fase)
+                var testo = sessione.testoCompleto
+                if let profilo = ArchivioVoce.carica(), sessione.nomiParlanti.values.contains(profilo.nome) {
+                    testo = "Chi registra è «\(profilo.nome)»: non va incluso nei contatti.\n\n" + testo
+                }
+                let relazione = try await motore.genera(da: testo, fase: fase)
                 sessione.titolo = relazione.titolo
                 sessione.riassunto = relazione.riassunto
                 sessione.puntiChiave = relazione.puntiChiave

@@ -8,6 +8,9 @@ struct ImpostazioniView: View {
     @AppStorage("ollamaIndirizzo") private var ollamaIndirizzo = ""
     @AppStorage("ollamaModello") private var ollamaModello = ""
 
+    @State private var profiloVoce = ArchivioVoce.carica()
+    @State private var nomeVoce = ArchivioVoce.carica()?.nome ?? "Io"
+    @State private var mostraProfiloVoce = false
     @State private var modelliMac: [String] = []
     @State private var esitoProva: EsitoProva?
     @State private var provaInCorso = false
@@ -36,6 +39,8 @@ struct ImpostazioniView: View {
                     Text("La trascrizione avviene sempre sull'iPhone. Il modello della lingua viene scaricato da Apple la prima volta.")
                 }
 
+                sezioneVoce
+
                 sezioneVerbale
 
                 if motore == SceltaMotore.mac.rawValue || motore == SceltaMotore.automatico.rawValue {
@@ -55,14 +60,56 @@ struct ImpostazioniView: View {
                     Link("Argo's New Dreams", destination: URL(string: "https://argosnewdreams.blog")!)
                 }
             }
+            .sheet(isPresented: $mostraProfiloVoce) {
+                ProfiloVoceView(nome: nomeVoce.isEmpty ? "Io" : nomeVoce) { profiloVoce = $0 }
+            }
             .navigationTitle("Impostazioni")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Fine") { chiudi() }
+                    Button("Fine") {
+                        aggiornaNomeVoce()
+                        chiudi()
+                    }
                 }
             }
         }
+    }
+
+    // MARK: La mia voce
+
+    private var sezioneVoce: some View {
+        Section {
+            TextField("Come ti chiami negli incontri", text: $nomeVoce)
+                .onSubmit { aggiornaNomeVoce() }
+            if let profiloVoce {
+                Label("Voce registrata il \(profiloVoce.creato.formatted(date: .abbreviated, time: .omitted))",
+                      systemImage: "person.wave.2.fill")
+                    .foregroundStyle(.green)
+                Button("Registra di nuovo", systemImage: "mic") { mostraProfiloVoce = true }
+                Button("Elimina il profilo voce", systemImage: "trash", role: .destructive) {
+                    ArchivioVoce.elimina()
+                    self.profiloVoce = nil
+                }
+            } else {
+                Button("Registra la mia voce (20 secondi)", systemImage: "mic.badge.plus") {
+                    mostraProfiloVoce = true
+                }
+            }
+        } header: {
+            Text("La mia voce")
+        } footer: {
+            Text("Argo riconosce la tua voce negli incontri e la chiama con questo nome, separandola da quelle degli interlocutori. L'impronta vocale è un dato biometrico: resta solo su questo iPhone e non viene mai esportata.")
+        }
+    }
+
+    private func aggiornaNomeVoce() {
+        guard var profilo = profiloVoce else { return }
+        let nome = nomeVoce.trimmingCharacters(in: .whitespaces)
+        guard !nome.isEmpty else { return }
+        profilo.nome = nome
+        try? ArchivioVoce.salva(profilo)
+        profiloVoce = profilo
     }
 
     // MARK: Verbale
