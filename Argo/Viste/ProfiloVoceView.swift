@@ -69,7 +69,7 @@ struct ProfiloVoceView: View {
 
                     case .errore(let messaggio):
                         Label(messaggio, systemImage: "exclamationmark.triangle")
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(StileArgo.avviso)
                         Button("Riprova") { stato = .pronto }
                     }
 

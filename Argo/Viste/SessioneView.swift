@@ -25,6 +25,16 @@ struct SessioneView: View {
                 LabeledContent("Audio", value: sessione.nomeFileAudio == nil ? "eliminato" : "sul dispositivo")
             }
 
+            // Stile Argo: l'azione principale si vede subito, non in fondo dopo la trascrizione
+            if puoElaborare, !inCorso, sessione.stato != .completata {
+                Section {
+                    Button(etichettaElabora, systemImage: "sparkles") {
+                        Task { await elabora() }
+                    }
+                    .fontWeight(.semibold)
+                }
+            }
+
             if let fase {
                 Section {
                     HStack(spacing: 12) {
@@ -37,7 +47,7 @@ struct SessioneView: View {
             if !inCorso, let messaggio = sessione.messaggioErrore {
                 Section {
                     Label(messaggio, systemImage: "exclamationmark.triangle")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(StileArgo.avviso)
                 }
             }
 
@@ -151,7 +161,7 @@ struct SessioneView: View {
                 }
             }
 
-            if puoElaborare, !inCorso {
+            if puoElaborare, !inCorso, sessione.stato == .completata {
                 Section {
                     Button(etichettaElabora, systemImage: "sparkles") {
                         Task { await elabora() }
@@ -162,9 +172,9 @@ struct SessioneView: View {
             if let inviata = sessione.inviataAdArgo {
                 Section {
                     Label("Inviato ad Argo sul computer il \(inviata.formatted(date: .abbreviated, time: .shortened))",
-                          systemImage: "checkmark.icloud")
+                          systemImage: "desktopcomputer")  // mai un'icona «cloud»: non passa da nessun cloud
                         .font(.footnote)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(StileArgo.ok)
                 }
             }
 
@@ -351,7 +361,7 @@ private struct PuntoElenco: LabelStyle {
 }
 
 enum Colori {
-    private static let tavolozza: [Color] = [.cyan, .orange, .green, .pink, .yellow, .purple, .mint, .red]
+    private static let tavolozza: [Color] = StileArgo.parlanti  // stessi colori dei parlanti di Argo sul computer
 
     static func parlante(_ id: String) -> Color {
         let numero = max(1, Int(id.dropFirst()) ?? 1)

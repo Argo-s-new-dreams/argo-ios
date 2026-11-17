@@ -13,6 +13,7 @@ struct ElencoSessioniView: View {
     @State private var mostraImporta = false
     @State private var erroreImport: String?
     @State private var esitoPonte: String?
+    @State private var daEliminare: IndexSet?
     @Environment(\.scenePhase) private var fase
 
     var body: some View {
@@ -20,9 +21,9 @@ struct ElencoSessioniView: View {
             Group {
                 if sessioni.isEmpty {
                     ContentUnavailableView(
-                        "Nessuna sessione",
+                        "Nessun incontro",
                         systemImage: "waveform",
-                        description: Text("Registra un incontro e scatta foto a biglietti da visita e documenti: trascrizione, voci e testo delle foto vengono elaborati sul tuo iPhone.")
+                        description: Text("Tocca «Registra» qui sotto: durante l'incontro puoi scattare foto a biglietti da visita e documenti. Trascrizione, voci e testo delle foto vengono elaborati sul tuo iPhone.")
                     )
                 } else {
                     List {
@@ -31,9 +32,20 @@ struct ElencoSessioniView: View {
                                 RigaSessione(sessione: sessione)
                             }
                         }
-                        .onDelete(perform: elimina)
+                        .onDelete { daEliminare = $0 }
                     }
                     .refreshable { await sincronizza() }
+                    .confirmationDialog("Eliminare l'incontro?",
+                                        isPresented: Binding(get: { daEliminare != nil },
+                                                             set: { if !$0 { daEliminare = nil } }),
+                                        titleVisibility: .visible) {
+                        Button("Elimina", role: .destructive) {
+                            if let indici = daEliminare { elimina(indici) }
+                            daEliminare = nil
+                        }
+                    } message: {
+                        Text("Trascrizione, foto e relazione vengono cancellate da questo iPhone. Se non l'hai inviato ad Argo sul computer, non si possono recuperare.")
+                    }
                 }
             }
             .navigationTitle("Argo")
@@ -152,7 +164,8 @@ private struct RigaSessione: View {
                         .labelStyle(.titleAndIcon)
                 }
                 if sessione.inviataAdArgo != nil {
-                    Image(systemName: "desktopcomputer").foregroundStyle(.green)
+                    Image(systemName: "desktopcomputer").foregroundStyle(StileArgo.ok)
+                        .accessibilityLabel("Inviato ad Argo sul computer")
                 }
                 if sessione.parlanti.count > 1 {
                     Label("\(sessione.parlanti.count)", systemImage: "person.2")
@@ -180,8 +193,8 @@ private struct RigaSessione: View {
 
     private var colore: Color {
         switch sessione.stato {
-        case .completata: .green
-        case .errore: .orange
+        case .completata: StileArgo.ok
+        case .errore: StileArgo.avviso
         default: .secondary
         }
     }

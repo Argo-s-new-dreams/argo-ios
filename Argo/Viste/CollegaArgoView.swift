@@ -42,7 +42,7 @@ struct CollegaArgoView: View {
                 case .errore(let messaggio):
                     Spacer()
                     Label(messaggio, systemImage: "exclamationmark.triangle")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(StileArgo.avviso)
                         .padding()
                     Button("Riprova") { stato = .inquadra }
                         .buttonStyle(.glassProminent)

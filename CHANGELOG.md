@@ -3,6 +3,18 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.6.1] · build 20261117.2025
+
+Manutenzione UX: stesso «Stile Argo» del computer, meno sorprese.
+
+### Modificato
+- **Colori dello Stile Argo**: accento terracotta al posto del blu di sistema, salvia per «fatto» e ocra per gli avvisi; i **parlanti hanno gli stessi colori** che su Argo sul computer
+- Si parla di **incontri** come su Argo desktop (elenco vuoto: «Nessun incontro», con l'invito a toccare Registra)
+- In un incontro **«Trascrivi e crea la relazione» sta in alto** finché la relazione non c'è; «Rifai la relazione» resta in fondo
+- «Inviato ad Argo sul computer» con l'icona del computer, non più con quella del cloud: nessun cloud di mezzo
+- **Conferma prima di eliminare** un incontro (swipe) e il profilo voce
+- VoiceOver: etichette chiare per Pausa/Riprendi e Ferma
+
 ## [0.6.0] · build 20261117.1350
 
 Pronta per TestFlight.

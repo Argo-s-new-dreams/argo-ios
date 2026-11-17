@@ -102,6 +102,7 @@ struct RegistraView: View {
                 }
                 .buttonStyle(.glass)
                 .clipShape(Circle())
+                .accessibilityLabel(registratore.inPausa ? "Riprendi la registrazione" : "Metti in pausa")
 
                 Button {
                     if let esito = registratore.ferma() {
@@ -116,6 +117,7 @@ struct RegistraView: View {
                 .buttonStyle(.glassProminent)
                 .tint(.red)
                 .clipShape(Circle())
+                .accessibilityLabel("Ferma e salva l'incontro")
 
                 Button {
                     mostraFotocamera = true

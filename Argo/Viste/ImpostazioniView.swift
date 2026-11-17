@@ -12,6 +12,7 @@ struct ImpostazioniView: View {
     @State private var profiloVoce = ArchivioVoce.carica()
     @State private var nomeVoce = ArchivioVoce.carica()?.nome ?? "Io"
     @State private var mostraProfiloVoce = false
+    @State private var confermaEliminaVoce = false
     @State private var anagrafe = ArchivioAnagrafe.carica()
     @State private var abbinamento = Ponte.abbinamento
     @State private var mostraCollega = false
@@ -113,11 +114,19 @@ struct ImpostazioniView: View {
             if let profiloVoce {
                 Label("Voce registrata il \(profiloVoce.creato.formatted(date: .abbreviated, time: .omitted))",
                       systemImage: "person.wave.2.fill")
-                    .foregroundStyle(.green)
+                    .foregroundStyle(StileArgo.ok)
                 Button("Registra di nuovo", systemImage: "mic") { mostraProfiloVoce = true }
                 Button("Elimina il profilo voce", systemImage: "trash", role: .destructive) {
-                    ArchivioVoce.elimina()
-                    self.profiloVoce = nil
+                    confermaEliminaVoce = true
+                }
+                .confirmationDialog("Eliminare il profilo voce?", isPresented: $confermaEliminaVoce,
+                                    titleVisibility: .visible) {
+                    Button("Elimina", role: .destructive) {
+                        ArchivioVoce.elimina()
+                        self.profiloVoce = nil
+                    }
+                } message: {
+                    Text("Argo non ti riconoscerà più negli incontri finché non registri di nuovo la tua voce.")
                 }
             } else {
                 Button("Registra la mia voce (20 secondi)", systemImage: "mic.badge.plus") {
@@ -208,7 +217,7 @@ struct ImpostazioniView: View {
                 Button("Importa da file…", systemImage: "arrow.down.doc") { mostraImportaAnagrafe = true }
             }
             if let erroreAnagrafe {
-                Label(erroreAnagrafe, systemImage: "exclamationmark.triangle").foregroundStyle(.orange)
+                Label(erroreAnagrafe, systemImage: "exclamationmark.triangle").foregroundStyle(StileArgo.avviso)
             }
         } header: {
             Text("Anagrafe voci da Argo desktop")
@@ -233,7 +242,7 @@ struct ImpostazioniView: View {
             } else {
                 Label("Apple Intelligence disponibile su questo iPhone", systemImage: "checkmark.seal")
                     .font(.footnote)
-                    .foregroundStyle(.green)
+                    .foregroundStyle(StileArgo.ok)
             }
         } header: {
             Text("Verbale")
@@ -263,10 +272,10 @@ struct ImpostazioniView: View {
             switch esitoProva {
             case .ok(let numero)?:
                 Label("Mac raggiunto · \(numero) modelli installati", systemImage: "checkmark.circle")
-                    .foregroundStyle(.green)
+                    .foregroundStyle(StileArgo.ok)
             case .errore(let messaggio)?:
                 Label(messaggio, systemImage: "xmark.octagon")
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(StileArgo.avviso)
             case nil:
                 EmptyView()
             }
