@@ -13,6 +13,7 @@ Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com
 | **Testo delle foto** | OCR con Apple Vision + riconoscimento di telefoni, email, siti | iPhone |
 | **Voci** | Diarizzazione con [FluidAudio](https://github.com/FluidInference/FluidAudio) (pyannote in CoreML), parlanti rinominabili | iPhone |
 | **La mia voce** | Profilo voce registrato una volta: Argo ti riconosce e ti separa dagli interlocutori | iPhone |
+| **Anagrafe voci** | Le persone dell'anagrafe di Argo desktop, importate con AirDrop (`.argovoci`), riconosciute per nome | iPhone |
 | **Trascrivi** | `SpeechAnalyzer` + `SpeechTranscriber` (framework Speech, iOS 26) con marche temporali | iPhone |
 | **Verbale** | Foundation Models (Apple Intelligence) con guided generation: titolo, riassunto, punti chiave, azioni | iPhone con Apple Intelligence |
 | **Verbale dal Mac** | Ollama sul tuo Mac in rete locale, output JSON strutturato | Mac (Wi-Fi di casa/ufficio) |

@@ -8,8 +8,8 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.4.1"
-    CURRENT_PROJECT_VERSION: "20261117.1059"
+    MARKETING_VERSION: "0.5.0"
+    CURRENT_PROJECT_VERSION: "20261117.1110"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
@@ -51,6 +51,19 @@ targets:
         UIBackgroundModes:
           - audio
         ITSAppUsesNonExemptEncryption: false
+        # File .argovoci (anagrafe voci da Argo desktop): «Apri con Argo» da AirDrop e File
+        LSSupportsOpeningDocumentsInPlace: false
+        UTExportedTypeDeclarations:
+          - UTTypeIdentifier: blog.argosnewdreams.argovoci
+            UTTypeDescription: Anagrafe voci di Argo
+            UTTypeConformsTo: [public.json, public.data]
+            UTTypeTagSpecification:
+              public.filename-extension: [argovoci]
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: Anagrafe voci di Argo
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Owner
+            LSItemContentTypes: [blog.argosnewdreams.argovoci]
         NSCameraUsageDescription: "Argo usa la fotocamera per fotografare biglietti da visita e documenti durante un incontro. Le foto restano nell'app."
         NSMicrophoneUsageDescription: "Argo usa il microfono per registrare le riunioni. L'audio resta sul tuo iPhone."
         NSLocalNetworkUsageDescription: "Argo può chiedere al tuo Mac in rete locale (Ollama) di scrivere il verbale."

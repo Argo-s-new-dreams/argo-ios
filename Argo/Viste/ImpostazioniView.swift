@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ImpostazioniView: View {
     @Environment(\.dismiss) private var chiudi
@@ -11,6 +12,9 @@ struct ImpostazioniView: View {
     @State private var profiloVoce = ArchivioVoce.carica()
     @State private var nomeVoce = ArchivioVoce.carica()?.nome ?? "Io"
     @State private var mostraProfiloVoce = false
+    @State private var anagrafe = ArchivioAnagrafe.carica()
+    @State private var mostraImportaAnagrafe = false
+    @State private var erroreAnagrafe: String?
     @State private var modelliMac: [String] = []
     @State private var esitoProva: EsitoProva?
     @State private var provaInCorso = false
@@ -41,6 +45,8 @@ struct ImpostazioniView: View {
 
                 sezioneVoce
 
+                sezioneAnagrafe
+
                 sezioneVerbale
 
                 if motore == SceltaMotore.mac.rawValue || motore == SceltaMotore.automatico.rawValue {
@@ -58,6 +64,14 @@ struct ImpostazioniView: View {
                 Section("Informazioni") {
                     LabeledContent("Versione", value: versione)
                     Link("Argo's New Dreams", destination: URL(string: "https://argosnewdreams.blog")!)
+                }
+            }
+            .fileImporter(isPresented: $mostraImportaAnagrafe, allowedContentTypes: [.anagrafeVoci, .json]) { esito in
+                do {
+                    anagrafe = try ArchivioAnagrafe.importa(da: esito.get())
+                    erroreAnagrafe = nil
+                } catch {
+                    erroreAnagrafe = error.localizedDescription
                 }
             }
             .sheet(isPresented: $mostraProfiloVoce) {
@@ -110,6 +124,34 @@ struct ImpostazioniView: View {
         profilo.nome = nome
         try? ArchivioVoce.salva(profilo)
         profiloVoce = profilo
+    }
+
+    // MARK: Anagrafe voci (da Argo desktop)
+
+    private var sezioneAnagrafe: some View {
+        Section {
+            if let anagrafe {
+                DisclosureGroup("\(anagrafe.voci.count) voci · importata il \((anagrafe.importata ?? .now).formatted(date: .abbreviated, time: .shortened))") {
+                    ForEach(anagrafe.voci, id: \.nome) { voce in
+                        LabeledContent(voce.nome, value: voce.campioni.map { "\($0) campioni" } ?? "")
+                    }
+                }
+                Button("Aggiorna da file…", systemImage: "arrow.down.doc") { mostraImportaAnagrafe = true }
+                Button("Elimina l'anagrafe dall'iPhone", systemImage: "trash", role: .destructive) {
+                    ArchivioAnagrafe.elimina()
+                    self.anagrafe = nil
+                }
+            } else {
+                Button("Importa da file…", systemImage: "arrow.down.doc") { mostraImportaAnagrafe = true }
+            }
+            if let erroreAnagrafe {
+                Label(erroreAnagrafe, systemImage: "exclamationmark.triangle").foregroundStyle(.orange)
+            }
+        } header: {
+            Text("Anagrafe voci da Argo desktop")
+        } footer: {
+            Text("Sul Mac: Argo › Voci › 📱 Per iPhone…, poi AirDrop e «Apri con Argo». Negli incontri le voci note prendono il loro nome. Dati biometrici: restano su questo iPhone e non vengono mai esportati.")
+        }
     }
 
     // MARK: Verbale

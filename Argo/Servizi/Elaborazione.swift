@@ -29,11 +29,16 @@ enum Elaborazione {
                     avvisi.append("Parlanti non riconosciuti (\(error.localizedDescription)). La trascrizione c'è comunque.")
                 }
 
-                // La tua voce: se hai un profilo, la voce che ti somiglia diventa «Io».
-                if !impronte.isEmpty, let profilo = ArchivioVoce.carica() {
-                    if let mio = RiconoscitoreVoce.trova(profilo, tra: impronte) {
-                        sessione.nomiParlanti[mio] = profilo.nome
-                    } else {
+                // Chi è chi: anagrafe voci di Argo desktop + il tuo profilo voce, abbinati uno a uno.
+                let profilo = ArchivioVoce.carica()
+                let anagrafe = ArchivioAnagrafe.carica()
+                if !impronte.isEmpty, profilo != nil || anagrafe != nil {
+                    var candidati = (anagrafe?.voci ?? []).map { (nome: $0.nome, impronta: $0.impronta) }
+                    if let profilo { candidati.append((profilo.nome, profilo.impronta)) }
+                    let soglia = Float(anagrafe?.soglia ?? Double(RiconoscitoreVoce.soglia))
+                    let riconosciuti = RiconoscitoreVoce.abbina(impronte, candidati: candidati, soglia: soglia)
+                    for (parlante, nome) in riconosciuti { sessione.nomiParlanti[parlante] = nome }
+                    if let profilo, !riconosciuti.values.contains(profilo.nome) {
                         avvisi.append("Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti.")
                     }
                 }

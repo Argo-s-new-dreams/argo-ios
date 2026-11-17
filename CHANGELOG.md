@@ -3,6 +3,19 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.5.0] · build 20261117.1110
+
+L'anagrafe voci di Argo desktop arriva sull'iPhone.
+
+### Aggiunto
+- Import dei file `.argovoci` esportati da Argo desktop (*Voci › 📱 Per iPhone…*): AirDrop › «Apri con Argo», oppure *Impostazioni › Anagrafe voci › Importa da file*
+- Negli incontri le voci note prendono il loro nome; abbinamento uno-a-uno come `voci_core.abbina` del desktop, con la soglia del desktop
+- Il profilo voce personale partecipa allo stesso abbinamento (nessun doppione se ha lo stesso nome di una voce dell'anagrafe)
+- Impostazioni: elenco delle voci importate, aggiornamento, eliminazione
+
+### Privacy
+- Anagrafe salvata con protezione completa del file; il file ricevuto via AirDrop viene cancellato dopo l'import; le impronte non entrano mai nel pacchetto Argo
+
 ## [0.4.1] · build 20261117.1059
 
 ### Modificato

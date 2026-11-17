@@ -56,11 +56,32 @@ enum RiconoscitoreVoce {
 
     /// Id (P1, P2…) del parlante che corrisponde al profilo, se la somiglianza supera la soglia.
     static func trova(_ profilo: ProfiloVoce, tra impronte: [String: [Float]]) -> String? {
-        let migliore = impronte
-            .map { (parlante: $0.key, somiglianza: coseno($0.value, profilo.impronta)) }
-            .max { $0.somiglianza < $1.somiglianza }
-        guard let migliore, migliore.somiglianza >= soglia else { return nil }
-        return migliore.parlante
+        abbina(impronte, candidati: [(profilo.nome, profilo.impronta)], soglia: soglia).first?.key
+    }
+
+    /// Abbinamento uno-a-uno come `voci_core.abbina` di Argo desktop: si parte dalle coppie
+    /// più simili; ogni parlante e ogni nome al massimo una volta; sotto soglia nessun nome.
+    static func abbina(
+        _ impronte: [String: [Float]],
+        candidati: [(nome: String, impronta: [Float])],
+        soglia: Float
+    ) -> [String: String] {
+        var coppie: [(somiglianza: Float, parlante: String, nome: String)] = []
+        for (parlante, vettore) in impronte {
+            for candidato in candidati {
+                coppie.append((coseno(vettore, candidato.impronta), parlante, candidato.nome))
+            }
+        }
+        coppie.sort { $0.somiglianza > $1.somiglianza }
+
+        var mappa: [String: String] = [:]
+        var usati = Set<String>()
+        for coppia in coppie where coppia.somiglianza >= soglia {
+            guard mappa[coppia.parlante] == nil, !usati.contains(coppia.nome) else { continue }
+            mappa[coppia.parlante] = coppia.nome
+            usati.insert(coppia.nome)
+        }
+        return mappa
     }
 
     static func coseno(_ a: [Float], _ b: [Float]) -> Float {
