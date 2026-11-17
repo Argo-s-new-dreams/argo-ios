@@ -43,8 +43,16 @@ enum ArchivioAnagrafe {
     static func importa(da origine: URL) throws -> AnagrafeVoci {
         let accesso = origine.startAccessingSecurityScopedResource()
         defer { if accesso { origine.stopAccessingSecurityScopedResource() } }
+        let anagrafe = try importa(dati: Data(contentsOf: origine))
+        // Il file ricevuto (es. Documents/Inbox di AirDrop) non deve restare in giro.
+        if origine.path.contains("/Inbox/") { try? FileManager.default.removeItem(at: origine) }
+        return anagrafe
+    }
 
-        var anagrafe = try JSONDecoder().decode(AnagrafeVoci.self, from: Data(contentsOf: origine))
+    /// Importa un'anagrafe già in memoria (es. scaricata dal Ponte).
+    @discardableResult
+    static func importa(dati: Data) throws -> AnagrafeVoci {
+        var anagrafe = try JSONDecoder().decode(AnagrafeVoci.self, from: dati)
         guard anagrafe.formato == "argo.voci", anagrafe.versioneFormato == 1 else {
             throw ErroreAnagrafe.formato
         }
@@ -53,9 +61,6 @@ enum ArchivioAnagrafe {
         }
         anagrafe.importata = .now
         try JSONEncoder().encode(anagrafe).write(to: url, options: [.atomic, .completeFileProtection])
-
-        // Il file ricevuto (es. Documents/Inbox di AirDrop) non deve restare in giro.
-        if origine.path.contains("/Inbox/") { try? FileManager.default.removeItem(at: origine) }
         return anagrafe
     }
 

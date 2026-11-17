@@ -3,6 +3,21 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.6.0] · build 20261117.1135
+
+Ponte con Argo sul computer: niente più AirDrop a mano.
+
+### Aggiunto
+- **Argo sul computer** (Impostazioni): collegamento inquadrando il QR di Argo desktop (*Incontri › 📱 Collega iPhone…*) con il lettore di sistema (VisionKit)
+- Canale **HTTPS in rete locale con pinning** del certificato del computer; segreto nel Portachiavi (solo questo dispositivo)
+- **Sincronizzazione automatica** quando Argo torna in primo piano o tiri giù l'elenco: anagrafe voci scelta sul computer giù, incontri trascritti su (mai durante l'elaborazione)
+- In ogni incontro: **Invia ad Argo sul computer** e indicazione «inviato»; nell'elenco l'icona del computer sugli incontri consegnati
+- Opzione «Elimina dall'iPhone dopo l'invio»
+- Protocollo documentato in argo-ai `docs/PONTE.md`
+
+### Modificato
+- Una relazione rifatta sul telefono fa ripartire l'invio (il computer conserva il lavoro già fatto sullo stesso incontro)
+
 ## [0.5.0] · build 20261117.1110
 
 L'anagrafe voci di Argo desktop arriva sull'iPhone.

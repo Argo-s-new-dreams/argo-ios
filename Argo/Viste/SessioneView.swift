@@ -9,6 +9,7 @@ struct SessioneView: View {
     @State private var fotoAperta: FotoSessione?
     @State private var pacchetto: FileDaCondividere?
     @State private var erroreEsportazione: String?
+    @State private var invioInCorso = false
 
     private var inCorso: Bool { fase != nil }
 
@@ -158,6 +159,15 @@ struct SessioneView: View {
                 }
             }
 
+            if let inviata = sessione.inviataAdArgo {
+                Section {
+                    Label("Inviato ad Argo sul computer il \(inviata.formatted(date: .abbreviated, time: .shortened))",
+                          systemImage: "checkmark.icloud")
+                        .font(.footnote)
+                        .foregroundStyle(.green)
+                }
+            }
+
             if let motore = sessione.motoreVerbale, sessione.stato == .completata {
                 Section {
                     Text("Relazione scritta da \(motore). Rileggila prima di condividerla.")
@@ -172,7 +182,12 @@ struct SessioneView: View {
             if sessione.haTrascrizione {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
-                        Button("Pacchetto per il Mac (AirDrop, File…)", systemImage: "shippingbox") {
+                        if Ponte.abbinamento != nil {
+                            Button("Invia ad Argo sul computer", systemImage: "desktopcomputer.and.arrow.down") {
+                                Task { await inviaAdArgo() }
+                            }
+                        }
+                        Button("Pacchetto (AirDrop, File…)", systemImage: "shippingbox") {
                             esporta()
                         }
                         ShareLink(item: sessione.markdown, subject: Text(sessione.titolo)) {
@@ -181,7 +196,7 @@ struct SessioneView: View {
                     } label: {
                         Label("Condividi", systemImage: "square.and.arrow.up")
                     }
-                    .disabled(inCorso)
+                    .disabled(inCorso || invioInCorso)
                 }
             }
         }
@@ -222,6 +237,18 @@ struct SessioneView: View {
         fase = "Preparo…"
         await Elaborazione.esegui(sessione, eliminaAudioDopo: eliminaAudio) { fase = $0 }
         fase = nil
+    }
+
+    private func inviaAdArgo() async {
+        invioInCorso = true
+        fase = "Invio ad Argo sul computer…"
+        do {
+            try await Ponte.invia(sessione)
+        } catch {
+            erroreEsportazione = error.localizedDescription
+        }
+        fase = nil
+        invioInCorso = false
     }
 
     private func esporta() {

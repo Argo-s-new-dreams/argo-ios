@@ -13,6 +13,12 @@ struct ImpostazioniView: View {
     @State private var nomeVoce = ArchivioVoce.carica()?.nome ?? "Io"
     @State private var mostraProfiloVoce = false
     @State private var anagrafe = ArchivioAnagrafe.carica()
+    @State private var abbinamento = Ponte.abbinamento
+    @State private var mostraCollega = false
+    @State private var sincronizzazione: String?
+    @State private var sincronizzando = false
+    @AppStorage("eliminaDopoInvio") private var eliminaDopoInvio = false
+    @Environment(\.modelContext) private var contesto
     @State private var mostraImportaAnagrafe = false
     @State private var erroreAnagrafe: String?
     @State private var modelliMac: [String] = []
@@ -43,6 +49,8 @@ struct ImpostazioniView: View {
                     Text("La trascrizione avviene sempre sull'iPhone. Il modello della lingua viene scaricato da Apple la prima volta.")
                 }
 
+                sezionePonte
+
                 sezioneVoce
 
                 sezioneAnagrafe
@@ -72,6 +80,12 @@ struct ImpostazioniView: View {
                     erroreAnagrafe = nil
                 } catch {
                     erroreAnagrafe = error.localizedDescription
+                }
+            }
+            .sheet(isPresented: $mostraCollega) {
+                CollegaArgoView { nuovo in
+                    abbinamento = nuovo
+                    Task { await sincronizza() }
                 }
             }
             .sheet(isPresented: $mostraProfiloVoce) {
@@ -126,6 +140,55 @@ struct ImpostazioniView: View {
         profiloVoce = profilo
     }
 
+    // MARK: Argo sul computer (Ponte)
+
+    private var sezionePonte: some View {
+        Section {
+            if let abbinamento {
+                LabeledContent("Collegato a", value: abbinamento.nome)
+                if let ultima = abbinamento.ultimaSincronizzazione {
+                    LabeledContent("Ultima sincronizzazione", value: ultima.formatted(date: .abbreviated, time: .shortened))
+                }
+                Button {
+                    Task { await sincronizza() }
+                } label: {
+                    HStack {
+                        Label("Sincronizza ora", systemImage: "arrow.triangle.2.circlepath")
+                        Spacer()
+                        if sincronizzando { ProgressView() }
+                    }
+                }
+                .disabled(sincronizzando)
+                if let sincronizzazione {
+                    Text(sincronizzazione).font(.footnote).foregroundStyle(.secondary)
+                }
+                Toggle("Elimina dall'iPhone dopo l'invio", isOn: $eliminaDopoInvio)
+                Button("Scollega", systemImage: "link.badge.plus", role: .destructive) {
+                    Ponte.scollega()
+                    self.abbinamento = nil
+                }
+            } else {
+                Button("Collega (inquadra il QR sul computer)", systemImage: "qrcode.viewfinder") {
+                    mostraCollega = true
+                }
+            }
+        } header: {
+            Text("Argo sul computer")
+        } footer: {
+            Text("Canale cifrato in rete locale con Argo desktop: gli incontri trascritti partono da soli quando sei sulla stessa rete e Argo è aperto; l'anagrafe voci scelta sul computer arriva qui. Niente cloud.")
+        }
+    }
+
+    private func sincronizza() async {
+        sincronizzando = true
+        let esito = await Ponte.sincronizza(contesto)
+        sincronizzando = false
+        abbinamento = Ponte.abbinamento
+        anagrafe = ArchivioAnagrafe.carica()
+        sincronizzazione = esito ?? (abbinamento?.ultimaSincronizzazione != nil
+            ? "Tutto aggiornato." : "Argo sul computer non raggiungibile: deve essere aperto e sulla stessa rete.")
+    }
+
     // MARK: Anagrafe voci (da Argo desktop)
 
     private var sezioneAnagrafe: some View {
@@ -150,7 +213,7 @@ struct ImpostazioniView: View {
         } header: {
             Text("Anagrafe voci da Argo desktop")
         } footer: {
-            Text("Sul Mac: Argo › Voci › 📱 Per iPhone…, poi AirDrop e «Apri con Argo». Negli incontri le voci note prendono il loro nome. Dati biometrici: restano su questo iPhone e non vengono mai esportati.")
+            Text("Sul computer: Argo › Voci › 📱 Per iPhone…; arriva da sola con il collegamento, oppure via AirDrop («Apri con Argo»). Negli incontri le voci note prendono il loro nome. Dati biometrici: restano su questo iPhone e non vengono mai esportati.")
         }
     }
 

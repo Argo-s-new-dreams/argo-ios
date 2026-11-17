@@ -12,6 +12,8 @@ struct ElencoSessioniView: View {
     @State private var mostraImpostazioni = false
     @State private var mostraImporta = false
     @State private var erroreImport: String?
+    @State private var esitoPonte: String?
+    @Environment(\.scenePhase) private var fase
 
     var body: some View {
         NavigationStack(path: $percorso) {
@@ -31,9 +33,25 @@ struct ElencoSessioniView: View {
                         }
                         .onDelete(perform: elimina)
                     }
+                    .refreshable { await sincronizza() }
                 }
             }
             .navigationTitle("Argo")
+            .safeAreaInset(edge: .top) {
+                if let esitoPonte {
+                    Label(esitoPonte, systemImage: "desktopcomputer")
+                        .font(.footnote)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .glassEffect()
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
+            // Quando Argo torna in primo piano: se il computer è raggiungibile, sincronizza da solo.
+            .onChange(of: fase) { _, nuova in
+                if nuova == .active { Task { await sincronizza() } }
+            }
+            .task { await sincronizza() }
             .navigationDestination(for: Sessione.self) { SessioneView(sessione: $0) }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -76,6 +94,13 @@ struct ElencoSessioniView: View {
                 Text(erroreImport ?? "")
             }
         }
+    }
+
+    private func sincronizza() async {
+        guard let esito = await Ponte.sincronizza(contesto) else { return }
+        withAnimation { esitoPonte = esito }
+        try? await Task.sleep(for: .seconds(5))
+        withAnimation { esitoPonte = nil }
     }
 
     private func elimina(_ indici: IndexSet) {
@@ -125,6 +150,9 @@ private struct RigaSessione: View {
                 if !sessione.foto.isEmpty {
                     Label("\(sessione.foto.count)", systemImage: "camera")
                         .labelStyle(.titleAndIcon)
+                }
+                if sessione.inviataAdArgo != nil {
+                    Image(systemName: "desktopcomputer").foregroundStyle(.green)
                 }
                 if sessione.parlanti.count > 1 {
                     Label("\(sessione.parlanti.count)", systemImage: "person.2")

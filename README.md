@@ -18,6 +18,7 @@ Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com
 | **Verbale** | Foundation Models (Apple Intelligence) con guided generation: titolo, riassunto, punti chiave, azioni | iPhone con Apple Intelligence |
 | **Verbale dal Mac** | Ollama sul tuo Mac in rete locale, output JSON strutturato | Mac (Wi-Fi di casa/ufficio) |
 | **Pacchetto Argo** | .zip con `sessione.json`, relazione e foto, via AirDrop/File verso Argo desktop ([formato](docs/FORMATO-PACCHETTO.md)) | — |
+| **Ponte con Argo desktop** | Canale cifrato in rete locale (QR + pinning): incontri al computer, anagrafe voci all'iPhone, in automatico ([protocollo](https://github.com/Argo-s-new-dreams/argo-ai/blob/main/docs/PONTE.md)) | rete locale |
 | **Condividi** | Relazione in Markdown verso Mail, Note, Teams… | — |
 | **Importa** | Qualsiasi file audio (Memo Vocali, File) | iPhone |
 
@@ -84,7 +85,7 @@ Argo/
 1. Allo stand avvii la registrazione e informi l'interlocutore.
 2. Ti dà un biglietto da visita o una brochure: tocchi 📷 e scatti, senza fermare la registrazione.
 3. A fine incontro premi stop: l'iPhone trascrive, divide le voci, legge le foto ed **elimina l'audio**.
-4. In albergo condividi il **pacchetto Argo** al Mac via AirDrop; Argo desktop scrive la relazione e, in futuro, la carica su Dynamics 365 Sales.
+4. In albergo, sulla stessa Wi-Fi del portatile con Argo aperto, l'incontro arriva da solo nella pagina **Incontri** di Argo desktop tramite il **Ponte**; da lì relazione e, a seguire, Dynamics 365 Sales.
 
 ## Note tecniche
 

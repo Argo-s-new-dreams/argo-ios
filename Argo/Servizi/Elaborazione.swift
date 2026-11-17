@@ -5,11 +5,16 @@ import Foundation
 @MainActor
 enum Elaborazione {
 
+    /// Sessioni in elaborazione: il Ponte non le invia finché non hanno finito.
+    static private(set) var inCorso = Set<UUID>()
+
     static func esegui(
         _ sessione: Sessione,
         eliminaAudioDopo: Bool,
         fase: @escaping @MainActor (String) -> Void
     ) async {
+        inCorso.insert(sessione.id)
+        defer { inCorso.remove(sessione.id) }
         sessione.messaggioErrore = nil
         sessione.avviso = nil
         var avvisi: [String] = []
@@ -81,6 +86,8 @@ enum Elaborazione {
                 }
                 sessione.motoreVerbale = motore.nome
                 sessione.stato = .completata
+                // Relazione nuova o rifatta: va (ri)consegnata ad Argo sul computer.
+                sessione.inviataAdArgo = nil
             }
         } catch {
             sessione.stato = sessione.haTrascrizione ? .trascritta : .errore

@@ -28,6 +28,8 @@ final class Sessione {
     /// Id parlante (P1, P2…) → nome scelto dall'utente.
     var nomiParlanti: [String: String] = [:]
     var contatti: [Contatto] = []
+    /// 0.6 · quando è stata consegnata ad Argo sul computer tramite il Ponte.
+    var inviataAdArgo: Date? = nil
 
     init(titolo: String, lingua: String, durata: TimeInterval, nomeFileAudio: String?, foto: [FotoSessione] = []) {
         self.id = UUID()
