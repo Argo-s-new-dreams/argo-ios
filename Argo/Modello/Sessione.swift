@@ -16,6 +16,10 @@ final class Sessione {
     var azioni: [Azione]
     var stato: StatoSessione
     var messaggioErrore: String?
+    /// Informazione non bloccante (es. nessun motore per il verbale).
+    var avviso: String?
+    /// Chi ha scritto il verbale (Apple Intelligence o Mac · modello).
+    var motoreVerbale: String?
 
     init(titolo: String, lingua: String, durata: TimeInterval, nomeFileAudio: String?) {
         self.id = UUID()
@@ -59,7 +63,8 @@ final class Sessione {
         if !trascrizione.isEmpty {
             testo += "## Trascrizione\n\n\(trascrizione)\n"
         }
-        testo += "\n---\nGenerato con Argo per iPhone · elaborazione 100% sul dispositivo\n"
+        let origine = motoreVerbale.map { "verbale: \($0)" } ?? "solo trascrizione"
+        testo += "\n---\nGenerato con Argo per iPhone · trascrizione sul dispositivo · \(origine)\n"
         return testo
     }
 }

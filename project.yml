@@ -8,8 +8,8 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.1.0"
-    CURRENT_PROJECT_VERSION: "20261116.2204"
+    MARKETING_VERSION: "0.2.0"
+    CURRENT_PROJECT_VERSION: "20261117.0905"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
@@ -44,4 +44,7 @@ targets:
           - audio
         ITSAppUsesNonExemptEncryption: false
         NSMicrophoneUsageDescription: "Argo usa il microfono per registrare le riunioni. L'audio resta sul tuo iPhone."
+        NSLocalNetworkUsageDescription: "Argo può chiedere al tuo Mac in rete locale (Ollama) di scrivere il verbale."
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         NSSpeechRecognitionUsageDescription: "Argo trascrive le registrazioni direttamente sul tuo iPhone, senza inviarle a server esterni."

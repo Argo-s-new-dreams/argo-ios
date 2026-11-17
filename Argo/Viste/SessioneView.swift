@@ -30,13 +30,17 @@ struct SessioneView: View {
                 }
             }
 
-            if let messaggio = sessione.messaggioErrore, !inCorso {
+            if !inCorso, let messaggio = sessione.messaggioErrore {
                 Section {
                     Label(messaggio, systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.orange)
-                    if puoElaborare {
-                        Button("Riprova", systemImage: "arrow.clockwise") { Task { await elabora() } }
-                    }
+                }
+            }
+
+            if !inCorso, let avviso = sessione.avviso {
+                Section {
+                    Label(avviso, systemImage: "info.circle")
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -82,11 +86,22 @@ struct SessioneView: View {
                 }
             }
 
-            if sessione.stato != .completata, puoElaborare, !inCorso, sessione.messaggioErrore == nil {
+            if sessione.stato != .completata, puoElaborare, !inCorso {
                 Section {
-                    Button("Trascrivi e crea il verbale", systemImage: "sparkles") {
+                    Button(
+                        sessione.trascrizione.isEmpty ? "Trascrivi e crea il verbale" : "Crea il verbale",
+                        systemImage: "sparkles"
+                    ) {
                         Task { await elabora() }
                     }
+                }
+            }
+
+            if let motore = sessione.motoreVerbale, sessione.stato == .completata {
+                Section {
+                    Text("Verbale scritto da \(motore). Rileggilo prima di condividerlo.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
             }
         }

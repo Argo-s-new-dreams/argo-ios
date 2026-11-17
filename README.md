@@ -10,7 +10,8 @@ Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com
 |---|---|---|
 | **Registra** | Microfono, AAC mono 16 kHz, continua anche a schermo bloccato | iPhone |
 | **Trascrivi** | `SpeechAnalyzer` + `SpeechTranscriber` (framework Speech, iOS 26) con marche temporali | iPhone |
-| **Verbale** | Foundation Models (Apple Intelligence) con guided generation: titolo, riassunto, punti chiave, azioni | iPhone |
+| **Verbale** | Foundation Models (Apple Intelligence) con guided generation: titolo, riassunto, punti chiave, azioni | iPhone con Apple Intelligence |
+| **Verbale dal Mac** | Ollama sul tuo Mac in rete locale, output JSON strutturato | Mac (Wi-Fi di casa/ufficio) |
 | **Condividi** | Verbale in Markdown verso Mail, Note, Teams, File… | — |
 | **Importa** | Qualsiasi file audio (Memo Vocali, File) | iPhone |
 
@@ -23,7 +24,10 @@ Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com
 
 - Xcode 26 o successivo, macOS con Apple Silicon
 - iPhone con iOS 26
-- Per il verbale: iPhone compatibile con Apple Intelligence (iPhone 15 Pro o successivi) e Apple Intelligence attiva. Sugli altri iPhone la trascrizione funziona, il verbale no.
+- Qualsiasi iPhone con iOS 26 (iPhone 11 e successivi, SE di 2ª generazione e successivi): registrazione e trascrizione funzionano ovunque
+- Per il verbale, una delle due:
+  - iPhone con Apple Intelligence (15 Pro e successivi), tutto sul telefono;
+  - il tuo Mac con [Ollama](https://ollama.com) sulla stessa rete Wi-Fi.
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) per generare il progetto Xcode
 
 ## Primo avvio
@@ -41,6 +45,18 @@ Per non sceglierlo ogni volta, scrivi il tuo Team ID in `project.yml` (`DEVELOPM
 
 > `Argo.xcodeproj` non è nel repository: si rigenera con `xcodegen generate` ogni volta che aggiungi file.
 
+## Verbale dal Mac (iPhone senza Apple Intelligence)
+
+1. Sul Mac, fai accettare a Ollama le connessioni dalla rete locale. Puoi usare l'opzione di rete nelle impostazioni dell'app Ollama, se la tua versione la prevede, oppure:
+   ```bash
+   launchctl setenv OLLAMA_HOST "0.0.0.0"
+   ```
+   poi chiudi e riapri Ollama. Se il firewall di macOS chiede conferma, consenti.
+2. Sull'iPhone: *Impostazioni › Verbale*, scegli **Automatico** o **Il mio Mac**, scrivi `nome-del-mac.local` (lo trovi in *Impostazioni di Sistema › Generali › Condivisione › Nome host locale*), premi **Prova connessione** e scegli il modello.
+3. Alla prima richiesta iOS chiede il permesso per la rete locale: consenti.
+
+> ⚠️ Con `OLLAMA_HOST=0.0.0.0` Ollama risponde a chiunque sia sulla stessa rete, senza autenticazione. Va bene a casa; su reti condivise (ufficio, hotel) valuta di disattivarlo quando non serve.
+
 ## Struttura
 
 ```
@@ -50,7 +66,8 @@ Argo/
 ├── Servizi/
 │   ├── Registratore.swift          AVAudioRecorder, livelli, interruzioni
 │   ├── Trascrittore.swift          SpeechAnalyzer / SpeechTranscriber
-│   ├── Verbalista.swift            Foundation Models, riduzione a blocchi
+│   ├── Verbalista.swift            scelta del motore, Apple Intelligence, riduzione a blocchi
+│   ├── MotoreOllama.swift          verbale dal Mac via API Ollama
 │   └── Elaborazione.swift          audio → trascrizione → verbale
 ├── Viste/                          SwiftUI (Liquid Glass, tema scuro)
 └── Risorse/Assets.xcassets         icona e colore d'accento
@@ -66,7 +83,9 @@ Argo/
 - [ ] Icona dal logo originale (Icona_AND) e colori del Brand Book di Argo's New Dreams
 - [ ] Trascrizione live durante la registrazione (`SpeechAnalyzer` con input da `AVAudioEngine`)
 - [ ] Azioni verso Promemoria (EventKit) e Planner
-- [ ] Modalità «usa il mio Mac»: elaborazione con Argo desktop in rete locale (WhisperX + Ollama + diarizzazione)
+- [x] Verbale dal Mac con Ollama in rete locale
+- [ ] Trascrizione dal Mac con Argo desktop (WhisperX + diarizzazione)
+- [ ] Modello linguistico piccolo direttamente sull'iPhone (MLX) per i telefoni senza Apple Intelligence, anche lontano dal Mac
 - [ ] Riconoscimento dei parlanti
 - [ ] TestFlight per i colleghi del CC AI
 

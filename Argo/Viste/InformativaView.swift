@@ -16,7 +16,7 @@ struct InformativaView: View {
 
                 VStack(alignment: .leading, spacing: 14) {
                     punto("megaphone", "Avvisa i partecipanti che la riunione viene registrata e trascritta con l'AI.")
-                    punto("iphone", "Audio, trascrizione e verbale vengono elaborati solo su questo iPhone, senza servizi cloud.")
+                    punto("iphone", "Audio e trascrizione restano su questo iPhone. Il verbale lo scrive l'iPhone o il tuo Mac in rete locale: mai servizi cloud.")
                     punto("trash", "Se l'opzione è attiva in Impostazioni, l'audio viene eliminato appena trascritto.")
                     punto("checkmark.shield", "Il verbale generato dall'AI va riletto prima di condividerlo.")
                 }

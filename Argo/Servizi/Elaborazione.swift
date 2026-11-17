@@ -1,6 +1,6 @@
 import Foundation
 
-/// Pipeline completa: audio → trascrizione → verbale. Tutto sul dispositivo.
+/// Pipeline completa: audio → trascrizione (sempre sull'iPhone) → verbale (motore scelto).
 @MainActor
 enum Elaborazione {
 
@@ -10,6 +10,7 @@ enum Elaborazione {
         fase: @escaping @MainActor (String) -> Void
     ) async {
         sessione.messaggioErrore = nil
+        sessione.avviso = nil
         do {
             if sessione.trascrizione.isEmpty {
                 guard let url = sessione.urlAudio else {
@@ -24,19 +25,21 @@ enum Elaborazione {
                 if eliminaAudioDopo { sessione.eliminaAudio() }
             }
 
-            if let avviso = Verbalista.messaggioIndisponibilita {
-                sessione.messaggioErrore = avviso
-                return
+            switch Verbalista.risolvi() {
+            case .nonDisponibile(let motivo):
+                // Non è un errore: la trascrizione c'è, il verbale si potrà creare dopo.
+                sessione.avviso = motivo
+            case .pronto(let motore):
+                let verbale = try await motore.genera(da: sessione.trascrizione, fase: fase)
+                sessione.titolo = verbale.titolo
+                sessione.riassunto = verbale.riassunto
+                sessione.puntiChiave = verbale.puntiChiave
+                sessione.azioni = verbale.azioni.map {
+                    Azione(descrizione: $0.descrizione, responsabile: $0.responsabile, scadenza: $0.scadenza)
+                }
+                sessione.motoreVerbale = motore.nome
+                sessione.stato = .completata
             }
-
-            let verbale = try await Verbalista.genera(da: sessione.trascrizione, fase: fase)
-            sessione.titolo = verbale.titolo
-            sessione.riassunto = verbale.riassunto
-            sessione.puntiChiave = verbale.puntiChiave
-            sessione.azioni = verbale.azioni.map {
-                Azione(descrizione: $0.descrizione, responsabile: $0.responsabile, scadenza: $0.scadenza)
-            }
-            sessione.stato = .completata
         } catch {
             sessione.stato = sessione.trascrizione.isEmpty ? .errore : .trascritta
             sessione.messaggioErrore = error.localizedDescription
