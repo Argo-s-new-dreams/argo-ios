@@ -11,6 +11,7 @@ Pronta per TestFlight.
 - Team Apple Developer in `project.yml`, per archiviare e caricare su App Store Connect senza scegliere il Team a mano
 - `strumenti/nuova-build.sh`: numero di build nuovo a ogni caricamento
 - README: come distribuire con TestFlight
+- **Icona dell'app** (logo di Argo, 1024 px senza trasparenza): senza, App Store Connect rifiuta il caricamento
 
 ## [0.6.0] · build 20261117.1135
 
