@@ -8,7 +8,7 @@ Il fratello tascabile di [Argo · Cassetta degli attrezzi AI](https://github.com
 
 | Funzione | Come | Dove gira |
 |---|---|---|
-| **Registra** | Microfono, AAC mono 16 kHz, continua anche a schermo bloccato | iPhone |
+| **Registra** | Microfono, PCM mono 16 kHz (file che resta leggibile anche se la registrazione si interrompe), continua anche a schermo bloccato | iPhone |
 | **Foto** | Scatti durante la registrazione, agganciati al secondo della conversazione | iPhone |
 | **Testo delle foto** | OCR con Apple Vision + riconoscimento di telefoni, email, siti | iPhone |
 | **Voci** | Diarizzazione con [FluidAudio](https://github.com/FluidInference/FluidAudio) (pyannote in CoreML), parlanti rinominabili | iPhone |

@@ -21,8 +21,11 @@ enum Elaborazione {
         do {
             // 1 · Trascrizione e parlanti (servono entrambi l'audio)
             if !sessione.haTrascrizione {
-                guard let url = sessione.urlAudio else { throw ErroreElaborazione.audioMancante }
+                guard let originale = sessione.urlAudio else { throw ErroreElaborazione.audioMancante }
                 sessione.stato = .inTrascrizione
+                // File che iOS non apre (registrazione interrotta): si prova a recuperarlo in una copia temporanea.
+                let url = try await LettoreAudio.leggibile(originale)
+                defer { LettoreAudio.elimina(url, originale: originale) }
                 var segmenti = try await Trascrittore.trascrivi(file: url, lingua: sessione.lingua, fase: fase)
 
                 var impronte: [String: [Float]] = [:]

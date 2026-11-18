@@ -3,6 +3,15 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.6.2] · build 20261118.2045
+
+Registrazioni che non si rovinano più.
+
+### Corretto
+- **«Impossibile completare l'operazione (Errore com.apple.coreaudio.avfaudio 2003334207)»**: iOS non riusciva ad aprire il file audio (`'wht?'`). Le registrazioni erano in `.m4a` (AAC), leggibili solo se si chiudono bene: l'indice dei pacchetti si scrive alla fine.
+- **Nuovo formato di registrazione**: PCM 16 bit mono 16 kHz in `.caf`, che resta leggibile fino all'ultimo secondo registrato anche se la registrazione si interrompe. Circa 115 MB per ora, solo fino alla trascrizione: poi l'audio viene eliminato come prima.
+- **Recupero dei file già registrati**: se iOS non apre l'audio, Argo prova a decodificarlo con un secondo lettore (`AVAssetReader`) in una copia temporanea, eliminata subito dopo. Se nemmeno così si apre, compare un messaggio chiaro al posto del codice di errore Apple.
+
 ## [0.6.1] · build 20261117.2025
 
 Manutenzione UX: stesso «Stile Argo» del computer, meno sorprese.

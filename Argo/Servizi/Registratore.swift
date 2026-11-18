@@ -1,7 +1,11 @@
 import AVFoundation
 import Observation
 
-/// Registra dal microfono in AAC mono 16 kHz (adatto alla trascrizione, file leggeri).
+/// Registra dal microfono in PCM 16 bit, mono, 16 kHz, in un file CAF: il formato che la trascrizione usa già.
+/// Non compresso di proposito: un .m4a (AAC) è leggibile solo se la registrazione si chiude bene, perché
+/// l'indice dei pacchetti è scritto alla fine; il PCM ha campioni di dimensione fissa e resta leggibile fino
+/// all'ultimo byte anche se la registrazione si interrompe in modo anomalo. Costo: circa 115 MB per ora,
+/// solo fino alla trascrizione (poi l'audio viene eliminato).
 /// Continua anche a schermo bloccato grazie a UIBackgroundModes = audio.
 @MainActor
 @Observable
@@ -26,13 +30,16 @@ final class Registratore {
         try sessioneAudio.setCategory(.record, mode: .default)
         try sessioneAudio.setActive(true)
 
-        let nome = "argo-\(UUID().uuidString).m4a"
+        let nome = "argo-\(UUID().uuidString).caf"
         let url = Archivio.cartellaAudio.appending(path: nome)
         let impostazioni: [String: Any] = [
-            AVFormatIDKey: kAudioFormatMPEG4AAC,
+            AVFormatIDKey: kAudioFormatLinearPCM,
             AVSampleRateKey: 16_000,
             AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMIsFloatKey: false,
+            AVLinearPCMIsBigEndianKey: false,
+            AVLinearPCMIsNonInterleaved: false
         ]
         let nuovo = try AVAudioRecorder(url: url, settings: impostazioni)
         nuovo.isMeteringEnabled = true
