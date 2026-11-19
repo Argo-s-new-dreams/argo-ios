@@ -4,7 +4,8 @@
 # Uso: strumenti/pubblica-testflight.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
-source "$HOME/Documents/ArgoChiavi/asc.env"
+CHIAVI="${ARGO_CHIAVI:-$HOME/.argo-chiavi}"; [ -d "$CHIAVI" ] || CHIAVI="$HOME/Documents/ArgoChiavi"
+source "$CHIAVI/asc.env"
 # Firma e caricamento con l'account Apple collegato in Xcode (Settings › Accounts): firma nel cloud
 # e profili aggiornati da soli. La chiave API (ruolo App Manager) serve solo a testflight.py.
 AUTH=(-allowProvisioningUpdates)

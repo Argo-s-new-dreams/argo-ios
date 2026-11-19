@@ -4,17 +4,20 @@
   testflight.py stato <build>                stato della build e gruppi a cui è assegnata
   testflight.py esterni <build> "<gruppo>"   assegna la build al gruppo esterno e la invia alla revisione beta
 
-Credenziali in ~/Documents/ArgoChiavi/asc.env (ASC_KEY_ID, ASC_ISSUER_ID, ASC_APP_ID).
+Credenziali in ~/.argo-chiavi/asc.env (o $ARGO_CHIAVI; vecchia sede ~/Documents/ArgoChiavi) (ASC_KEY_ID, ASC_ISSUER_ID, ASC_APP_ID).
 """
 import os, re, sys, time
 from pathlib import Path
 import jwt, requests
 
 API = "https://api.appstoreconnect.apple.com/v1"
+CHIAVI = Path(os.environ.get("ARGO_CHIAVI", Path.home() / ".argo-chiavi"))
+if not CHIAVI.is_dir():
+    CHIAVI = Path.home() / "Documents/ArgoChiavi"
 
 
 def ambiente():
-    for riga in (Path.home() / "Documents/ArgoChiavi/asc.env").read_text().splitlines():
+    for riga in (CHIAVI / "asc.env").read_text().splitlines():
         m = re.match(r"\s*(?:export\s+)?(\w+)=[\"']?([^\"'#]*)", riga)
         if m:
             os.environ.setdefault(m[1], m[2].strip())
