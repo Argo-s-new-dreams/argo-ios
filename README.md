@@ -84,6 +84,19 @@ uv run --with pyjwt --with cryptography --with requests strumenti/testflight.py 
 
 Serve una volta sola: il tuo Apple ID collegato in Xcode › Settings › Accounts (firma e caricamento), più una chiave API di App Store Connect (ruolo App Manager, solo per note e gruppi) in `~/.appstoreconnect/private_keys/AuthKey_<ID>.p8` e il file `~/Documents/ArgoChiavi/asc.env` con `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_APP_ID`.
 
+
+### Di notte, da solo, o quando vuoi tu
+
+`strumenti/pubblica-se-serve.sh` pubblica **solo se** su `main` ci sono modifiche dall'ultimo invio **e** una voce nuova nel `CHANGELOG.md` (altrimenti non fa nulla, o avvisa che manca la voce). Scrive il log in `~/Library/Logs/Argo/` e manda una notifica macOS.
+
+Una volta sola, per programmarlo ogni notte (se il Mac dorme, parte al risveglio):
+
+```bash
+strumenti/installa-notte.sh 02:30
+```
+
+Quando vuoi tu: `strumenti/pubblica-se-serve.sh` (oppure `--forza` per ripubblicare comunque). Per togliere la programmazione: `strumenti/installa-notte.sh --togli`.
+
 **A ogni rilascio (a mano, piano B):**
 
 1. `strumenti/nuova-build.sh`: nuovo numero di build (AAAAMMGG.HHMM) e progetto rigenerato.
