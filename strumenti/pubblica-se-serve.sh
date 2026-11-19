@@ -1,6 +1,6 @@
 #!/bin/bash
 # Manda ai tester una nuova build solo se su main ci sono modifiche dall'ultimo invio
-# (con la loro voce nel CHANGELOG). Lo lancia launchd ogni notte; a mano:
+# all'app (con la loro voce nel CHANGELOG). Strumenti, docs e README non contano. Lo lancia launchd ogni notte; a mano:
 #   strumenti/pubblica-se-serve.sh           pubblica se serve
 #   strumenti/pubblica-se-serve.sh --forza   pubblica comunque (stesse note dell'ultima voce)
 set -uo pipefail
@@ -13,9 +13,9 @@ avvisa() { osascript -e "display notification \"$2\" with title \"Argo · $REPO\
 echo "=== $(date '+%Y-%m-%d %H:%M') · $REPO"
 
 if [ -f strumenti/pubblica-testflight.sh ]; then
-  PUBBLICA=strumenti/pubblica-testflight.sh; DOVE="TestFlight"; ESCLUSI=(':!VERSIONE' ':!project.yml')
+  PUBBLICA=strumenti/pubblica-testflight.sh; DOVE="TestFlight"; ESCLUSI=(':!VERSIONE' ':!project.yml' ':!strumenti' ':!docs' ':!README.md' ':!THIRD_PARTY_LICENSES.md')
 else
-  PUBBLICA=strumenti/pubblica-play.sh; DOVE="test interno di Google Play"; ESCLUSI=(':!VERSIONE')
+  PUBBLICA=strumenti/pubblica-play.sh; DOVE="test interno di Google Play"; ESCLUSI=(':!VERSIONE' ':!strumenti' ':!docs' ':!README.md' ':!THIRD_PARTY_LICENSES.md')
 fi
 
 BLOCCO="/tmp/argo-$REPO.lock"
