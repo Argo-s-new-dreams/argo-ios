@@ -25,7 +25,7 @@ echo "Simulatore: $NOME ($UDID)"
 
 xcrun simctl boot "$UDID" 2>/dev/null || true
 xcrun simctl bootstatus "$UDID" -b >/dev/null
-open -a Simulator
+open "$(xcode-select -p)/Applications/Simulator.app" 2>/dev/null || true
 xcrun simctl ui "$UDID" appearance dark
 xcrun simctl status_bar "$UDID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \
   --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
