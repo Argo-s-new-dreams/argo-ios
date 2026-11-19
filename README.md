@@ -109,6 +109,14 @@ Quando vuoi tu: `strumenti/pubblica-se-serve.sh` (oppure `--forza` per ripubblic
 
 La crittografia è dichiarata in `Info.plist` (`ITSAppUsesNonExemptEncryption: false`: solo HTTPS/TLS del sistema), quindi App Store Connect non chiede la conformità all'esportazione a ogni build. Le build TestFlight scadono dopo un periodo fisso: caricane una nuova prima della scadenza.
 
+## Screenshot per l'App Store
+
+```bash
+strumenti/screenshot-appstore.sh
+```
+
+Compila Argo in Debug per il simulatore «Pro Max» più recente (schermo 6,9", 1320 × 2868), lo avvia in **modalità vetrina** con incontri inventati (`Argo/Vetrina/Vetrina.swift`) e salva sei schermate in `~/Desktop/Argo-AppStore`: elenco, informativa, registrazione, relazione, trascrizione con le voci, foto con il testo letto. Tema scuro, ora 9:41, nessun microfono e nessun dato vero. La modalità vetrina esiste solo nelle build Debug.
+
 ## Verbale dal Mac (iPhone senza Apple Intelligence)
 
 1. Sul Mac, fai accettare a Ollama le connessioni dalla rete locale. Puoi usare l'opzione di rete nelle impostazioni dell'app Ollama, se la tua versione la prevede, oppure:

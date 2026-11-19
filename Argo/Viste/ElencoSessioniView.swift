@@ -66,7 +66,15 @@ struct ElencoSessioniView: View {
             .onChange(of: fase) { _, nuova in
                 if nuova == .active { Task { await sincronizza() } }
             }
-            .task { await sincronizza() }
+            .task {
+#if DEBUG
+                // Modalità vetrina: alcune schermate partono già dentro l'incontro principale.
+                if Vetrina.apreIncontro, percorso.isEmpty, let principale = sessioni.first {
+                    percorso = [principale]
+                }
+#endif
+                await sincronizza()
+            }
             .navigationDestination(for: Sessione.self) { SessioneView(sessione: $0) }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

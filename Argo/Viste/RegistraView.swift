@@ -49,6 +49,16 @@ struct RegistraView: View {
             }
         }
         .interactiveDismissDisabled(registratore.staRegistrando)
+#if DEBUG
+        // Modalità vetrina: registrazione simulata con due foto, senza microfono.
+        .onAppear {
+            if Vetrina.schermata == .registrazione {
+                foto = Vetrina.fotoRegistrazione
+                registratore.simulaVetrina()
+                informativaConfermata = true
+            }
+        }
+#endif
         .fullScreenCover(isPresented: $mostraFotocamera) {
             FotocameraView(registratore: registratore) { immagine, secondo in
                 do {
@@ -128,11 +138,20 @@ struct RegistraView: View {
                 }
                 .buttonStyle(.glass)
                 .clipShape(Circle())
-                .disabled(!FotocameraView.disponibile)
+                .disabled(!FotocameraView.disponibile && !inVetrina)
                 .accessibilityLabel("Scatta una foto")
             }
             .padding(.bottom, 40)
         }
+    }
+
+    /// Nel simulatore la fotocamera non c'è: in modalità vetrina il pulsante resta comunque attivo.
+    private var inVetrina: Bool {
+#if DEBUG
+        Vetrina.attiva
+#else
+        false
+#endif
     }
 
     private func avvia() async {

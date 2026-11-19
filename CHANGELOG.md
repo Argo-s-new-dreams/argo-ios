@@ -13,6 +13,9 @@ Se sul computer spegni il riconoscimento delle voci, anche l'iPhone smette di us
 ### Corretto
 - Impostazioni: dichiarato l'uso di SwiftData, che la compilazione segnalava come avviso (nessun effetto per chi usa l'app)
 
+### Sviluppo
+- **Modalità vetrina** per gli screenshot dell'App Store: `strumenti/screenshot-appstore.sh` compila Argo per il simulatore iPhone 6,9" e fotografa sei schermate con incontri, persone e aziende inventati. Esiste solo nelle build Debug: nella versione per TestFlight e App Store non c'è.
+
 ### Da provare
 - Con il riconoscimento delle voci spento sul computer, sincronizza: le voci spariscono dall'iPhone e i nuovi incontri usano «Parlante 1, 2…»
 - L'aggiornamento arriva da TestFlight senza fare nulla e gli incontri già presenti restano al loro posto
