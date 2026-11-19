@@ -195,14 +195,17 @@ struct MiniaturaFoto: View {
     let foto: FotoSessione
 
     var body: some View {
-        Group {
-            if let immagine = UIImage(contentsOfFile: foto.url.path) {
-                Image(uiImage: immagine).resizable().scaledToFill()
-            } else {
-                Image(systemName: "photo").foregroundStyle(.secondary)
+        // Color.clear prende la cornice decisa da fuori (.frame): la foto la riempie e viene ritagliata,
+        // invece di debordare sulle miniature accanto.
+        Color.clear
+            .overlay {
+                if let immagine = UIImage(contentsOfFile: foto.url.path) {
+                    Image(uiImage: immagine).resizable().scaledToFill()
+                } else {
+                    Image(systemName: "photo").foregroundStyle(.secondary)
+                }
             }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         .contentShape(RoundedRectangle(cornerRadius: 10))
     }
 }

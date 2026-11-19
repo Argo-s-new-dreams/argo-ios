@@ -11,6 +11,7 @@ Se sul computer spegni il riconoscimento delle voci, anche l'iPhone smette di us
 - **Voci allineate al computer**: Argo sul computer (dalla 20261119.1720) tiene il riconoscimento delle voci spento finché non lo attivi, con il consenso di ogni persona. Quando è spento, alla sincronizzazione con il Ponte l'iPhone elimina le voci che aveva scaricato e i parlanti restano «Parlante 1, 2…».
 
 ### Corretto
+- Le miniature delle foto (durante la registrazione e nell'incontro) non debordano più su quelle accanto: ognuna resta nel suo riquadro
 - Impostazioni: dichiarato l'uso di SwiftData, che la compilazione segnalava come avviso (nessun effetto per chi usa l'app)
 
 ### Sviluppo
