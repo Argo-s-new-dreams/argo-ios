@@ -5,8 +5,9 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source "$HOME/Documents/ArgoChiavi/asc.env"
-CHIAVE="$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
-AUTH=(-allowProvisioningUpdates -authenticationKeyPath "$CHIAVE" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+# Firma e caricamento con l'account Apple collegato in Xcode (Settings › Accounts): firma nel cloud
+# e profili aggiornati da soli. La chiave API (ruolo App Manager) serve solo a testflight.py.
+AUTH=(-allowProvisioningUpdates)
 BUILD=$(cat VERSIONE)
 xcodegen generate
 rm -rf build/Argo.xcarchive build/export

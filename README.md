@@ -82,7 +82,7 @@ Lo script archivia, firma, carica su App Store Connect, attende l'elaborazione e
 uv run --with pyjwt --with cryptography --with requests strumenti/testflight.py esterni <build> "Argo – colleghi"
 ```
 
-Serve una volta sola: chiave API di App Store Connect (ruolo App Manager) in `~/.appstoreconnect/private_keys/AuthKey_<ID>.p8` e il file `~/Documents/ArgoChiavi/asc.env` con `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_APP_ID`.
+Serve una volta sola: il tuo Apple ID collegato in Xcode › Settings › Accounts (firma e caricamento), più una chiave API di App Store Connect (ruolo App Manager, solo per note e gruppi) in `~/.appstoreconnect/private_keys/AuthKey_<ID>.p8` e il file `~/Documents/ArgoChiavi/asc.env` con `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_APP_ID`.
 
 **A ogni rilascio (a mano, piano B):**
 
