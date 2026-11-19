@@ -70,7 +70,21 @@ Per installare Argo su altri iPhone (famiglia, colleghi) senza cavo.
 
 **Una volta sola**, in [App Store Connect](https://appstoreconnect.apple.com): *App › + › Nuova app*, piattaforma iOS, bundle ID `blog.argosnewdreams.argo`, uno SKU a scelta (es. `argo-ios`). Il nome sullo Store deve essere unico: per esempio «Argo · Taccuino». Se il bundle ID risulta già usato (registrato a suo tempo dal Personal Team), cambialo in `project.yml`.
 
-**A ogni rilascio:**
+**A ogni rilascio (automatico):** dal Terminale del Mac, nella cartella del progetto:
+
+```bash
+strumenti/nuova-build.sh && strumenti/pubblica-testflight.sh
+```
+
+Lo script archivia, firma, carica su App Store Connect, attende l'elaborazione e scrive le note «Cosa provare» dalla prima voce del `CHANGELOG.md`. Il gruppo interno con **distribuzione automatica** riceve la build da solo. Per estendere una build a un gruppo esterno (con revisione beta di Apple):
+
+```bash
+uv run --with pyjwt --with cryptography --with requests strumenti/testflight.py esterni <build> "Argo – colleghi"
+```
+
+Serve una volta sola: chiave API di App Store Connect (ruolo App Manager) in `~/.appstoreconnect/private_keys/AuthKey_<ID>.p8` e il file `~/Documents/ArgoChiavi/asc.env` con `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_APP_ID`.
+
+**A ogni rilascio (a mano, piano B):**
 
 1. `strumenti/nuova-build.sh`: nuovo numero di build (AAAAMMGG.HHMM) e progetto rigenerato.
 2. Xcode: destinazione *Any iOS Device (arm64)* › *Product › Archive*.
