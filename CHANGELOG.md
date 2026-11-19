@@ -3,6 +3,16 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.6.4] · build (al prossimo invio)
+
+Manutenzione: nessuna novità da vedere, è la prima versione arrivata da sola su TestFlight durante la notte.
+
+### Corretto
+- Impostazioni: dichiarato l'uso di SwiftData, che la compilazione segnalava come avviso (nessun effetto per chi usa l'app)
+
+### Da provare
+- L'aggiornamento arriva da TestFlight senza fare nulla e gli incontri già presenti restano al loro posto
+
 ## [0.6.3] · build 20261119.0750
 
 Gli incontri non si perdono più senza preavviso.
