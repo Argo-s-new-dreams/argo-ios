@@ -51,6 +51,19 @@ Il Team è già in `project.yml` (`DEVELOPMENT_TEAM: WPR2P5Q2S8`, account Apple 
 
 > `Argo.xcodeproj` non è nel repository: si rigenera con `xcodegen generate` ogni volta che aggiungi file.
 
+## ⚠️ Prima di installare una nuova versione: non perdere gli incontri
+
+Gli incontri (trascrizioni, foto, relazioni) vivono **solo nell'archivio dell'app** finché non arrivano ad Argo sul computer. Se l'app viene eliminata, l'archivio se ne va con lei e non si recupera: l'unica strada è ripristinare tutto l'iPhone da un backup precedente.
+
+**Prima di ogni installazione da Xcode o di un cambio di firma:**
+1. Apri Argo sull'iPhone: se in cima alla lista c'è l'avviso «N incontri sono solo su questo iPhone», trascrivili e tocca **Invia ora ad Argo sul computer** (Argo sul computer aperto, stessa rete).
+2. Controlla che ogni incontro abbia l'icona del computer.
+3. Solo allora installa.
+
+**Mai eliminare l'app per installare la nuova versione.** Se Xcode o iOS rifiutano l'aggiornamento («a different app with the same identifier», firma diversa), è quasi sempre perché la versione sul telefono è firmata con un **altro Team**: per esempio una build fatta col *Personal Team* gratuito (fino alla 0.5 il Team in `project.yml` era vuoto e si sceglieva a mano) e la nuova col team a pagamento `WPR2P5Q2S8`. iOS considera le due firme app diverse e non passa l'archivio dall'una all'altra: prima invia tutto al computer, poi elimina e reinstalla.
+
+Installare sopra una build con **la stessa firma** (stesso Team, stesso bundle ID), da Xcode o da TestFlight, conserva gli incontri.
+
 ## Distribuire con TestFlight
 
 Per installare Argo su altri iPhone (famiglia, colleghi) senza cavo.

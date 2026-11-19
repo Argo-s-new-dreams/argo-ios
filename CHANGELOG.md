@@ -3,6 +3,14 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [0.6.3] · build 20261119.0750
+
+Gli incontri non si perdono più senza preavviso.
+
+### Aggiunto
+- **Avviso in cima alla lista** finché ci sono incontri solo su questo iPhone (non ancora arrivati ad Argo sul computer): quanti sono, quanti vanno prima trascritti e il pulsante **Invia ora ad Argo sul computer**. Se il computer non è collegato, dice dove collegarlo.
+- **README**: cosa fare prima di installare una nuova versione, e perché passare dal *Personal Team* al team a pagamento obbliga a eliminare l'app (e con lei gli incontri non inviati).
+
 ## [0.6.2] · build 20261118.2045
 
 Registrazioni che non si rovinano più.

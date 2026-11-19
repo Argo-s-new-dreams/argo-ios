@@ -27,6 +27,9 @@ struct ElencoSessioniView: View {
                     )
                 } else {
                     List {
+                        if !soloSuIPhone.isEmpty {
+                            Section { avvisoSoloSuIPhone }
+                        }
                         ForEach(sessioni) { sessione in
                             NavigationLink(value: sessione) {
                                 RigaSessione(sessione: sessione)
@@ -106,6 +109,34 @@ struct ElencoSessioniView: View {
                 Text(erroreImport ?? "")
             }
         }
+    }
+
+    /// Incontri che esistono solo su questo iPhone: se l'app viene eliminata (o reinstallata con un'altra
+    /// firma, per esempio passando dal Personal Team al team a pagamento) si perdono.
+    private var soloSuIPhone: [Sessione] { sessioni.filter { $0.inviataAdArgo == nil } }
+
+    private var avvisoSoloSuIPhone: some View {
+        let numero = soloSuIPhone.count
+        let daTrascrivere = soloSuIPhone.filter { $0.stato != .trascritta && $0.stato != .completata }.count
+        let abbinato = Ponte.abbinamento != nil
+        var testo = numero == 1 ? "1 incontro è solo su questo iPhone." : "\(numero) incontri sono solo su questo iPhone."
+        testo += " Se elimini o reinstalli l'app si perdono: prima inviali ad Argo sul computer."
+        if daTrascrivere > 0 {
+            testo += daTrascrivere == 1 ? " Uno va prima trascritto." : " \(daTrascrivere) vanno prima trascritti."
+        }
+        if !abbinato { testo += " Collega il computer in Impostazioni › Argo sul computer." }
+        return VStack(alignment: .leading, spacing: 8) {
+            Label(testo, systemImage: "exclamationmark.triangle")
+                .font(.footnote)
+                .foregroundStyle(StileArgo.avviso)
+            if abbinato && numero > daTrascrivere {
+                Button("Invia ora ad Argo sul computer", systemImage: "desktopcomputer") {
+                    Task { await sincronizza() }
+                }
+                .font(.footnote.weight(.semibold))
+            }
+        }
+        .padding(.vertical, 4)
     }
 
     private func sincronizza() async {
