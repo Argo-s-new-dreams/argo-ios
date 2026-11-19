@@ -89,10 +89,15 @@ enum Ponte {
     // MARK: Servizi
 
     /// Scarica l'anagrafe voci scelta sul computer (Voci › Per iPhone). nil se non ne è stata scelta nessuna.
+    /// Se sul computer il riconoscimento delle voci è spento (Argo desktop dalla 20261119.1720), elimina
+    /// l'anagrafe già scaricata: l'iPhone smette di riconoscere le persone, come il computer.
     static func scaricaAnagrafe() async throws -> AnagrafeVoci? {
         do {
             let (dati, _) = try await richiestaAutenticata("GET", "/v1/anagrafe", attesa: 20)
             return try ArchivioAnagrafe.importa(dati: dati)
+        } catch ErrorePonte.rifiutato(let motivo) where motivo.contains("Riconoscimento delle voci spento") {
+            ArchivioAnagrafe.elimina()
+            return nil
         } catch ErrorePonte.rifiutato(let motivo) where motivo.contains("Nessuna voce") {
             return nil
         }

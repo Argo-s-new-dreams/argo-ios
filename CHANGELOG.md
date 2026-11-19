@@ -5,12 +5,16 @@ Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
 ## [0.6.4] · build (al prossimo invio)
 
-Manutenzione: nessuna novità da vedere, è la prima versione arrivata da sola su TestFlight durante la notte.
+Se sul computer spegni il riconoscimento delle voci, anche l'iPhone smette di usarle.
+
+### Modificato
+- **Voci allineate al computer**: Argo sul computer (dalla 20261119.1720) tiene il riconoscimento delle voci spento finché non lo attivi, con il consenso di ogni persona. Quando è spento, alla sincronizzazione con il Ponte l'iPhone elimina le voci che aveva scaricato e i parlanti restano «Parlante 1, 2…».
 
 ### Corretto
 - Impostazioni: dichiarato l'uso di SwiftData, che la compilazione segnalava come avviso (nessun effetto per chi usa l'app)
 
 ### Da provare
+- Con il riconoscimento delle voci spento sul computer, sincronizza: le voci spariscono dall'iPhone e i nuovi incontri usano «Parlante 1, 2…»
 - L'aggiornamento arriva da TestFlight senza fare nulla e gli incontri già presenti restano al loro posto
 
 ## [0.6.3] · build 20261119.0750
