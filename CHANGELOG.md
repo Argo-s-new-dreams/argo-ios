@@ -3,18 +3,31 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
-## [1.0] · build (al prossimo invio)
+## [1.0.1] · build (al prossimo invio)
 
-Prima versione per l'App Store. Gli incontri lunghi non si interrompono più se esci dalla schermata, e se sul computer spegni il riconoscimento delle voci anche l'iPhone smette di usarle.
+Gli incontri lunghi non si interrompono più se esci dalla schermata, e in Impostazioni trovi licenze e riconoscimenti.
 
-### Modificato
-- **Voci allineate al computer**: Argo sul computer (dalla 20261119.1720) tiene il riconoscimento delle voci spento finché non lo attivi, con il consenso di ogni persona. Quando è spento, alla sincronizzazione con il Ponte l'iPhone elimina le voci che aveva scaricato e i parlanti restano «Parlante 1, 2…».
+### Aggiunto
+- **Licenze e riconoscimenti** in Impostazioni › Informazioni: FluidAudio (Apache 2.0) con i componenti che include, e i modelli pyannote per la divisione delle voci (CC BY 4.0, convertiti in Core ML da Fluid Inference). Lo stesso elenco è in `LICENZE-TERZE-PARTI.md`.
 
 ### Corretto
 - **Incontri lunghi interrotti a metà** («Impossibile completare l'operazione. (Errore Swift.CancellationError 1)»). L'elaborazione partiva dalla schermata dell'incontro: uscendo, iOS la annullava. I parlanti restavano senza nome, l'audio veniva cancellato e la relazione non partiva. Ora:
   - l'elaborazione continua anche se torni all'elenco;
   - lo schermo resta acceso finché Argo lavora;
   - se Argo viene interrotto lo stesso, l'audio resta sul telefono e un messaggio chiaro dice come riprendere.
+
+### Da provare
+- Registra un incontro di almeno 10 minuti, poi torna subito all'elenco: trascrizione, parlanti e relazione devono arrivare lo stesso. Lo schermo resta acceso finché Argo lavora
+- Impostazioni › Informazioni › Licenze e riconoscimenti: il testo si apre e si scorre fino in fondo
+
+## [1.0] · build 20261120.830
+
+Prima versione per l'App Store, approvata e pubblicata il 20/11/2026. Se sul computer spegni il riconoscimento delle voci, anche l'iPhone smette di usarle.
+
+### Modificato
+- **Voci allineate al computer**: Argo sul computer (dalla 20261119.1720) tiene il riconoscimento delle voci spento finché non lo attivi, con il consenso di ogni persona. Quando è spento, alla sincronizzazione con il Ponte l'iPhone elimina le voci che aveva scaricato e i parlanti restano «Parlante 1, 2…».
+
+### Corretto
 - Le miniature delle foto (durante la registrazione e nell'incontro) non debordano più su quelle accanto: ognuna resta nel suo riquadro
 - Impostazioni: dichiarato l'uso di SwiftData, che la compilazione segnalava come avviso (nessun effetto per chi usa l'app)
 
@@ -22,7 +35,6 @@ Prima versione per l'App Store. Gli incontri lunghi non si interrompono più se 
 - **Modalità vetrina** per gli screenshot dell'App Store: `strumenti/screenshot-appstore.sh` compila Argo per il simulatore iPhone 6,9" e fotografa sei schermate con incontri, persone e aziende inventati. Esiste solo nelle build Debug: nella versione per TestFlight e App Store non c'è.
 
 ### Da provare
-- Registra un incontro di almeno 10 minuti, poi torna subito all'elenco: trascrizione, parlanti e relazione devono arrivare lo stesso. Lo schermo resta acceso finché Argo lavora
 - Con il riconoscimento delle voci spento sul computer, sincronizza: le voci spariscono dall'iPhone e i nuovi incontri usano «Parlante 1, 2…»
 - L'aggiornamento arriva da TestFlight senza fare nulla e gli incontri già presenti restano al loro posto
 

@@ -74,6 +74,7 @@ struct ImpostazioniView: View {
                 Section("Informazioni") {
                     LabeledContent("Versione", value: versione)
                     Link("Argo's New Dreams", destination: URL(string: "https://argosnewdreams.blog")!)
+                    NavigationLink("Licenze e riconoscimenti") { LicenzeView() }
                 }
             }
             .fileImporter(isPresented: $mostraImportaAnagrafe, allowedContentTypes: [.anagrafeVoci, .json]) { esito in

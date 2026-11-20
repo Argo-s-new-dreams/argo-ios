@@ -156,7 +156,7 @@ Argo/
 
 - **Contesto del modello on-device:** circa 4.000 token. Le trascrizioni lunghe vengono riassunte a blocchi da circa 5.000 caratteri, poi unite nel verbale finale (fino a tre passaggi).
 - **Primo utilizzo:** il modello della lingua (Apple) e quelli di diarizzazione (FluidAudio, da Hugging Face) si scaricano la prima volta; poi tutto funziona offline. Conviene fare una prova prima di partire per la fiera.
-- **Licenze:** prima della distribuzione verificare le licenze di FluidAudio e dei modelli di diarizzazione che scarica (vedi Fase 4 della roadmap Argo Pro).
+- **Licenze di terze parti:** FluidAudio (Apache 2.0) e modelli pyannote (CC BY 4.0), con attribuzione nell'app in Impostazioni › Informazioni › Licenze e riconoscimenti. Elenco e regole in [`LICENZE-TERZE-PARTI.md`](LICENZE-TERZE-PARTI.md).
 - **Call Teams:** iOS non permette di registrare l'audio di altre app. Argo registra il microfono, quindi va bene per riunioni in presenza o in vivavoce, non per una call in cuffia.
 
 ## Da fare
