@@ -4,13 +4,15 @@ struct SessioneView: View {
     @Bindable var sessione: Sessione
     @AppStorage("eliminaAudio") private var eliminaAudio = true
 
-    @State private var fase: String?
+    @State private var faseInvio: String?
     @State private var cronologiaAperta = false
     @State private var fotoAperta: FotoSessione?
     @State private var pacchetto: FileDaCondividere?
     @State private var erroreEsportazione: String?
     @State private var invioInCorso = false
 
+    /// La fase dell'elaborazione arriva da Elaborazione (continua anche se esci da questa schermata).
+    private var fase: String? { faseInvio ?? Elaborazione.fasi.valori[sessione.id] }
     private var inCorso: Bool { fase != nil }
 
     var body: some View {
@@ -30,7 +32,7 @@ struct SessioneView: View {
                 if puoElaborare, !inCorso, sessione.stato != .completata {
                     Section {
                         Button(etichettaElabora, systemImage: "sparkles") {
-                            Task { await elabora() }
+                            elabora()
                         }
                         .fontWeight(.semibold)
                     }
@@ -41,6 +43,10 @@ struct SessioneView: View {
                         HStack(spacing: 12) {
                             ProgressView()
                             Text(fase).foregroundStyle(.secondary)
+                        }
+                    } footer: {
+                        if faseInvio == nil {
+                            Text("Puoi tornare all'elenco: Argo continua. Tieni l'app aperta finché finisce: lo schermo resta acceso da solo.")
                         }
                     }
                 }
@@ -166,7 +172,7 @@ struct SessioneView: View {
                 if puoElaborare, !inCorso, sessione.stato == .completata {
                     Section {
                         Button(etichettaElabora, systemImage: "sparkles") {
-                            Task { await elabora() }
+                            elabora()
                         }
                     }
                 }
@@ -241,8 +247,8 @@ struct SessioneView: View {
             Text(erroreEsportazione ?? "")
         }
         .task {
-            // Appena registrata: parte da sola.
-            if sessione.stato == .registrata { await elabora() }
+            // Appena registrata: parte da sola (in un lavoro che non si ferma se esci dalla schermata).
+            if sessione.stato == .registrata { elabora() }
         }
     }
 
@@ -262,21 +268,19 @@ struct SessioneView: View {
         )
     }
 
-    private func elabora() async {
-        fase = "Preparo…"
-        await Elaborazione.esegui(sessione, eliminaAudioDopo: eliminaAudio) { fase = $0 }
-        fase = nil
+    private func elabora() {
+        Elaborazione.avvia(sessione, eliminaAudioDopo: eliminaAudio)
     }
 
     private func inviaAdArgo() async {
         invioInCorso = true
-        fase = "Invio ad Argo sul computer…"
+        faseInvio = "Invio ad Argo sul computer…"
         do {
             try await Ponte.invia(sessione)
         } catch {
             erroreEsportazione = error.localizedDescription
         }
-        fase = nil
+        faseInvio = nil
         invioInCorso = false
     }
 

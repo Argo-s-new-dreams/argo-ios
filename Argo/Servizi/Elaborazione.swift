@@ -1,4 +1,14 @@
 import Foundation
+import Observation
+import UIKit
+
+/// Fase in corso di ogni sessione in elaborazione: la schermata dell'incontro la mostra anche se la riapri
+/// a lavoro avviato.
+@MainActor
+@Observable
+final class FasiElaborazione {
+    var valori: [UUID: String] = [:]
+}
 
 /// Pipeline completa, tutto sull'iPhone salvo la relazione se affidata al Mac:
 /// audio → trascrizione → parlanti → audio eliminato → testo delle foto → relazione.
@@ -7,6 +17,53 @@ enum Elaborazione {
 
     /// Sessioni in elaborazione: il Ponte non le invia finché non hanno finito.
     static private(set) var inCorso = Set<UUID>()
+    static let fasi = FasiElaborazione()
+    private static var tempoInBackground: UIBackgroundTaskIdentifier = .invalid
+
+    /// Avvia l'elaborazione in un Task che NON dipende dalla schermata: prima partiva dal `.task` della vista e,
+    /// uscendo dall'incontro, SwiftUI la annullava a metà (Swift.CancellationError su un incontro di un'ora).
+    /// Finché lavora, lo schermo non si spegne da solo e, se l'app va in background, iOS concede ancora
+    /// qualche momento per chiudere il passo in corso.
+    static func avvia(_ sessione: Sessione, eliminaAudioDopo: Bool) {
+        guard !inCorso.contains(sessione.id) else { return }
+        let id = sessione.id
+        inCorso.insert(id)
+        fasi.valori[id] = "Preparo…"
+        tieniSveglio()
+        Task { @MainActor in
+            await esegui(sessione, eliminaAudioDopo: eliminaAudioDopo) { fasi.valori[id] = $0 }
+            fasi.valori[id] = nil
+            lasciaDormire()
+        }
+    }
+
+    private static func tieniSveglio() {
+        UIApplication.shared.isIdleTimerDisabled = true
+        guard tempoInBackground == .invalid else { return }
+        tempoInBackground = UIApplication.shared.beginBackgroundTask(withName: "Argo · elaborazione") {
+            // Tempo finito: iOS sospende l'app. Il lavoro riprende quando torni su Argo.
+            MainActor.assumeIsolated { chiudiTempoInBackground() }
+        }
+    }
+
+    private static func lasciaDormire() {
+        guard inCorso.isEmpty else { return }
+        UIApplication.shared.isIdleTimerDisabled = false
+        chiudiTempoInBackground()
+    }
+
+    private static func chiudiTempoInBackground() {
+        guard tempoInBackground != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(tempoInBackground)
+        tempoInBackground = .invalid
+    }
+
+    /// Annullamento (Task annullato, richiesta di rete annullata): non è un errore del passo, è un'interruzione.
+    static func eAnnullamento(_ error: Error) -> Bool {
+        if error is CancellationError || Task.isCancelled { return true }
+        if let url = error as? URLError, url.code == .cancelled { return true }
+        return false
+    }
 
     static func esegui(
         _ sessione: Sessione,
@@ -34,6 +91,8 @@ enum Elaborazione {
                     impronte = voci.impronte
                     segmenti = Diarizzatore.assegna(voci.turni, a: segmenti)
                 } catch {
+                    // Interrotto: si ferma tutto e l'audio resta, così i parlanti si possono rifare.
+                    if eAnnullamento(error) { throw error }
                     avvisi.append("Parlanti non riconosciuti (\(error.localizedDescription)). La trascrizione c'è comunque.")
                 }
 
@@ -94,7 +153,13 @@ enum Elaborazione {
             }
         } catch {
             sessione.stato = sessione.haTrascrizione ? .trascritta : .errore
-            sessione.messaggioErrore = error.localizedDescription
+            if eAnnullamento(error) {
+                sessione.messaggioErrore = sessione.haTrascrizione
+                    ? "Relazione interrotta prima della fine. Premi «Crea la relazione» per riprendere."
+                    : "Elaborazione interrotta prima della fine. L'audio è ancora sul telefono: premi «Trascrivi e crea la relazione» per riprendere."
+            } else {
+                sessione.messaggioErrore = error.localizedDescription
+            }
         }
         sessione.avviso = avvisi.isEmpty ? nil : avvisi.joined(separator: "\n")
     }
