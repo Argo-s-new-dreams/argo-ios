@@ -3,9 +3,9 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
-## [0.6.4] · build (al prossimo invio)
+## [1.0] · build (al prossimo invio)
 
-Se sul computer spegni il riconoscimento delle voci, anche l'iPhone smette di usarle.
+Prima versione per l'App Store. Se sul computer spegni il riconoscimento delle voci, anche l'iPhone smette di usarle.
 
 ### Modificato
 - **Voci allineate al computer**: Argo sul computer (dalla 20261119.1720) tiene il riconoscimento delle voci spento finché non lo attivi, con il consenso di ogni persona. Quando è spento, alla sincronizzazione con il Ponte l'iPhone elimina le voci che aveva scaricato e i parlanti restano «Parlante 1, 2…».
