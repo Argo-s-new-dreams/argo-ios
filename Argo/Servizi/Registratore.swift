@@ -54,6 +54,22 @@ final class Registratore {
         osservaInterruzioni()
     }
 
+#if DEBUG
+    /// Modalità vetrina (screenshot dell'App Store): finge una registrazione in corso, senza microfono.
+    func simulaVetrina() {
+        staRegistrando = true
+        inPausa = false
+        durata = 767
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                guard let self else { return }
+                self.durata += 0.1
+                self.livello = Float.random(in: 0.45...0.85)
+            }
+        }
+    }
+#endif
+
     func pausa() {
         recorder?.pause()
         inPausa = true

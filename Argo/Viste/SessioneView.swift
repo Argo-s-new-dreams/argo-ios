@@ -14,177 +14,196 @@ struct SessioneView: View {
     private var inCorso: Bool { fase != nil }
 
     var body: some View {
-        List {
-            Section {
-                TextField("Titolo", text: $sessione.titolo, axis: .vertical)
-                    .font(.title3.weight(.semibold))
-                LabeledContent("Data", value: sessione.creata.formatted(date: .long, time: .shortened))
-                if sessione.durata > 0 {
-                    LabeledContent("Durata", value: Formato.durata(sessione.durata))
-                }
-                LabeledContent("Audio", value: sessione.nomeFileAudio == nil ? "eliminato" : "sul dispositivo")
-            }
-
-            // Stile Argo: l'azione principale si vede subito, non in fondo dopo la trascrizione
-            if puoElaborare, !inCorso, sessione.stato != .completata {
+        ScrollViewReader { lettore in
+            List {
                 Section {
-                    Button(etichettaElabora, systemImage: "sparkles") {
-                        Task { await elabora() }
+                    TextField("Titolo", text: $sessione.titolo, axis: .vertical)
+                        .font(.title3.weight(.semibold))
+                    LabeledContent("Data", value: sessione.creata.formatted(date: .long, time: .shortened))
+                    if sessione.durata > 0 {
+                        LabeledContent("Durata", value: Formato.durata(sessione.durata))
                     }
-                    .fontWeight(.semibold)
+                    LabeledContent("Audio", value: sessione.nomeFileAudio == nil ? "eliminato" : "sul dispositivo")
                 }
-            }
 
-            if let fase {
-                Section {
-                    HStack(spacing: 12) {
-                        ProgressView()
-                        Text(fase).foregroundStyle(.secondary)
+                // Stile Argo: l'azione principale si vede subito, non in fondo dopo la trascrizione
+                if puoElaborare, !inCorso, sessione.stato != .completata {
+                    Section {
+                        Button(etichettaElabora, systemImage: "sparkles") {
+                            Task { await elabora() }
+                        }
+                        .fontWeight(.semibold)
                     }
                 }
-            }
 
-            if !inCorso, let messaggio = sessione.messaggioErrore {
-                Section {
-                    Label(messaggio, systemImage: "exclamationmark.triangle")
-                        .foregroundStyle(StileArgo.avviso)
-                }
-            }
-
-            if !inCorso, let avviso = sessione.avviso {
-                Section {
-                    Label(avviso, systemImage: "info.circle")
-                        .foregroundStyle(.secondary)
-                }
-            }
-
-            if !sessione.riassunto.isEmpty {
-                Section("Riassunto") { Text(sessione.riassunto) }
-            }
-
-            if !sessione.contatti.isEmpty {
-                Section("Contatti") {
-                    ForEach(sessione.contatti) { contatto in
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(contatto.nome).font(.headline)
-                            let dettagli = [contatto.ruolo, contatto.azienda].compactMap { $0 }.filter { !$0.isEmpty }
-                            if !dettagli.isEmpty {
-                                Text(dettagli.joined(separator: " · ")).font(.subheadline)
-                            }
-                            let recapiti = [contatto.email, contatto.telefono].compactMap { $0 }.filter { !$0.isEmpty }
-                            if !recapiti.isEmpty {
-                                Text(recapiti.joined(separator: " · "))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .textSelection(.enabled)
-                            }
-                            if let note = contatto.note, !note.isEmpty {
-                                Text(note).font(.caption).foregroundStyle(.secondary)
-                            }
+                if let fase {
+                    Section {
+                        HStack(spacing: 12) {
+                            ProgressView()
+                            Text(fase).foregroundStyle(.secondary)
                         }
                     }
                 }
-            }
 
-            if !sessione.puntiChiave.isEmpty {
-                Section("Punti chiave") {
-                    ForEach(sessione.puntiChiave, id: \.self) { punto in
-                        Label(punto, systemImage: "circle.fill").labelStyle(PuntoElenco())
+                if !inCorso, let messaggio = sessione.messaggioErrore {
+                    Section {
+                        Label(messaggio, systemImage: "exclamationmark.triangle")
+                            .foregroundStyle(StileArgo.avviso)
                     }
                 }
-            }
 
-            if !sessione.azioni.isEmpty {
-                Section("Azioni") {
-                    ForEach(sessione.azioni) { azione in
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(azione.descrizione)
-                            let dettagli = [azione.responsabile, azione.scadenza.map { "entro \($0)" }]
-                                .compactMap { $0 }.filter { !$0.isEmpty }
-                            if !dettagli.isEmpty {
-                                Text(dettagli.joined(separator: " · "))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
+                if !inCorso, let avviso = sessione.avviso {
+                    Section {
+                        Label(avviso, systemImage: "info.circle")
+                            .foregroundStyle(.secondary)
                     }
                 }
-            }
 
-            if !sessione.parlanti.isEmpty {
-                Section {
-                    ForEach(sessione.parlanti, id: \.self) { id in
-                        HStack {
-                            Circle().fill(Colori.parlante(id)).frame(width: 10, height: 10)
-                            TextField("Parlante \(id.dropFirst())", text: nomeBinding(id))
-                        }
-                    }
-                } header: {
-                    Text("Partecipanti")
-                } footer: {
-                    Text("Dai un nome alle voci (es. «Io», «Mario Rossi»): li userà la relazione. Poi tocca «Rifai la relazione».")
+                if !sessione.riassunto.isEmpty {
+                    Section("Riassunto") { Text(sessione.riassunto) }
                 }
-            }
 
-            if !sessione.foto.isEmpty {
-                Section("Foto") {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ForEach(sessione.foto.sorted { $0.secondo < $1.secondo }) { foto in
-                                Button { fotoAperta = foto } label: {
-                                    VStack(spacing: 4) {
-                                        MiniaturaFoto(foto: foto).frame(width: 84, height: 84)
-                                        Text(Formato.durata(foto.secondo))
-                                            .font(.caption2.monospacedDigit())
-                                            .foregroundStyle(.secondary)
-                                    }
+                if !sessione.contatti.isEmpty {
+                    Section("Contatti") {
+                        ForEach(sessione.contatti) { contatto in
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(contatto.nome).font(.headline)
+                                let dettagli = [contatto.ruolo, contatto.azienda].compactMap { $0 }.filter { !$0.isEmpty }
+                                if !dettagli.isEmpty {
+                                    Text(dettagli.joined(separator: " · ")).font(.subheadline)
                                 }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                        .padding(.vertical, 4)
-                    }
-                }
-            }
-
-            if sessione.haTrascrizione {
-                Section {
-                    DisclosureGroup("Trascrizione", isExpanded: $cronologiaAperta) {
-                        if sessione.segmenti.isEmpty {
-                            Text(sessione.trascrizione).font(.callout).textSelection(.enabled)
-                        } else {
-                            ForEach(sessione.cronologia) { voce in
-                                RigaCronologia(voce: voce, sessione: sessione) { fotoAperta = $0 }
+                                let recapiti = [contatto.email, contatto.telefono].compactMap { $0 }.filter { !$0.isEmpty }
+                                if !recapiti.isEmpty {
+                                    Text(recapiti.joined(separator: " · "))
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .textSelection(.enabled)
+                                }
+                                if let note = contatto.note, !note.isEmpty {
+                                    Text(note).font(.caption).foregroundStyle(.secondary)
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if puoElaborare, !inCorso, sessione.stato == .completata {
-                Section {
-                    Button(etichettaElabora, systemImage: "sparkles") {
-                        Task { await elabora() }
+                if !sessione.puntiChiave.isEmpty {
+                    Section("Punti chiave") {
+                        ForEach(sessione.puntiChiave, id: \.self) { punto in
+                            Label(punto, systemImage: "circle.fill").labelStyle(PuntoElenco())
+                        }
+                    }
+                }
+
+                if !sessione.azioni.isEmpty {
+                    Section("Azioni") {
+                        ForEach(sessione.azioni) { azione in
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(azione.descrizione)
+                                let dettagli = [azione.responsabile, azione.scadenza.map { "entro \($0)" }]
+                                    .compactMap { $0 }.filter { !$0.isEmpty }
+                                if !dettagli.isEmpty {
+                                    Text(dettagli.joined(separator: " · "))
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if !sessione.parlanti.isEmpty {
+                    Section {
+                        ForEach(sessione.parlanti, id: \.self) { id in
+                            HStack {
+                                Circle().fill(Colori.parlante(id)).frame(width: 10, height: 10)
+                                TextField("Parlante \(id.dropFirst())", text: nomeBinding(id))
+                            }
+                        }
+                    } header: {
+                        Text("Partecipanti")
+                    } footer: {
+                        Text("Dai un nome alle voci (es. «Io», «Mario Rossi»): li userà la relazione. Poi tocca «Rifai la relazione».")
+                    }
+                }
+
+                if !sessione.foto.isEmpty {
+                    Section("Foto") {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10) {
+                                ForEach(sessione.foto.sorted { $0.secondo < $1.secondo }) { foto in
+                                    Button { fotoAperta = foto } label: {
+                                        VStack(spacing: 4) {
+                                            MiniaturaFoto(foto: foto).frame(width: 84, height: 84)
+                                            Text(Formato.durata(foto.secondo))
+                                                .font(.caption2.monospacedDigit())
+                                                .foregroundStyle(.secondary)
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                }
+
+                if sessione.haTrascrizione {
+                    Section {
+                        DisclosureGroup("Trascrizione", isExpanded: $cronologiaAperta) {
+                            if sessione.segmenti.isEmpty {
+                                Text(sessione.trascrizione).font(.callout).textSelection(.enabled)
+                            } else {
+                                ForEach(sessione.cronologia) { voce in
+                                    RigaCronologia(voce: voce, sessione: sessione) { fotoAperta = $0 }
+                                }
+                            }
+                        }
+                    }
+                    .id("trascrizione")
+                }
+
+                if puoElaborare, !inCorso, sessione.stato == .completata {
+                    Section {
+                        Button(etichettaElabora, systemImage: "sparkles") {
+                            Task { await elabora() }
+                        }
+                    }
+                }
+
+                if let inviata = sessione.inviataAdArgo {
+                    Section {
+                        Label("Inviato ad Argo sul computer il \(inviata.formatted(date: .abbreviated, time: .shortened))",
+                              systemImage: "desktopcomputer")  // mai un'icona «cloud»: non passa da nessun cloud
+                            .font(.footnote)
+                            .foregroundStyle(StileArgo.ok)
+                    }
+                }
+
+                if let motore = sessione.motoreVerbale, sessione.stato == .completata {
+                    Section {
+                        Text("Relazione scritta da \(motore). Rileggila prima di condividerla.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
-
-            if let inviata = sessione.inviataAdArgo {
-                Section {
-                    Label("Inviato ad Argo sul computer il \(inviata.formatted(date: .abbreviated, time: .shortened))",
-                          systemImage: "desktopcomputer")  // mai un'icona «cloud»: non passa da nessun cloud
-                        .font(.footnote)
-                        .foregroundStyle(StileArgo.ok)
+#if DEBUG
+            // Modalità vetrina: trascrizione aperta o foto in primo piano per gli screenshot.
+            .task {
+                switch Vetrina.schermata {
+                case .some(.trascrizione):
+                    cronologiaAperta = true
+                    try? await Task.sleep(for: .milliseconds(700))
+                    withAnimation { lettore.scrollTo("trascrizione", anchor: .top) }
+                case .some(.foto):
+                    try? await Task.sleep(for: .milliseconds(500))
+                    fotoAperta = sessione.foto.sorted { $0.secondo < $1.secondo }.first
+                default:
+                    break
                 }
             }
-
-            if let motore = sessione.motoreVerbale, sessione.stato == .completata {
-                Section {
-                    Text("Relazione scritta da \(motore). Rileggila prima di condividerla.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-            }
+#endif
         }
         .navigationTitle("Incontro")
         .navigationBarTitleDisplayMode(.inline)

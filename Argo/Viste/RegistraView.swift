@@ -49,6 +49,16 @@ struct RegistraView: View {
             }
         }
         .interactiveDismissDisabled(registratore.staRegistrando)
+#if DEBUG
+        // Modalità vetrina: registrazione simulata con due foto, senza microfono.
+        .onAppear {
+            if Vetrina.schermata == .registrazione {
+                foto = Vetrina.fotoRegistrazione
+                registratore.simulaVetrina()
+                informativaConfermata = true
+            }
+        }
+#endif
         .fullScreenCover(isPresented: $mostraFotocamera) {
             FotocameraView(registratore: registratore) { immagine, secondo in
                 do {
@@ -128,11 +138,20 @@ struct RegistraView: View {
                 }
                 .buttonStyle(.glass)
                 .clipShape(Circle())
-                .disabled(!FotocameraView.disponibile)
+                .disabled(!FotocameraView.disponibile && !inVetrina)
                 .accessibilityLabel("Scatta una foto")
             }
             .padding(.bottom, 40)
         }
+    }
+
+    /// Nel simulatore la fotocamera non c'è: in modalità vetrina il pulsante resta comunque attivo.
+    private var inVetrina: Bool {
+#if DEBUG
+        Vetrina.attiva
+#else
+        false
+#endif
     }
 
     private func avvia() async {
@@ -176,14 +195,17 @@ struct MiniaturaFoto: View {
     let foto: FotoSessione
 
     var body: some View {
-        Group {
-            if let immagine = UIImage(contentsOfFile: foto.url.path) {
-                Image(uiImage: immagine).resizable().scaledToFill()
-            } else {
-                Image(systemName: "photo").foregroundStyle(.secondary)
+        // Color.clear prende la cornice decisa da fuori (.frame): la foto la riempie e viene ritagliata,
+        // invece di debordare sulle miniature accanto.
+        Color.clear
+            .overlay {
+                if let immagine = UIImage(contentsOfFile: foto.url.path) {
+                    Image(uiImage: immagine).resizable().scaledToFill()
+                } else {
+                    Image(systemName: "photo").foregroundStyle(.secondary)
+                }
             }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         .contentShape(RoundedRectangle(cornerRadius: 10))
     }
 }
