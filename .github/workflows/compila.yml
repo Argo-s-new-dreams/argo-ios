@@ -1,0 +1,31 @@
+# Compilazione di Argo per iPhone a ogni modifica dell'app, per il simulatore e senza firma: un errore si
+# vede qui, non sul Mac di notte durante la pubblicazione su TestFlight. Nessun invio.
+name: Compila
+
+on:
+  push:
+    branches: [main]
+    paths: ["Argo/**", "project.yml", ".github/workflows/compila.yml"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compila:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode 26 (serve per iOS 26)
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XCODE" ]; then echo "Xcode 26 non trovato sul runner"; ls -d /Applications/Xcode*.app; exit 1; fi
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+      - name: XcodeGen
+        run: brew install xcodegen && xcodegen generate
+      - name: Compila per il simulatore
+        run: |
+          set -o pipefail
+          xcodebuild -project Argo.xcodeproj -scheme Argo -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build | tail -60
