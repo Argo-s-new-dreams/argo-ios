@@ -1,6 +1,36 @@
 {
   "sourceLanguage": "it",
   "strings": {
+    "Anagrafe voci di Argo": {
+      "comment": "Tipo di file .argovoci",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo-Stimmenverzeichnis"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo voice registry"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registro de voces de Argo"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anagrafe voci di Argo"
+          }
+        }
+      }
+    },
     "CFBundleDisplayName": {
       "comment": "Nome dell'app, uguale in tutte le lingue",
       "extractionState": "manual",
