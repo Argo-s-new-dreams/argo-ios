@@ -10,3 +10,4 @@ xcuserdata/
 # macOS
 .DS_Store
 strumenti/prova-impronte/Package.resolved
+__pycache__/
