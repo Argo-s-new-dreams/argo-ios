@@ -33,7 +33,7 @@ struct InformativaView: View {
         }
     }
 
-    private func punto(_ icona: String, _ testo: String) -> some View {
+    private func punto(_ icona: String, _ testo: LocalizedStringKey) -> some View {
         Label {
             Text(testo)
         } icon: {

@@ -1,0 +1,166 @@
+{
+  "sourceLanguage": "it",
+  "strings": {
+    "Anagrafe voci di Argo": {
+      "comment": "Tipo di file .argovoci",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo-Stimmenverzeichnis"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo voice registry"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registro de voces de Argo"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anagrafe voci di Argo"
+          }
+        }
+      }
+    },
+    "CFBundleDisplayName": {
+      "comment": "Nome dell'app, uguale in tutte le lingue",
+      "extractionState": "manual",
+      "shouldTranslate": false
+    },
+    "CFBundleName": {
+      "comment": "Nome dell'app, uguale in tutte le lingue",
+      "extractionState": "manual",
+      "shouldTranslate": false
+    },
+    "NSCameraUsageDescription": {
+      "comment": "Info.plist",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo verwendet die Kamera, um während eines Termins Visitenkarten und Dokumente zu fotografieren. Die Fotos bleiben in der App."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo uses the camera to photograph business cards and documents during a meeting. The photos stay in the app."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo usa la cámara para fotografiar tarjetas de visita y documentos durante una reunión. Las fotos se quedan en la app."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo usa la fotocamera per fotografare biglietti da visita e documenti durante un incontro. Le foto restano nell'app."
+          }
+        }
+      }
+    },
+    "NSLocalNetworkUsageDescription": {
+      "comment": "Info.plist",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo verbindet sich im lokalen Netz über einen verschlüsselten Kanal mit Argo auf deinem Computer, um Termine zu senden und das Stimmenverzeichnis zu empfangen, und optional mit Ollama für den Bericht."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo connects over the local network to Argo on your computer, through an encrypted channel, to send meetings and receive the voice registry, and optionally to Ollama for the report."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo se conecta por la red local a Argo en tu ordenador, con un canal cifrado, para enviar las reuniones y recibir el registro de voces, y opcionalmente a Ollama para el informe."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo si collega in rete locale ad Argo sul tuo computer, con un canale cifrato, per inviare gli incontri e ricevere l'anagrafe voci, e facoltativamente a Ollama per la relazione."
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription": {
+      "comment": "Info.plist",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo verwendet das Mikrofon, um Termine aufzunehmen. Das Audio bleibt auf deinem iPhone."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo uses the microphone to record meetings. The audio stays on your iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo usa el micrófono para grabar las reuniones. El audio se queda en tu iPhone."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo usa il microfono per registrare le riunioni. L'audio resta sul tuo iPhone."
+          }
+        }
+      }
+    },
+    "NSSpeechRecognitionUsageDescription": {
+      "comment": "Info.plist",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo transkribiert die Aufnahmen direkt auf deinem iPhone, ohne sie an externe Server zu senden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo transcribes recordings directly on your iPhone, without sending them to external servers."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo transcribe las grabaciones directamente en tu iPhone, sin enviarlas a servidores externos."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo trascrive le registrazioni direttamente sul tuo iPhone, senza inviarle a server esterni."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

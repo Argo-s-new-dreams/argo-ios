@@ -83,7 +83,7 @@ struct RegistraView: View {
                 .frame(height: 60)
                 .padding(.horizontal)
 
-            Text(registratore.inPausa ? "In pausa" : "Sto registrando · l'audio viene eliminato dopo la trascrizione")
+            (registratore.inPausa ? Text("In pausa") : Text("Sto registrando · l'audio viene eliminato dopo la trascrizione"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
 
@@ -112,7 +112,7 @@ struct RegistraView: View {
                 }
                 .buttonStyle(.glass)
                 .clipShape(Circle())
-                .accessibilityLabel(registratore.inPausa ? "Riprendi la registrazione" : "Metti in pausa")
+                .accessibilityLabel(registratore.inPausa ? Text("Riprendi la registrazione") : Text("Metti in pausa"))
 
                 Button {
                     if let esito = registratore.ferma() {
@@ -156,7 +156,7 @@ struct RegistraView: View {
 
     private func avvia() async {
         guard await Registratore.chiediPermessoMicrofono() else {
-            errore = "Serve l'accesso al microfono: lo trovi in Impostazioni › Privacy › Microfono."
+            errore = String(localized: "Serve l'accesso al microfono: lo trovi in Impostazioni › Privacy › Microfono.")
             return
         }
         do {

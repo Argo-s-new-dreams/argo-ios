@@ -24,11 +24,11 @@ enum ErrorePonte: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .qrNonValido: "Questo non è il QR di Argo: su computer apri Incontri › Collega iPhone."
-        case .nonCollegato: "Nessun computer collegato."
-        case .irraggiungibile: "Non raggiungo Argo sul computer: deve essere aperto e sulla stessa rete."
+        case .qrNonValido: String(localized: "Questo non è il QR di Argo: su computer apri Incontri › Collega iPhone.")
+        case .nonCollegato: String(localized: "Nessun computer collegato.")
+        case .irraggiungibile: String(localized: "Non raggiungo Argo sul computer: deve essere aperto e sulla stessa rete.")
         case .rifiutato(let motivo): motivo
-        case .risposta: "Risposta inattesa da Argo sul computer."
+        case .risposta: String(localized: "Risposta inattesa da Argo sul computer.")
         }
     }
 }
@@ -120,7 +120,7 @@ enum Ponte {
             // Prima un controllo veloce (pochi secondi): se il computer non c'è, si rinuncia subito.
             _ = try await richiestaAutenticata("GET", "/v1/stato", attesa: 4)
             if let anagrafe = try await scaricaAnagrafe() {
-                fatto.append("\(anagrafe.voci.count) voci aggiornate")
+                fatto.append(String(localized: "\(anagrafe.voci.count) voci aggiornate"))
             }
             let pronte = try contesto.fetch(FetchDescriptor<Sessione>()).filter {
                 $0.inviataAdArgo == nil && !Elaborazione.inCorso.contains($0.id)
@@ -135,10 +135,10 @@ enum Ponte {
                 }
             }
             if !pronte.isEmpty {
-                fatto.append("\(pronte.count) incontr\(pronte.count == 1 ? "o inviato" : "i inviati")")
+                fatto.append(pronte.count == 1 ? String(localized: "1 incontro inviato") : String(localized: "\(pronte.count) incontri inviati"))
             }
             abbinamento?.ultimaSincronizzazione = .now
-            return fatto.isEmpty ? nil : "Argo sul computer: " + fatto.joined(separator: ", ")
+            return fatto.isEmpty ? nil : String(localized: "Argo sul computer: \(fatto.joined(separator: ", "))")
         } catch ErrorePonte.irraggiungibile {
             return nil // fuori casa o computer spento: si riprova alla prossima occasione
         } catch {
@@ -192,7 +192,7 @@ enum Ponte {
                 guard (200..<300).contains(http.statusCode) else {
                     struct Errore: Decodable { let errore: String }
                     let motivo = (try? JSONDecoder().decode(Errore.self, from: dati))?.errore
-                    throw ErrorePonte.rifiutato(motivo ?? "Argo sul computer ha risposto con errore \(http.statusCode).")
+                    throw ErrorePonte.rifiutato(motivo ?? String(localized: "Argo sul computer ha risposto con errore \(http.statusCode)."))
                 }
                 return (dati, indirizzo)
             } catch is URLError {

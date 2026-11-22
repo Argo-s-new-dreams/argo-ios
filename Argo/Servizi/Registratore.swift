@@ -149,5 +149,5 @@ final class Registratore {
 
 enum ErroreRegistrazione: LocalizedError {
     case avvioFallito
-    var errorDescription: String? { "Non riesco ad avviare la registrazione." }
+    var errorDescription: String? { String(localized: "Non riesco ad avviare la registrazione.") }
 }

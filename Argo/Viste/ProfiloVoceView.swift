@@ -12,7 +12,7 @@ struct ProfiloVoceView: View {
     private enum Stato: Equatable { case pronto, registrazione, calcolo, errore(String) }
     private let durataMinima: TimeInterval = 20
 
-    private let testo = """
+    private let testo: LocalizedStringKey = """
     Buongiorno, sono qui per registrare la mia voce. Argo la userà per riconoscermi \
     durante le riunioni e le fiere, distinguendomi dalle persone con cui parlo. \
     Leggo questo testo con calma, con il mio tono di sempre, come se fossi allo stand \
@@ -45,9 +45,9 @@ struct ProfiloVoceView: View {
                     case .registrazione:
                         VStack(spacing: 12) {
                             ProgressView(value: min(registratore.durata, durataMinima), total: durataMinima)
-                            Text(registratore.durata < durataMinima
-                                 ? "Continua a leggere… \(Int(durataMinima - registratore.durata)) s"
-                                 : "Perfetto, puoi fermarti")
+                            (registratore.durata < durataMinima
+                                 ? Text("Continua a leggere… \(Int(durataMinima - registratore.durata)) s")
+                                 : Text("Perfetto, puoi fermarti"))
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
                             Button {
@@ -95,7 +95,7 @@ struct ProfiloVoceView: View {
 
     private func avvia() async {
         guard await Registratore.chiediPermessoMicrofono() else {
-            stato = .errore("Serve l'accesso al microfono.")
+            stato = .errore(String(localized: "Serve l'accesso al microfono."))
             return
         }
         do {

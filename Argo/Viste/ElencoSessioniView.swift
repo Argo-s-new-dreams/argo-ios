@@ -100,7 +100,7 @@ struct ElencoSessioniView: View {
             .fullScreenCover(isPresented: $mostraRegistra) {
                 RegistraView { nomeFile, durata, foto in
                     let nuova = Sessione(
-                        titolo: "Incontro del \(Date.now.formatted(date: .abbreviated, time: .shortened))",
+                        titolo: String(localized: "Incontro del \(Date.now.formatted(date: .abbreviated, time: .shortened))"),
                         lingua: lingua, durata: durata, nomeFileAudio: nomeFile, foto: foto
                     )
                     contesto.insert(nuova)
@@ -127,12 +127,12 @@ struct ElencoSessioniView: View {
         let numero = soloSuIPhone.count
         let daTrascrivere = soloSuIPhone.filter { $0.stato != .trascritta && $0.stato != .completata }.count
         let abbinato = Ponte.abbinamento != nil
-        var testo = numero == 1 ? "1 incontro è solo su questo iPhone." : "\(numero) incontri sono solo su questo iPhone."
-        testo += " Se elimini o reinstalli l'app si perdono: prima inviali ad Argo sul computer."
+        var testo = numero == 1 ? String(localized: "1 incontro è solo su questo iPhone.") : String(localized: "\(numero) incontri sono solo su questo iPhone.")
+        testo += " " + String(localized: "Se elimini o reinstalli l'app si perdono: prima inviali ad Argo sul computer.")
         if daTrascrivere > 0 {
-            testo += daTrascrivere == 1 ? " Uno va prima trascritto." : " \(daTrascrivere) vanno prima trascritti."
+            testo += " " + (daTrascrivere == 1 ? String(localized: "Uno va prima trascritto.") : String(localized: "\(daTrascrivere) vanno prima trascritti."))
         }
-        if !abbinato { testo += " Collega il computer in Impostazioni › Argo sul computer." }
+        if !abbinato { testo += " " + String(localized: "Collega il computer in Impostazioni › Argo sul computer.") }
         return VStack(alignment: .leading, spacing: 8) {
             Label(testo, systemImage: "exclamationmark.triangle")
                 .font(.footnote)

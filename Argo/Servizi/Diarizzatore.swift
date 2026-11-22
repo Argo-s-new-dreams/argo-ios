@@ -17,10 +17,10 @@ enum Diarizzatore {
         file url: URL,
         fase: @escaping @MainActor (String) -> Void
     ) async throws -> (turni: [Turno], impronte: [String: [Float]]) {
-        await fase("Riconosco i parlanti (la prima volta scarico il modello)…")
+        await fase(String(localized: "Riconosco i parlanti (la prima volta scarico il modello)…"))
         let gestore = try await gestorePronto()
 
-        await fase("Divido le voci…")
+        await fase(String(localized: "Divido le voci…"))
         let campioni = try AudioConverter().resampleAudioFile(path: url.path)
         let risultato = try await gestore.process(audio: campioni)
 

@@ -1,0 +1,4141 @@
+{
+  "sourceLanguage": "it",
+  "strings": {
+    " Per avere il verbale, collega il tuo Mac con Ollama in Impostazioni › Verbale.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " Für das Protokoll verbinde deinen Mac mit Ollama unter Einstellungen › Protokoll."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " To get the minutes, connect your Mac with Ollama in Settings › Minutes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " Para tener el acta, conecta tu Mac con Ollama en Ajustes › Acta."
+          }
+        }
+      }
+    },
+    " Puoi usare il Mac in Impostazioni › Verbale.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " Du kannst den Mac unter Einstellungen › Protokoll verwenden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " You can use your Mac in Settings › Minutes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " Puedes usar el Mac en Ajustes › Acta."
+          }
+        }
+      }
+    },
+    "%@ foto": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Fotos"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ photos"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ fotos"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "shouldTranslate": false
+    },
+    "%lld campioni": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Proben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld samples"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld muestras"
+          }
+        }
+      }
+    },
+    "%lld incontri inviati": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Termine gesendet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld meetings sent"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld reuniones enviadas"
+          }
+        }
+      }
+    },
+    "%lld incontri sono solo su questo iPhone.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Termine sind nur auf diesem iPhone."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld meetings are only on this iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld reuniones solo están en este iPhone."
+          }
+        }
+      }
+    },
+    "%lld vanno prima trascritti.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld müssen zuerst transkribiert werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld must be transcribed first."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld deben transcribirse antes."
+          }
+        }
+      }
+    },
+    "%lld voci aggiornate": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Stimmen aktualisiert"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld voices updated"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld voces actualizadas"
+          }
+        }
+      }
+    },
+    "%lld voci · importata il %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Stimmen · importiert am %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld voices · imported on %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld voces · importada el %@"
+          }
+        }
+      }
+    },
+    "1 incontro inviato": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Termin gesendet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 meeting sent"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 reunión enviada"
+          }
+        }
+      }
+    },
+    "1 incontro è solo su questo iPhone.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Termin ist nur auf diesem iPhone."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 meeting is only on this iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 reunión solo está en este iPhone."
+          }
+        }
+      }
+    },
+    "Aggiorna da file…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus Datei aktualisieren…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update from file…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualizar desde archivo…"
+          }
+        }
+      }
+    },
+    "Anagrafe importata: %lld voci (%@).": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stimmenverzeichnis importiert: %lld Stimmen (%@)."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice registry imported: %lld voices (%@)."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registro de voces importado: %lld voces (%@)."
+          }
+        }
+      }
+    },
+    "Anagrafe voci": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stimmenverzeichnis"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice registry"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registro de voces"
+          }
+        }
+      }
+    },
+    "Anagrafe voci da Argo desktop": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stimmenverzeichnis aus Argo am Computer"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice registry from Argo desktop"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registro de voces de Argo para ordenador"
+          }
+        }
+      }
+    },
+    "Annulla": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbrechen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "Apple Intelligence (iPhone)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence (iPhone)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence (iPhone)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence (iPhone)"
+          }
+        }
+      }
+    },
+    "Apple Intelligence disponibile su questo iPhone": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence auf diesem iPhone verfügbar"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence available on this iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence disponible en este iPhone"
+          }
+        }
+      }
+    },
+    "Apple Intelligence non è attiva (Impostazioni › Apple Intelligence e Siri).": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence ist nicht aktiviert (Einstellungen › Apple Intelligence & Siri)."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence is not turned on (Settings › Apple Intelligence & Siri)."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence no está activada (Ajustes › Apple Intelligence y Siri)."
+          }
+        }
+      }
+    },
+    "Apple Intelligence non è disponibile in questo momento.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence ist gerade nicht verfügbar."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence is not available right now."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence no está disponible en este momento."
+          }
+        }
+      }
+    },
+    "Argo": {
+      "shouldTranslate": false
+    },
+    "Argo non ti riconoscerà più negli incontri finché non registri di nuovo la tua voce.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo erkennt dich in Terminen nicht mehr, bis du deine Stimme erneut aufnimmst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo will no longer recognise you in meetings until you record your voice again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo ya no te reconocerá en las reuniones hasta que vuelvas a grabar tu voz."
+          }
+        }
+      }
+    },
+    "Argo riconosce la tua voce negli incontri e la chiama con questo nome, separandola da quelle degli interlocutori. L'impronta vocale è un dato biometrico: resta solo su questo iPhone e non viene mai esportata.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo erkennt deine Stimme in Terminen und nennt sie mit diesem Namen, getrennt von denen deiner Gesprächspartner. Der Stimmabdruck ist ein biometrisches Datum: Er bleibt nur auf diesem iPhone und wird nie exportiert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo recognises your voice in meetings and calls it by this name, separating it from the people you talk to. The voiceprint is biometric data: it stays only on this iPhone and is never exported."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo reconoce tu voz en las reuniones y la llama con este nombre, separándola de la de tus interlocutores. La huella vocal es un dato biométrico: se queda solo en este iPhone y nunca se exporta."
+          }
+        }
+      }
+    },
+    "Argo sul computer": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo auf dem Computer"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo on your computer"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo en el ordenador"
+          }
+        }
+      }
+    },
+    "Argo sul computer ha risposto con errore %lld.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo auf dem Computer hat mit Fehler %lld geantwortet."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo on your computer replied with error %lld."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo en el ordenador ha respondido con el error %lld."
+          }
+        }
+      }
+    },
+    "Argo sul computer non raggiungibile: deve essere aperto e sulla stessa rete.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo auf dem Computer ist nicht erreichbar: Es muss geöffnet und im selben Netz sein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo on your computer can't be reached: it must be open and on the same network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo en el ordenador no está accesible: debe estar abierto y en la misma red."
+          }
+        }
+      }
+    },
+    "Argo sul computer: %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo auf dem Computer: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo on your computer: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo en el ordenador: %@"
+          }
+        }
+      }
+    },
+    "Argo's New Dreams": {
+      "shouldTranslate": false
+    },
+    "Audio": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio"
+          }
+        }
+      }
+    },
+    "Automatico": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automático"
+          }
+        }
+      }
+    },
+    "Automatico: Apple Intelligence se l'iPhone la supporta, altrimenti il tuo Mac con Ollama. Senza nessuno dei due ottieni comunque la trascrizione.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch: Apple Intelligence, wenn das iPhone es unterstützt, sonst dein Mac mit Ollama. Ohne beides bekommst du trotzdem das Transkript."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic: Apple Intelligence if the iPhone supports it, otherwise your Mac with Ollama. Without either you still get the transcript."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automático: Apple Intelligence si el iPhone la admite; si no, tu Mac con Ollama. Sin ninguno de los dos obtienes igualmente la transcripción."
+          }
+        }
+      }
+    },
+    "Azioni": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufgaben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actions"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acciones"
+          }
+        }
+      }
+    },
+    "Buongiorno, sono qui per registrare la mia voce. Argo la userà per riconoscermi durante le riunioni e le fiere, distinguendomi dalle persone con cui parlo. Leggo questo testo con calma, con il mio tono di sempre, come se fossi allo stand a spiegare un progetto a un cliente. Mi piace la tecnologia quando semplifica il lavoro, e oggi provo a insegnare a un telefono a riconoscere chi sta parlando.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guten Tag, ich bin hier, um meine Stimme aufzunehmen. Argo wird sie verwenden, um mich in Terminen und auf Messen zu erkennen und mich von den Menschen zu unterscheiden, mit denen ich spreche. Ich lese diesen Text ruhig, in meinem gewohnten Ton, als stünde ich am Messestand und erklärte einem Kunden ein Projekt. Ich mag Technik, wenn sie die Arbeit einfacher macht, und heute versuche ich, einem Telefon beizubringen, wer gerade spricht."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good morning, I am here to record my voice. Argo will use it to recognise me during meetings and trade fairs, telling me apart from the people I talk to. I am reading this text calmly, in my usual tone, as if I were at the booth explaining a project to a customer. I like technology when it makes work simpler, and today I am trying to teach a phone to recognise who is speaking."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buenos días, estoy aquí para grabar mi voz. Argo la usará para reconocerme durante las reuniones y las ferias, distinguiéndome de las personas con las que hablo. Leo este texto con calma, con mi tono de siempre, como si estuviera en el stand explicando un proyecto a un cliente. Me gusta la tecnología cuando simplifica el trabajo, y hoy intento enseñar a un teléfono a reconocer quién está hablando."
+          }
+        }
+      }
+    },
+    "Calcolo l'impronta della tua voce (la prima volta scarico il modello)…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich berechne deinen Stimmabdruck (beim ersten Mal lade ich das Modell herunter)…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Computing your voiceprint (the first time I download the model)…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calculo la huella de tu voz (la primera vez descargo el modelo)…"
+          }
+        }
+      }
+    },
+    "Canale cifrato in rete locale con Argo desktop: gli incontri trascritti partono da soli quando sei sulla stessa rete e Argo è aperto; l'anagrafe voci scelta sul computer arriva qui. Niente cloud.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verschlüsselter Kanal im lokalen Netz mit Argo am Computer: Transkribierte Termine werden automatisch gesendet, wenn du im selben Netz bist und Argo geöffnet ist; das auf dem Computer gewählte Stimmenverzeichnis kommt hierher. Keine Cloud."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encrypted local network channel with Argo desktop: transcribed meetings are sent automatically when you are on the same network and Argo is open; the voice registry chosen on the computer arrives here. No cloud."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Canal cifrado en la red local con Argo para ordenador: las reuniones transcritas se envían solas cuando estás en la misma red y Argo está abierto; el registro de voces elegido en el ordenador llega aquí. Sin nube."
+          }
+        }
+      }
+    },
+    "Chi scrive il verbale": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wer das Protokoll schreibt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who writes the minutes"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quién escribe el acta"
+          }
+        }
+      }
+    },
+    "Chiudi": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schließen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar"
+          }
+        }
+      }
+    },
+    "Collega (inquadra il QR sul computer)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbinden (QR-Code am Computer scannen)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect (scan the QR code on the computer)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectar (escanea el QR del ordenador)"
+          }
+        }
+      }
+    },
+    "Collega Argo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo verbinden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect Argo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectar Argo"
+          }
+        }
+      }
+    },
+    "Collega il computer in Impostazioni › Argo sul computer.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbinde den Computer unter Einstellungen › Argo auf dem Computer."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect the computer in Settings › Argo on your computer."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conecta el ordenador en Ajustes › Argo en el ordenador."
+          }
+        }
+      }
+    },
+    "Collegato a": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbunden mit"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connected to"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectado a"
+          }
+        }
+      }
+    },
+    "Come la modalità Live di Argo sul Mac: resta solo il testo, nessun archivio audio sul telefono.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wie der Live-Modus von Argo am Mac: Es bleibt nur der Text, kein Audioarchiv auf dem Telefon."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Like Argo's Live mode on the Mac: only the text remains, no audio archive on the phone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Como el modo Live de Argo en el Mac: solo queda el texto, ningún archivo de audio en el teléfono."
+          }
+        }
+      }
+    },
+    "Come ti chiami negli incontri": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Name in Terminen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your name in meetings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo te llamas en las reuniones"
+          }
+        }
+      }
+    },
+    "Condividi": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teilen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartir"
+          }
+        }
+      }
+    },
+    "Consenti l'accesso in Impostazioni › Privacy › Fotocamera › Argo.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erlaube den Zugriff unter Einstellungen › Datenschutz › Kamera › Argo."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow access in Settings › Privacy › Camera › Argo."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite el acceso en Ajustes › Privacidad › Cámara › Argo."
+          }
+        }
+      }
+    },
+    "Consenti la fotocamera ad Argo in Impostazioni › Privacy › Fotocamera.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erlaube Argo die Kamera unter Einstellungen › Datenschutz › Kamera."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Argo to use the camera in Settings › Privacy › Camera."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite la cámara a Argo en Ajustes › Privacidad › Cámara."
+          }
+        }
+      }
+    },
+    "Contatti": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontakte"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contacts"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contactos"
+          }
+        }
+      }
+    },
+    "Contatto il Mac…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich kontaktiere den Mac…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contacting the Mac…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contacto con el Mac…"
+          }
+        }
+      }
+    },
+    "Continua a leggere… %@ s": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiterlesen… %@ s"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep reading… %@ s"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue leyendo… %@ s"
+          }
+        }
+      }
+    },
+    "Crea la relazione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht erstellen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create the report"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crear el informe"
+          }
+        }
+      }
+    },
+    "Dai un nome alle voci (es. «Io», «Mario Rossi»): li userà la relazione. Poi tocca «Rifai la relazione».": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gib den Stimmen Namen (z. B. «Ich», «Mario Rossi»): Der Bericht verwendet sie. Tippe dann auf «Bericht neu erstellen»."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name the voices (e.g. «Me», «Mario Rossi»): the report will use them. Then tap «Redo the report»."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pon nombre a las voces (p. ej. «Yo», «Mario Rossi»): los usará el informe. Después toca «Rehacer el informe»."
+          }
+        }
+      }
+    },
+    "Data": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datum"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fecha"
+          }
+        }
+      }
+    },
+    "Divido le voci…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich trenne die Stimmen…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Separating the voices…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Separo las voces…"
+          }
+        }
+      }
+    },
+    "Durata": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dauer"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duración"
+          }
+        }
+      }
+    },
+    "Elaborazione interrotta prima della fine. L'audio è ancora sul telefono: premi «Trascrivi e crea la relazione» per riprendere.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Verarbeitung wurde vor dem Ende unterbrochen. Das Audio ist noch auf dem Telefon: Tippe auf «Transkribieren und Bericht erstellen», um fortzufahren."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processing stopped before the end. The audio is still on the phone: tap «Transcribe and create the report» to resume."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El procesamiento se interrumpió antes del final. El audio sigue en el teléfono: pulsa «Transcribir y crear el informe» para continuar."
+          }
+        }
+      }
+    },
+    "Elimina": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Löschen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar"
+          }
+        }
+      }
+    },
+    "Elimina dall'iPhone dopo l'invio": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach dem Senden vom iPhone löschen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete from iPhone after sending"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar del iPhone tras el envío"
+          }
+        }
+      }
+    },
+    "Elimina il profilo voce": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stimmprofil löschen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete voice profile"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar el perfil de voz"
+          }
+        }
+      }
+    },
+    "Elimina l'anagrafe dall'iPhone": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verzeichnis vom iPhone löschen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the registry from iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar el registro del iPhone"
+          }
+        }
+      }
+    },
+    "Elimina l'audio dopo la trascrizione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio nach der Transkription löschen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete audio after transcription"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar el audio tras la transcripción"
+          }
+        }
+      }
+    },
+    "Eliminare il profilo voce?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stimmprofil löschen?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the voice profile?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar el perfil de voz?"
+          }
+        }
+      }
+    },
+    "Eliminare l'incontro?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termin löschen?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the meeting?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar la reunión?"
+          }
+        }
+      }
+    },
+    "Errore": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fehler"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        }
+      }
+    },
+    "Esportazione non riuscita": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export fehlgeschlagen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export failed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportación fallida"
+          }
+        }
+      }
+    },
+    "FOTO %lld: %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FOTO %lld: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PHOTO %lld: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FOTO %lld: %@"
+          }
+        }
+      }
+    },
+    "Ferma e salva l'incontro": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termin beenden und speichern"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop and save the meeting"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener y guardar la reunión"
+          }
+        }
+      }
+    },
+    "Fine": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fertig"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Foto": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotos"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotos"
+          }
+        }
+      }
+    },
+    "Foto a %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foto bei %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo at %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foto en %@"
+          }
+        }
+      }
+    },
+    "Fotocamera non autorizzata": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera nicht erlaubt"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera not allowed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cámara no autorizada"
+          }
+        }
+      }
+    },
+    "Fotocamera non disponibile": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera nicht verfügbar"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera not available"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cámara no disponible"
+          }
+        }
+      }
+    },
+    "Generato con Argo per iPhone · trascrizione sul dispositivo · %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erstellt mit Argo für iPhone · Transkription auf dem Gerät · %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generated with Argo for iPhone · on-device transcription · %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generado con Argo para iPhone · transcripción en el dispositivo · %@"
+          }
+        }
+      }
+    },
+    "Ho informato i partecipanti · Registra": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich habe die Teilnehmer informiert · Aufnehmen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I have informed the participants · Record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "He informado a los participantes · Grabar"
+          }
+        }
+      }
+    },
+    "Il Mac ha risposto con un errore (HTTP %lld).": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Mac hat mit einem Fehler geantwortet (HTTP %lld)."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Mac replied with an error (HTTP %lld)."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El Mac ha respondido con un error (HTTP %lld)."
+          }
+        }
+      }
+    },
+    "Il Mac ha risposto, ma il verbale non è nel formato atteso. Prova un altro modello.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Mac hat geantwortet, aber das Protokoll hat nicht das erwartete Format. Versuche ein anderes Modell."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Mac replied, but the minutes are not in the expected format. Try another model."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El Mac ha respondido, pero el acta no tiene el formato esperado. Prueba otro modelo."
+          }
+        }
+      }
+    },
+    "Il Mac scrive il verbale con %@…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Mac schreibt das Protokoll mit %@…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Mac is writing the minutes with %@…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El Mac escribe el acta con %@…"
+          }
+        }
+      }
+    },
+    "Il file audio di questa sessione non è più disponibile.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Audiodatei dieser Sitzung ist nicht mehr verfügbar."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The audio file of this session is no longer available."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El archivo de audio de esta sesión ya no está disponible."
+          }
+        }
+      }
+    },
+    "Il file audio di questo incontro è danneggiato: probabilmente la registrazione si è interrotta in modo anomalo (telefonata, app chiusa dal sistema). Argo ha provato a recuperarlo senza riuscirci: puoi eliminare l'incontro.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Audiodatei dieses Termins ist beschädigt: Die Aufnahme wurde wahrscheinlich ungewöhnlich unterbrochen (Anruf, App vom System geschlossen). Argo hat erfolglos versucht, sie wiederherzustellen: Du kannst den Termin löschen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The audio file of this meeting is damaged: the recording probably stopped abnormally (phone call, app closed by the system). Argo tried to recover it without success: you can delete the meeting."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El archivo de audio de esta reunión está dañado: probablemente la grabación se interrumpió de forma anómala (llamada, app cerrada por el sistema). Argo ha intentado recuperarlo sin éxito: puedes eliminar la reunión."
+          }
+        }
+      }
+    },
+    "Il file non è un'anagrafe voci di Argo (formato argo.voci v1).": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Datei ist kein Argo-Stimmenverzeichnis (Format argo.voci v1)."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file is not an Argo voice registry (argo.voci v1 format)."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El archivo no es un registro de voces de Argo (formato argo.voci v1)."
+          }
+        }
+      }
+    },
+    "Il mio Mac (Ollama)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mein Mac (Ollama)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My Mac (Ollama)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mi Mac (Ollama)"
+          }
+        }
+      }
+    },
+    "Il modello di Apple Intelligence si sta ancora scaricando.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Modell von Apple Intelligence wird noch geladen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Apple Intelligence model is still downloading."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El modelo de Apple Intelligence aún se está descargando."
+          }
+        }
+      }
+    },
+    "Il modello scelto non è installato sul Mac.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das gewählte Modell ist auf dem Mac nicht installiert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The chosen model is not installed on the Mac."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El modelo elegido no está instalado en el Mac."
+          }
+        }
+      }
+    },
+    "Importa audio": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio importieren"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import audio"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar audio"
+          }
+        }
+      }
+    },
+    "Importa da file…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus Datei importieren…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import from file…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar desde archivo…"
+          }
+        }
+      }
+    },
+    "Importazione non riuscita": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import fehlgeschlagen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import failed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importación fallida"
+          }
+        }
+      }
+    },
+    "Impostazioni": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes"
+          }
+        }
+      }
+    },
+    "In pausa": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausiert"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paused"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En pausa"
+          }
+        }
+      }
+    },
+    "Incontro": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termin"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meeting"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reunión"
+          }
+        }
+      }
+    },
+    "Incontro del %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Termin vom %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meeting of %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reunión del %@"
+          }
+        }
+      }
+    },
+    "Indica l'indirizzo del Mac in Impostazioni › Verbale.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gib die Adresse des Macs unter Einstellungen › Protokoll ein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the Mac's address in Settings › Minutes."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indica la dirección del Mac en Ajustes › Acta."
+          }
+        }
+      }
+    },
+    "Indirizzo non valido.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ungültige Adresse."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid address."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dirección no válida."
+          }
+        }
+      }
+    },
+    "Informazioni": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Información"
+          }
+        }
+      }
+    },
+    "Inizia a leggere": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mit dem Lesen beginnen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start reading"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza a leer"
+          }
+        }
+      }
+    },
+    "Invia ad Argo sul computer": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An Argo auf dem Computer senden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send to Argo on your computer"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar a Argo en el ordenador"
+          }
+        }
+      }
+    },
+    "Invia ora ad Argo sul computer": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jetzt an Argo auf dem Computer senden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send to Argo on your computer now"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar ahora a Argo en el ordenador"
+          }
+        }
+      }
+    },
+    "Inviato ad Argo sul computer": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An Argo auf dem Computer gesendet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent to Argo on your computer"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviada a Argo en el ordenador"
+          }
+        }
+      }
+    },
+    "Inviato ad Argo sul computer il %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Am %@ an Argo auf dem Computer gesendet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent to Argo on your computer on %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviada a Argo en el ordenador el %@"
+          }
+        }
+      }
+    },
+    "Invio ad Argo sul computer…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senden an Argo auf dem Computer…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sending to Argo on your computer…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envío a Argo en el ordenador…"
+          }
+        }
+      }
+    },
+    "Io": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Me"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yo"
+          }
+        }
+      }
+    },
+    "Italiano, English, Español o Deutsch: si sceglie nelle Impostazioni di iOS › Argo › Lingua. La lingua della riunione resta una scelta a parte.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Italiano, English, Español oder Deutsch: Wähle sie in den iOS-Einstellungen › Argo › Sprache. Die Sprache des Termins ist eine eigene Wahl."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Italiano, English, Español or Deutsch: choose it in iOS Settings › Argo › Language. The meeting language is a separate choice."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Italiano, English, Español o Deutsch: se elige en Ajustes de iOS › Argo › Idioma. El idioma de la reunión es una opción aparte."
+          }
+        }
+      }
+    },
+    "L'anagrafe è vuota o contiene impronte non compatibili.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Verzeichnis ist leer oder enthält inkompatible Stimmabdrücke."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The registry is empty or contains incompatible voiceprints."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El registro está vacío o contiene huellas no compatibles."
+          }
+        }
+      }
+    },
+    "L'audio viene cancellato subito: resta solo un'impronta numerica, salvata su questo iPhone e mai esportata.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Audio wird sofort gelöscht: Es bleibt nur ein numerischer Abdruck, gespeichert auf diesem iPhone und nie exportiert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The audio is deleted immediately: only a numeric voiceprint remains, saved on this iPhone and never exported."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El audio se borra enseguida: solo queda una huella numérica, guardada en este iPhone y nunca exportada."
+          }
+        }
+      }
+    },
+    "La lingua %@ non è supportata dalla trascrizione sul dispositivo.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Sprache %@ wird von der Transkription auf dem Gerät nicht unterstützt."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The language %@ is not supported by on-device transcription."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El idioma %@ no es compatible con la transcripción en el dispositivo."
+          }
+        }
+      }
+    },
+    "La mia voce": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meine Stimme"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My voice"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mi voz"
+          }
+        }
+      }
+    },
+    "La trascrizione avviene sempre sull'iPhone. Il modello della lingua viene scaricato da Apple la prima volta.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Transkription findet immer auf dem iPhone statt. Apple lädt das Sprachmodell beim ersten Mal herunter."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcription always happens on the iPhone. Apple downloads the language model the first time."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La transcripción siempre se hace en el iPhone. Apple descarga el modelo del idioma la primera vez."
+          }
+        }
+      }
+    },
+    "Leggi ad alta voce, con il tuo tono normale, in un posto tranquillo.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lies laut, in deinem normalen Ton, an einem ruhigen Ort."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read aloud, in your normal tone, in a quiet place."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lee en voz alta, con tu tono normal, en un lugar tranquilo."
+          }
+        }
+      }
+    },
+    "Leggo la foto %lld di %lld…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich lese Foto %lld von %lld…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading photo %lld of %lld…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leo la foto %lld de %lld…"
+          }
+        }
+      }
+    },
+    "Licenze e riconoscimenti": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lizenzen und Danksagungen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licenses and acknowledgements"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licencias y reconocimientos"
+          }
+        }
+      }
+    },
+    "Lingua dell'app": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprache der App"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App language"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idioma de la app"
+          }
+        }
+      }
+    },
+    "Lingua della riunione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprache des Termins"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meeting language"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idioma de la reunión"
+          }
+        }
+      }
+    },
+    "Mac e iPhone sulla stessa Wi-Fi. Sul Mac, Ollama deve accettare connessioni dalla rete locale. La trascrizione viaggia solo tra i tuoi dispositivi.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac und iPhone im selben WLAN. Auf dem Mac muss Ollama Verbindungen aus dem lokalen Netz annehmen. Das Transkript reist nur zwischen deinen Geräten."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac and iPhone on the same Wi-Fi. On the Mac, Ollama must accept connections from the local network. The transcript only travels between your devices."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac y iPhone en la misma wifi. En el Mac, Ollama debe aceptar conexiones de la red local. La transcripción solo viaja entre tus dispositivos."
+          }
+        }
+      }
+    },
+    "Mac raggiunto · %lld modelli installati": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac erreicht · %lld Modelle installiert"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac reached · %lld models installed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac encontrado · %lld modelos instalados"
+          }
+        }
+      }
+    },
+    "Metti in pausa": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausieren"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausar"
+          }
+        }
+      }
+    },
+    "Mi collego ad Argo sul computer…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich verbinde mich mit Argo auf dem Computer…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecting to Argo on your computer…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Me conecto a Argo en el ordenador…"
+          }
+        }
+      }
+    },
+    "Modello": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modell"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modelo"
+          }
+        }
+      }
+    },
+    "Nessun computer collegato.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein Computer verbunden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No computer connected."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ningún ordenador conectado."
+          }
+        }
+      }
+    },
+    "Nessun incontro": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch keine Termine"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No meetings yet"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ninguna reunión"
+          }
+        }
+      }
+    },
+    "Nessuno, solo trascrizione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keiner, nur Transkript"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None, transcript only"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ninguno, solo transcripción"
+          }
+        }
+      }
+    },
+    "Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich habe deine Stimme in diesem Termin nicht erkannt: Du kannst die Namen unter Teilnehmer von Hand vergeben."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I didn't recognise your voice in this meeting: you can name the voices by hand in Participants."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No he reconocido tu voz en esta reunión: puedes poner los nombres a mano en Participantes."
+          }
+        }
+      }
+    },
+    "Non ho trovato parlato nella registrazione.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich habe in der Aufnahme keine Sprache gefunden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I found no speech in the recording."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No he encontrado voz en la grabación."
+          }
+        }
+      }
+    },
+    "Non raggiungo Argo sul computer: deve essere aperto e sulla stessa rete.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich erreiche Argo auf dem Computer nicht: Es muss geöffnet und im selben Netz sein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I can't reach Argo on your computer: it must be open and on the same network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No llego a Argo en el ordenador: debe estar abierto y en la misma red."
+          }
+        }
+      }
+    },
+    "Non raggiungo il Mac. Controlla che sia acceso, sulla stessa Wi-Fi e che Ollama accetti connessioni dalla rete.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich erreiche den Mac nicht. Prüfe, ob er eingeschaltet und im selben WLAN ist und ob Ollama Netzwerkverbindungen annimmt."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I can't reach the Mac. Check that it is on, on the same Wi-Fi and that Ollama accepts network connections."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No llego al Mac. Comprueba que esté encendido, en la misma wifi y que Ollama acepte conexiones de la red."
+          }
+        }
+      }
+    },
+    "Non riesco a salvare la foto.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich kann das Foto nicht speichern."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I can't save the photo."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No puedo guardar la foto."
+          }
+        }
+      }
+    },
+    "Non riesco ad avviare la registrazione.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich kann die Aufnahme nicht starten."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I can't start the recording."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No puedo iniciar la grabación."
+          }
+        }
+      }
+    },
+    "Non sono riuscito a calcolare l'impronta della voce. Riprova in un posto più tranquillo.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich konnte den Stimmabdruck nicht berechnen. Versuche es an einem ruhigeren Ort erneut."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I couldn't compute the voiceprint. Try again in a quieter place."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No he podido calcular la huella de la voz. Vuelve a intentarlo en un lugar más tranquilo."
+          }
+        }
+      }
+    },
+    "OK": {
+      "shouldTranslate": false
+    },
+    "Pacchetto (AirDrop, File…)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paket (AirDrop, Dateien…)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Package (AirDrop, Files…)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paquete (AirDrop, Archivos…)"
+          }
+        }
+      }
+    },
+    "Parlante %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprecher %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speaker %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hablante %@"
+          }
+        }
+      }
+    },
+    "Parlanti non riconosciuti (%@). La trascrizione c'è comunque.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprecher nicht erkannt (%@). Das Transkript ist trotzdem da."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speakers not recognised (%@). The transcript is there anyway."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hablantes no reconocidos (%@). La transcripción está igualmente."
+          }
+        }
+      }
+    },
+    "Partecipanti": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teilnehmer"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Participants"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Participantes"
+          }
+        }
+      }
+    },
+    "Perfetto, puoi fermarti": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfekt, du kannst aufhören"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfect, you can stop"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfecto, puedes parar"
+          }
+        }
+      }
+    },
+    "Prendo appunti · parte %lld di %lld…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich mache Notizen · Teil %lld von %lld…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taking notes · part %lld of %lld…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomo notas · parte %lld de %lld…"
+          }
+        }
+      }
+    },
+    "Preparo…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorbereitung…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparing…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparando…"
+          }
+        }
+      }
+    },
+    "Prima di registrare": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vor der Aufnahme"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Before you record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antes de grabar"
+          }
+        }
+      }
+    },
+    "Privacy": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenschutz"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacidad"
+          }
+        }
+      }
+    },
+    "Prova connessione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbindung testen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test connection"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Probar conexión"
+          }
+        }
+      }
+    },
+    "Punti chiave": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kernpunkte"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key points"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puntos clave"
+          }
+        }
+      }
+    },
+    "Puoi tornare all'elenco: Argo continua. Tieni l'app aperta finché finisce: lo schermo resta acceso da solo.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kannst zur Liste zurückkehren: Argo arbeitet weiter. Lass die App offen, bis sie fertig ist: Der Bildschirm bleibt von selbst an."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can go back to the list: Argo keeps going. Keep the app open until it finishes: the screen stays on by itself."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes volver a la lista: Argo continúa. Mantén la app abierta hasta que termine: la pantalla se queda encendida sola."
+          }
+        }
+      }
+    },
+    "Questo iPhone non supporta Apple Intelligence.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dieses iPhone unterstützt Apple Intelligence nicht."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This iPhone does not support Apple Intelligence."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este iPhone no admite Apple Intelligence."
+          }
+        }
+      }
+    },
+    "Questo non è il QR di Argo: su computer apri Incontri › Collega iPhone.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das ist nicht der QR-Code von Argo: Öffne am Computer Termine › iPhone verbinden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is not Argo's QR code: on the computer open Meetings › Connect iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este no es el QR de Argo: en el ordenador abre Reuniones › Conectar iPhone."
+          }
+        }
+      }
+    },
+    "Registra": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufnehmen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabar"
+          }
+        }
+      }
+    },
+    "Registra di nuovo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erneut aufnehmen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record again"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabar de nuevo"
+          }
+        }
+      }
+    },
+    "Registra la mia voce (20 secondi)": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meine Stimme aufnehmen (20 Sekunden)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record my voice (20 seconds)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabar mi voz (20 segundos)"
+          }
+        }
+      }
+    },
+    "Registrazione troppo corta: servono almeno 10 secondi di parlato.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufnahme zu kurz: Mindestens 10 Sekunden Sprache sind nötig."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording too short: at least 10 seconds of speech are needed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabación demasiado corta: hacen falta al menos 10 segundos de voz."
+          }
+        }
+      }
+    },
+    "Relazione interrotta prima della fine. Premi «Crea la relazione» per riprendere.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht vor dem Ende unterbrochen. Tippe auf «Bericht erstellen», um fortzufahren."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report stopped before the end. Tap «Create the report» to resume."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe interrumpido antes del final. Pulsa «Crear el informe» para continuar."
+          }
+        }
+      }
+    },
+    "Relazione scritta da %@. Rileggila prima di condividerla.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht geschrieben von %@. Lies ihn, bevor du ihn teilst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report written by %@. Review it before you share it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe escrito por %@. Revísalo antes de compartirlo."
+          }
+        }
+      }
+    },
+    "Riassunto": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zusammenfassung"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Summary"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resumen"
+          }
+        }
+      }
+    },
+    "Riconosco i parlanti (la prima volta scarico il modello)…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich erkenne die Sprecher (beim ersten Mal lade ich das Modell herunter)…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recognising the speakers (the first time I download the model)…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reconozco a los hablantes (la primera vez descargo el modelo)…"
+          }
+        }
+      }
+    },
+    "Rifai la relazione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht neu erstellen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redo the report"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rehacer el informe"
+          }
+        }
+      }
+    },
+    "Riferimenti": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Angaben"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "References"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Referencias"
+          }
+        }
+      }
+    },
+    "Riprendi la registrazione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufnahme fortsetzen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume recording"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reanudar la grabación"
+          }
+        }
+      }
+    },
+    "Riprova": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erneut versuchen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reintentar"
+          }
+        }
+      }
+    },
+    "Risposta inattesa da Argo sul computer.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unerwartete Antwort von Argo auf dem Computer."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unexpected response from Argo on your computer."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de Argo en el ordenador."
+          }
+        }
+      }
+    },
+    "Scarico il modello per la lingua (solo la prima volta)…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich lade das Sprachmodell herunter (nur beim ersten Mal)…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading the language model (only the first time)…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descargo el modelo del idioma (solo la primera vez)…"
+          }
+        }
+      }
+    },
+    "Scarta": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwerfen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Descartar"
+          }
+        }
+      }
+    },
+    "Scartare la registrazione?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufnahme verwerfen?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard the recording?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Descartar la grabación?"
+          }
+        }
+      }
+    },
+    "Scatta": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufnehmen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take photo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hacer foto"
+          }
+        }
+      }
+    },
+    "Scatta una foto": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foto aufnehmen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take a photo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hacer una foto"
+          }
+        }
+      }
+    },
+    "Scollega": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trennen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disconnect"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desconectar"
+          }
+        }
+      }
+    },
+    "Scrivo il verbale con Apple Intelligence…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich schreibe das Protokoll mit Apple Intelligence…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Writing the minutes with Apple Intelligence…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribo el acta con Apple Intelligence…"
+          }
+        }
+      }
+    },
+    "Se elimini o reinstalli l'app si perdono: prima inviali ad Argo sul computer.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn du die App löschst oder neu installierst, gehen sie verloren: Sende sie vorher an Argo auf dem Computer."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you delete or reinstall the app they are lost: send them to Argo on your computer first."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si eliminas o reinstalas la app se pierden: antes envíalas a Argo en el ordenador."
+          }
+        }
+      }
+    },
+    "Serve il permesso di riconoscimento vocale: lo trovi in Impostazioni › Privacy › Riconoscimento vocale.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Berechtigung zur Spracherkennung wird benötigt: Du findest sie unter Einstellungen › Datenschutz › Spracherkennung."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech recognition permission is needed: you can find it in Settings › Privacy › Speech Recognition."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hace falta el permiso de reconocimiento de voz: lo encuentras en Ajustes › Privacidad › Reconocimiento de voz."
+          }
+        }
+      }
+    },
+    "Serve l'accesso al microfono.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zugriff auf das Mikrofon wird benötigt."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone access is needed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hace falta acceso al micrófono."
+          }
+        }
+      }
+    },
+    "Serve l'accesso al microfono: lo trovi in Impostazioni › Privacy › Microfono.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zugriff auf das Mikrofon wird benötigt: Du findest ihn unter Einstellungen › Datenschutz › Mikrofon."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone access is needed: you can find it in Settings › Privacy › Microphone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hace falta acceso al micrófono: lo encuentras en Ajustes › Privacidad › Micrófono."
+          }
+        }
+      }
+    },
+    "Sincronizza ora": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jetzt synchronisieren"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync now"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronizar ahora"
+          }
+        }
+      }
+    },
+    "Solo testo della relazione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nur der Text des Berichts"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report text only"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo el texto del informe"
+          }
+        }
+      }
+    },
+    "Sto registrando · l'audio viene eliminato dopo la trascrizione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aufnahme läuft · das Audio wird nach der Transkription gelöscht"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording · the audio is deleted after transcription"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabando · el audio se elimina tras la transcripción"
+          }
+        }
+      }
+    },
+    "Sul computer apri **Argo › Incontri › 📱 Collega iPhone…** e inquadra il codice. iPhone e computer devono essere sulla stessa rete.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffne am Computer **Argo › Termine › 📱 iPhone verbinden…** und scanne den Code. iPhone und Computer müssen im selben Netz sein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the computer open **Argo › Meetings › 📱 Connect iPhone…** and scan the code. iPhone and computer must be on the same network."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En el ordenador abre **Argo › Reuniones › 📱 Conectar iPhone…** y escanea el código. El iPhone y el ordenador deben estar en la misma red."
+          }
+        }
+      }
+    },
+    "Sul computer: Argo › Voci › 📱 Per iPhone…; arriva da sola con il collegamento, oppure via AirDrop («Apri con Argo»). Negli incontri le voci note prendono il loro nome. Dati biometrici: restano su questo iPhone e non vengono mai esportati.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Am Computer: Argo › Stimmen › 📱 Für iPhone…; es kommt über die Verbindung von selbst oder per AirDrop («Mit Argo öffnen»). In Terminen erhalten bekannte Stimmen ihren Namen. Biometrische Daten: Sie bleiben auf diesem iPhone und werden nie exportiert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the computer: Argo › Voices › 📱 For iPhone…; it arrives by itself through the connection, or via AirDrop («Open with Argo»). In meetings, known voices get their names. Biometric data: it stays on this iPhone and is never exported."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En el ordenador: Argo › Voces › 📱 Para iPhone…; llega sola con la conexión, o por AirDrop («Abrir con Argo»). En las reuniones las voces conocidas reciben su nombre. Datos biométricos: se quedan en este iPhone y nunca se exportan."
+          }
+        }
+      }
+    },
+    "Testo delle licenze non trovato. Lo trovi su https://github.com/Argo-s-new-dreams/argo-ios/blob/main/LICENZE-TERZE-PARTI.md": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lizenztext nicht gefunden. Du findest ihn unter https://github.com/Argo-s-new-dreams/argo-ios/blob/main/LICENZE-TERZE-PARTI.md"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License text not found. You can find it at https://github.com/Argo-s-new-dreams/argo-ios/blob/main/LICENZE-TERZE-PARTI.md"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se ha encontrado el texto de las licencias. Está en https://github.com/Argo-s-new-dreams/argo-ios/blob/main/LICENZE-TERZE-PARTI.md"
+          }
+        }
+      }
+    },
+    "Testo letto": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelesener Text"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text read"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texto leído"
+          }
+        }
+      }
+    },
+    "Titolo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Titel"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Título"
+          }
+        }
+      }
+    },
+    "Tocca «Registra» qui sotto: durante l'incontro puoi scattare foto a biglietti da visita e documenti. Trascrizione, voci e testo delle foto vengono elaborati sul tuo iPhone.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tippe unten auf «Aufnehmen»: Während des Termins kannst du Visitenkarten und Dokumente fotografieren. Transkript, Stimmen und Fototext werden auf deinem iPhone verarbeitet."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap «Record» below: during the meeting you can take photos of business cards and documents. Transcript, voices and photo text are processed on your iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca «Grabar» aquí abajo: durante la reunión puedes hacer fotos de tarjetas de visita y documentos. La transcripción, las voces y el texto de las fotos se procesan en tu iPhone."
+          }
+        }
+      }
+    },
+    "Trascrivi e crea la relazione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transkribieren und Bericht erstellen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcribe and create the report"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcribir y crear el informe"
+          }
+        }
+      }
+    },
+    "Trascrivo sul dispositivo…": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transkription auf dem Gerät…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcribing on the device…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcribo en el dispositivo…"
+          }
+        }
+      }
+    },
+    "Trascrizione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transkript"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcript"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcripción"
+          }
+        }
+      }
+    },
+    "Trascrizione, foto e relazione vengono cancellate da questo iPhone. Se non l'hai inviato ad Argo sul computer, non si possono recuperare.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transkript, Fotos und Bericht werden von diesem iPhone gelöscht. Wenn du ihn nicht an Argo auf dem Computer gesendet hast, lassen sie sich nicht wiederherstellen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcript, photos and report are deleted from this iPhone. If you haven't sent it to Argo on your computer, they can't be recovered."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La transcripción, las fotos y el informe se borran de este iPhone. Si no la has enviado a Argo en el ordenador, no se pueden recuperar."
+          }
+        }
+      }
+    },
+    "Tutto aggiornato.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alles aktuell."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All up to date."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo actualizado."
+          }
+        }
+      }
+    },
+    "Ultima sincronizzazione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letzte Synchronisierung"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last sync"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Última sincronización"
+          }
+        }
+      }
+    },
+    "Uno va prima trascritto.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einer muss zuerst transkribiert werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One must be transcribed first."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una debe transcribirse antes."
+          }
+        }
+      }
+    },
+    "Verbale": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protokoll"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minutes"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acta"
+          }
+        }
+      }
+    },
+    "Verbale disattivato nelle impostazioni: c'è solo la trascrizione.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protokoll in den Einstellungen ausgeschaltet: Es gibt nur das Transkript."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minutes turned off in settings: there is only the transcript."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acta desactivada en los ajustes: solo hay transcripción."
+          }
+        }
+      }
+    },
+    "Versione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versión"
+          }
+        }
+      }
+    },
+    "Voce registrata il %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stimme aufgenommen am %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice recorded on %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voz grabada el %@"
+          }
+        }
+      }
+    },
+    "eliminato": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gelöscht"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "deleted"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "eliminado"
+          }
+        }
+      }
+    },
+    "entro %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bis %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "by %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "antes del %@"
+          }
+        }
+      }
+    },
+    "nessun testo leggibile": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "kein lesbarer Text"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no readable text"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ningún texto legible"
+          }
+        }
+      }
+    },
+    "nome-del-mac.local oppure 192.168.1.20": {
+      "shouldTranslate": false
+    },
+    "relazione: %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bericht: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "report: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "informe: %@"
+          }
+        }
+      }
+    },
+    "solo trascrizione": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nur Transkript"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "transcript only"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "solo transcripción"
+          }
+        }
+      }
+    },
+    "sul dispositivo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "auf dem Gerät"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "on the device"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "en el dispositivo"
+          }
+        }
+      }
+    },
+    "· %@": {
+      "shouldTranslate": false
+    },
+    "📷 %@": {
+      "shouldTranslate": false
+    }
+  },
+  "version": "1.0"
+}

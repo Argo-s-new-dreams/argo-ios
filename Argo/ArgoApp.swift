@@ -29,7 +29,8 @@ struct ArgoApp: App {
                 guard url.pathExtension.lowercased() == "argovoci" else { return }
                 do {
                     let anagrafe = try ArchivioAnagrafe.importa(da: url)
-                    esitoImport = "Anagrafe importata: \(anagrafe.voci.count) voci (\(anagrafe.voci.map(\.nome).joined(separator: ", ")))."
+                    let nomi = anagrafe.voci.map(\.nome).joined(separator: ", ")
+                    esitoImport = String(localized: "Anagrafe importata: \(anagrafe.voci.count) voci (\(nomi)).")
                 } catch {
                     esitoImport = error.localizedDescription
                 }

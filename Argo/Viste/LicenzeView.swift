@@ -6,7 +6,7 @@ struct LicenzeView: View {
     private let testo: String = {
         guard let url = Bundle.main.url(forResource: "LicenzeTerzeParti", withExtension: "txt"),
               let contenuto = try? String(contentsOf: url, encoding: .utf8) else {
-            return "Testo delle licenze non trovato. Lo trovi su https://github.com/Argo-s-new-dreams/argo-ios/blob/main/LICENZE-TERZE-PARTI.md"
+            return String(localized: "Testo delle licenze non trovato. Lo trovi su https://github.com/Argo-s-new-dreams/argo-ios/blob/main/LICENZE-TERZE-PARTI.md")
         }
         return contenuto
     }()

@@ -1,6 +1,9 @@
 name: Argo
 options:
   bundleIdPrefix: blog.argosnewdreams
+  # Interfaccia in italiano (lingua di sviluppo), inglese, spagnolo e tedesco: Argo/Localizable.xcstrings
+  # e Argo/InfoPlist.xcstrings (permessi). iOS mostra la scelta in Impostazioni › Argo › Lingua.
+  developmentLanguage: it
   deploymentTarget:
     iOS: "26.0"
   createIntermediateGroups: true
@@ -8,7 +11,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.0.1"
+    MARKETING_VERSION: "1.1"
     CURRENT_PROJECT_VERSION: "20261120.2057"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: "WPR2P5Q2S8"

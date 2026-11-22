@@ -73,8 +73,8 @@ enum ErroreAnagrafe: LocalizedError {
     case formato, impronte
     var errorDescription: String? {
         switch self {
-        case .formato: "Il file non è un'anagrafe voci di Argo (formato argo.voci v1)."
-        case .impronte: "L'anagrafe è vuota o contiene impronte non compatibili."
+        case .formato: String(localized: "Il file non è un'anagrafe voci di Argo (formato argo.voci v1).")
+        case .impronte: String(localized: "L'anagrafe è vuota o contiene impronte non compatibili.")
         }
     }
 }

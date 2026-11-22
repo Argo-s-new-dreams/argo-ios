@@ -5,14 +5,12 @@ import Speech
 /// I modelli linguistici vengono scaricati da Apple la prima volta e poi restano sul telefono.
 enum Trascrittore {
 
-    static let lingueProposte: [(codice: String, nome: String)] = [
-        ("it-IT", "Italiano"),
-        ("en-US", "Inglese (USA)"),
-        ("en-GB", "Inglese (UK)"),
-        ("de-DE", "Tedesco"),
-        ("fr-FR", "Francese"),
-        ("es-ES", "Spagnolo")
-    ]
+    /// Lingue della riunione (indipendenti dalla lingua dell'app), con il nome nella lingua dell'app.
+    static var lingueProposte: [(codice: String, nome: String)] {
+        ["it-IT", "en-US", "en-GB", "de-DE", "fr-FR", "es-ES"].map { codice in
+            (codice, Locale.current.localizedString(forIdentifier: codice)?.localizedCapitalized ?? codice)
+        }
+    }
 
     static func trascrivi(
         file url: URL,
@@ -32,11 +30,11 @@ enum Trascrittore {
         )
 
         if let richiesta = try await AssetInventory.assetInstallationRequest(supporting: [transcriber]) {
-            await fase("Scarico il modello per la lingua (solo la prima volta)…")
+            await fase(String(localized: "Scarico il modello per la lingua (solo la prima volta)…"))
             try await richiesta.downloadAndInstall()
         }
 
-        await fase("Trascrivo sul dispositivo…")
+        await fase(String(localized: "Trascrivo sul dispositivo…"))
         let analyzer = SpeechAnalyzer(modules: [transcriber])
         let file = try AVAudioFile(forReading: url)
 
@@ -88,11 +86,11 @@ enum ErroreTrascrizione: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .nonAutorizzato:
-            "Serve il permesso di riconoscimento vocale: lo trovi in Impostazioni › Privacy › Riconoscimento vocale."
+            String(localized: "Serve il permesso di riconoscimento vocale: lo trovi in Impostazioni › Privacy › Riconoscimento vocale.")
         case .linguaNonSupportata(let codice):
-            "La lingua \(codice) non è supportata dalla trascrizione sul dispositivo."
+            String(localized: "La lingua \(codice) non è supportata dalla trascrizione sul dispositivo.")
         case .nessunParlato:
-            "Non ho trovato parlato nella registrazione."
+            String(localized: "Non ho trovato parlato nella registrazione.")
         }
     }
 }
