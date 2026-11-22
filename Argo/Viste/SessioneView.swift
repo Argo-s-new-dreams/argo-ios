@@ -25,7 +25,7 @@ struct SessioneView: View {
                     if sessione.durata > 0 {
                         LabeledContent("Durata", value: Formato.durata(sessione.durata))
                     }
-                    LabeledContent("Audio", value: sessione.nomeFileAudio == nil ? "eliminato" : "sul dispositivo")
+                    LabeledContent("Audio", value: sessione.nomeFileAudio == nil ? String(localized: "eliminato") : String(localized: "sul dispositivo"))
                 }
 
                 // Stile Argo: l'azione principale si vede subito, non in fondo dopo la trascrizione
@@ -106,7 +106,7 @@ struct SessioneView: View {
                         ForEach(sessione.azioni) { azione in
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(azione.descrizione)
-                                let dettagli = [azione.responsabile, azione.scadenza.map { "entro \($0)" }]
+                                let dettagli = [azione.responsabile, azione.scadenza.map { String(localized: "entro \($0)") }]
                                     .compactMap { $0 }.filter { !$0.isEmpty }
                                 if !dettagli.isEmpty {
                                     Text(dettagli.joined(separator: " · "))
@@ -257,8 +257,8 @@ struct SessioneView: View {
     }
 
     private var etichettaElabora: String {
-        if !sessione.haTrascrizione { return "Trascrivi e crea la relazione" }
-        return sessione.stato == .completata ? "Rifai la relazione" : "Crea la relazione"
+        if !sessione.haTrascrizione { return String(localized: "Trascrivi e crea la relazione") }
+        return sessione.stato == .completata ? String(localized: "Rifai la relazione") : String(localized: "Crea la relazione")
     }
 
     private func nomeBinding(_ id: String) -> Binding<String> {
@@ -274,7 +274,7 @@ struct SessioneView: View {
 
     private func inviaAdArgo() async {
         invioInCorso = true
-        faseInvio = "Invio ad Argo sul computer…"
+        faseInvio = String(localized: "Invio ad Argo sul computer…")
         do {
             try await Ponte.invia(sessione)
         } catch {
@@ -327,7 +327,7 @@ private struct RigaCronologia: View {
                         Text("📷 \(Formato.durata(foto.secondo))")
                             .font(.caption2.monospacedDigit())
                             .foregroundStyle(.secondary)
-                        Text(foto.testoOCR.isEmpty ? "Foto" : foto.testoOCR)
+                        Text(foto.testoOCR.isEmpty ? String(localized: "Foto") : foto.testoOCR)
                             .font(.caption)
                             .lineLimit(2)
                     }

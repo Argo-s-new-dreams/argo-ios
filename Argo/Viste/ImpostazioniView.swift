@@ -11,7 +11,7 @@ struct ImpostazioniView: View {
     @AppStorage("ollamaModello") private var ollamaModello = ""
 
     @State private var profiloVoce = ArchivioVoce.carica()
-    @State private var nomeVoce = ArchivioVoce.carica()?.nome ?? "Io"
+    @State private var nomeVoce = ArchivioVoce.carica()?.nome ?? String(localized: "Io")
     @State private var mostraProfiloVoce = false
     @State private var confermaEliminaVoce = false
     @State private var anagrafe = ArchivioAnagrafe.carica()
@@ -39,6 +39,8 @@ struct ImpostazioniView: View {
     var body: some View {
         NavigationStack {
             Form {
+                sezioneLinguaApp
+
                 Section {
                     Picker("Lingua della riunione", selection: $lingua) {
                         ForEach(Trascrittore.lingueProposte, id: \.codice) { voce in
@@ -92,7 +94,7 @@ struct ImpostazioniView: View {
                 }
             }
             .sheet(isPresented: $mostraProfiloVoce) {
-                ProfiloVoceView(nome: nomeVoce.isEmpty ? "Io" : nomeVoce) { profiloVoce = $0 }
+                ProfiloVoceView(nome: nomeVoce.isEmpty ? String(localized: "Io") : nomeVoce) { profiloVoce = $0 }
             }
             .navigationTitle("Impostazioni")
             .navigationBarTitleDisplayMode(.inline)
@@ -104,6 +106,22 @@ struct ImpostazioniView: View {
                     }
                 }
             }
+        }
+    }
+
+    // MARK: Lingua dell'app
+
+    /// iOS mostra la scelta della lingua per app nelle Impostazioni di sistema (Argo › Lingua), perché Argo è
+    /// in quattro lingue. Qui la si vede e la si apre.
+    private var sezioneLinguaApp: some View {
+        Section {
+            Button {
+                if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+            } label: {
+                LabeledContent("Lingua dell'app", value: Locale.current.localizedString(forLanguageCode: Bundle.main.preferredLocalizations.first ?? "it")?.localizedCapitalized ?? "")
+            }
+        } footer: {
+            Text("Italiano, English, Español o Deutsch: si sceglie nelle Impostazioni di iOS › Argo › Lingua. La lingua della riunione resta una scelta a parte.")
         }
     }
 
@@ -197,7 +215,7 @@ struct ImpostazioniView: View {
         abbinamento = Ponte.abbinamento
         anagrafe = ArchivioAnagrafe.carica()
         sincronizzazione = esito ?? (abbinamento?.ultimaSincronizzazione != nil
-            ? "Tutto aggiornato." : "Argo sul computer non raggiungibile: deve essere aperto e sulla stessa rete.")
+            ? String(localized: "Tutto aggiornato.") : String(localized: "Argo sul computer non raggiungibile: deve essere aperto e sulla stessa rete."))
     }
 
     // MARK: Anagrafe voci (da Argo desktop)
@@ -207,7 +225,7 @@ struct ImpostazioniView: View {
             if let anagrafe {
                 DisclosureGroup("\(anagrafe.voci.count) voci · importata il \((anagrafe.importata ?? .now).formatted(date: .abbreviated, time: .shortened))") {
                     ForEach(anagrafe.voci, id: \.nome) { voce in
-                        LabeledContent(voce.nome, value: voce.campioni.map { "\($0) campioni" } ?? "")
+                        LabeledContent(voce.nome, value: voce.campioni.map { String(localized: "\($0) campioni") } ?? "")
                     }
                 }
                 Button("Aggiorna da file…", systemImage: "arrow.down.doc") { mostraImportaAnagrafe = true }
@@ -300,7 +318,7 @@ struct ImpostazioniView: View {
         provaInCorso = true
         defer { provaInCorso = false }
         guard let url = MotoreOllama.normalizza(ollamaIndirizzo) else {
-            esitoProva = .errore("Indirizzo non valido.")
+            esitoProva = .errore(String(localized: "Indirizzo non valido."))
             return
         }
         do {

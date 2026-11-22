@@ -101,8 +101,8 @@ enum ErroreVoce: LocalizedError {
     case registrazioneCorta, impronta
     var errorDescription: String? {
         switch self {
-        case .registrazioneCorta: "Registrazione troppo corta: servono almeno 10 secondi di parlato."
-        case .impronta: "Non sono riuscito a calcolare l'impronta della voce. Riprova in un posto più tranquillo."
+        case .registrazioneCorta: String(localized: "Registrazione troppo corta: servono almeno 10 secondi di parlato.")
+        case .impronta: String(localized: "Non sono riuscito a calcolare l'impronta della voce. Riprova in un posto più tranquillo.")
         }
     }
 }

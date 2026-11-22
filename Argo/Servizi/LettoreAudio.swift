@@ -79,8 +79,6 @@ enum LettoreAudio {
 enum ErroreAudio: LocalizedError {
     case danneggiato
     var errorDescription: String? {
-        "Il file audio di questo incontro è danneggiato: probabilmente la registrazione si è interrotta in modo "
-            + "anomalo (telefonata, app chiusa dal sistema). Argo ha provato a recuperarlo senza riuscirci: "
-            + "puoi eliminare l'incontro."
+        String(localized: "Il file audio di questo incontro è danneggiato: probabilmente la registrazione si è interrotta in modo anomalo (telefonata, app chiusa dal sistema). Argo ha provato a recuperarlo senza riuscirci: puoi eliminare l'incontro.")
     }
 }

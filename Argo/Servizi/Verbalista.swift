@@ -58,10 +58,10 @@ enum SceltaMotore: String, CaseIterable, Identifiable {
 
     var nome: String {
         switch self {
-        case .automatico: "Automatico"
-        case .apple: "Apple Intelligence (iPhone)"
-        case .mac: "Il mio Mac (Ollama)"
-        case .nessuno: "Nessuno, solo trascrizione"
+        case .automatico: String(localized: "Automatico")
+        case .apple: String(localized: "Apple Intelligence (iPhone)")
+        case .mac: String(localized: "Il mio Mac (Ollama)")
+        case .nessuno: String(localized: "Nessuno, solo trascrizione")
         }
     }
 }
@@ -109,13 +109,13 @@ enum Verbalista {
         case .available:
             return nil
         case .unavailable(.deviceNotEligible):
-            return "Questo iPhone non supporta Apple Intelligence."
+            return String(localized: "Questo iPhone non supporta Apple Intelligence.")
         case .unavailable(.appleIntelligenceNotEnabled):
-            return "Apple Intelligence non è attiva (Impostazioni › Apple Intelligence e Siri)."
+            return String(localized: "Apple Intelligence non è attiva (Impostazioni › Apple Intelligence e Siri).")
         case .unavailable(.modelNotReady):
-            return "Il modello di Apple Intelligence si sta ancora scaricando."
+            return String(localized: "Il modello di Apple Intelligence si sta ancora scaricando.")
         case .unavailable:
-            return "Apple Intelligence non è disponibile in questo momento."
+            return String(localized: "Apple Intelligence non è disponibile in questo momento.")
         }
     }
 
@@ -127,18 +127,18 @@ enum Verbalista {
 
         switch scelta {
         case .nessuno:
-            return .nonDisponibile("Verbale disattivato nelle impostazioni: c'è solo la trascrizione.")
+            return .nonDisponibile(String(localized: "Verbale disattivato nelle impostazioni: c'è solo la trascrizione."))
         case .apple:
             if appleDisponibile { return .pronto(MotoreApple()) }
-            return .nonDisponibile((motivoAppleNonDisponibile ?? "") + " Puoi usare il Mac in Impostazioni › Verbale.")
+            return .nonDisponibile((motivoAppleNonDisponibile ?? "") + String(localized: " Puoi usare il Mac in Impostazioni › Verbale."))
         case .mac:
             if let mac { return .pronto(mac) }
-            return .nonDisponibile("Indica l'indirizzo del Mac in Impostazioni › Verbale.")
+            return .nonDisponibile(String(localized: "Indica l'indirizzo del Mac in Impostazioni › Verbale."))
         case .automatico:
             if appleDisponibile { return .pronto(MotoreApple()) }
             if let mac { return .pronto(mac) }
             return .nonDisponibile((motivoAppleNonDisponibile ?? "") +
-                " Per avere il verbale, collega il tuo Mac con Ollama in Impostazioni › Verbale.")
+                String(localized: " Per avere il verbale, collega il tuo Mac con Ollama in Impostazioni › Verbale."))
         }
     }
 
@@ -155,7 +155,7 @@ enum Verbalista {
             let blocchi = dividi(materiale, massimo: massimo)
             var note: [String] = []
             for (indice, blocco) in blocchi.enumerated() {
-                await fase("Prendo appunti · parte \(indice + 1) di \(blocchi.count)…")
+                await fase(String(localized: "Prendo appunti · parte \(indice + 1) di \(blocchi.count)…"))
                 note.append(try await appunti(blocco))
             }
             materiale = note.joined(separator: "\n\n")
@@ -200,7 +200,7 @@ struct MotoreApple: MotoreVerbale {
             let sessione = LanguageModelSession(instructions: Verbalista.istruzioniNote)
             return try await sessione.respond(to: "Parte di trascrizione:\n\n\(blocco)").content
         }
-        await fase("Scrivo il verbale con Apple Intelligence…")
+        await fase(String(localized: "Scrivo il verbale con Apple Intelligence…"))
         let sessione = LanguageModelSession(instructions: Verbalista.istruzioniVerbale)
         return try await sessione.respond(
             to: "Redigi il verbale a partire da questo testo:\n\n\(materiale)",

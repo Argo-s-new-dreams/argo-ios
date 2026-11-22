@@ -3,11 +3,14 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
-## [1.0.1] · build (al prossimo invio)
+## [1.1] · build (al prossimo invio)
 
-Gli incontri lunghi non si interrompono più se esci dalla schermata, e in Impostazioni trovi licenze e riconoscimenti.
+Argo parla quattro lingue: italiano, inglese, spagnolo e tedesco. Gli incontri lunghi non si interrompono più se esci dalla schermata, e in Impostazioni trovi licenze e riconoscimenti.
 
 ### Aggiunto
+- **Interfaccia in italiano, inglese, spagnolo e tedesco**: schermate, avvisi, errori, fasi dell'elaborazione, testo condiviso della relazione e descrizioni dei permessi (microfono, fotocamera, rete locale, riconoscimento vocale). Argo segue la lingua dell'iPhone; per sceglierne un'altra solo per Argo: Impostazioni di iOS › Argo › Lingua (in Argo › Impostazioni › Lingua dell'app c'è il collegamento). Con l'iPhone in un'altra lingua Argo resta in italiano.
+- La **lingua della riunione** resta una scelta a parte; i nomi delle lingue ora sono scritti nella lingua dell'app.
+- Testi in `Argo/Localizable.xcstrings` e `Argo/InfoPlist.xcstrings`. La GitHub Action **Compila** ora esporta anche le traduzioni e si ferma se un testo non è tradotto (`strumenti/controlla-traduzioni.py`).
 - **Licenze e riconoscimenti** in Impostazioni › Informazioni: FluidAudio (Apache 2.0) con i componenti che include, e i modelli pyannote per la divisione delle voci (CC BY 4.0, convertiti in Core ML da Fluid Inference). Lo stesso elenco è in `LICENZE-TERZE-PARTI.md`.
 
 ### Corretto
@@ -16,7 +19,13 @@ Gli incontri lunghi non si interrompono più se esci dalla schermata, e in Impos
   - lo schermo resta acceso finché Argo lavora;
   - se Argo viene interrotto lo stesso, l'audio resta sul telefono e un messaggio chiaro dice come riprendere.
 
+### Note
+- Le traduzioni sono una prima versione da rileggere.
+- Il **verbale** scritto da Apple Intelligence o dal Mac resta per ora in italiano: le istruzioni al modello non sono cambiate.
+- I nomi dei menu di Argo sul computer citati in inglese, spagnolo e tedesco («Meetings › Connect iPhone…») saranno giusti quando anche Argo desktop avrà le quattro lingue.
+
 ### Da provare
+- Impostazioni di iOS › Argo › Lingua › English (poi Español, Deutsch): schermate, avvisi e richiesta del microfono nella nuova lingua; poi torna all'italiano
 - Registra un incontro di almeno 10 minuti, poi torna subito all'elenco: trascrizione, parlanti e relazione devono arrivare lo stesso. Lo schermo resta acceso finché Argo lavora
 - Impostazioni › Informazioni › Licenze e riconoscimenti: il testo si apre e si scorre fino in fondo
 

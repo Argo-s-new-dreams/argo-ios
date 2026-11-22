@@ -62,7 +62,7 @@ final class Sessione {
     func nome(di parlante: String?) -> String? {
         guard let parlante else { return nil }
         let nome = nomiParlanti[parlante]?.trimmingCharacters(in: .whitespaces) ?? ""
-        return nome.isEmpty ? "Parlante \(parlante.dropFirst())" : nome
+        return nome.isEmpty ? String(localized: "Parlante \(String(parlante.dropFirst()))") : nome
     }
 
     /// Cronologia: parole e foto in ordine di tempo.
@@ -83,8 +83,8 @@ final class Sessione {
                 return "[\(Formato.durata(s.inizio))] \(chi)\(s.testo)"
             case .foto(let f):
                 numeroFoto += 1
-                let letto = f.testoOCR.isEmpty ? "nessun testo leggibile" : f.testoOCR.replacingOccurrences(of: "\n", with: " · ")
-                return "[\(Formato.durata(f.secondo))] 📷 FOTO \(numeroFoto): \(letto)"
+                let letto = f.testoOCR.isEmpty ? String(localized: "nessun testo leggibile") : f.testoOCR.replacingOccurrences(of: "\n", with: " · ")
+                return "[\(Formato.durata(f.secondo))] 📷 " + String(localized: "FOTO \(numeroFoto): \(letto)")
             }
         }.joined(separator: "\n")
     }
@@ -105,19 +105,19 @@ final class Sessione {
     var markdown: String {
         var testo = "# \(titolo)\n\n"
         testo += "_\(creata.formatted(date: .long, time: .shortened)) · \(Formato.durata(durata))_\n\n"
-        if !riassunto.isEmpty { testo += "## Riassunto\n\n\(riassunto)\n\n" }
+        if !riassunto.isEmpty { testo += "## " + String(localized: "Riassunto") + "\n\n\(riassunto)\n\n" }
         if !contatti.isEmpty {
-            testo += "## Contatti\n\n" + contatti.map { "- \($0.descrizione)" }.joined(separator: "\n") + "\n\n"
+            testo += "## " + String(localized: "Contatti") + "\n\n" + contatti.map { "- \($0.descrizione)" }.joined(separator: "\n") + "\n\n"
         }
         if !puntiChiave.isEmpty {
-            testo += "## Punti chiave\n\n" + puntiChiave.map { "- \($0)" }.joined(separator: "\n") + "\n\n"
+            testo += "## " + String(localized: "Punti chiave") + "\n\n" + puntiChiave.map { "- \($0)" }.joined(separator: "\n") + "\n\n"
         }
         if !azioni.isEmpty {
-            testo += "## Azioni\n\n" + azioni.map { "- [ ] \($0.testoCompleto)" }.joined(separator: "\n") + "\n\n"
+            testo += "## " + String(localized: "Azioni") + "\n\n" + azioni.map { "- [ ] \($0.testoCompleto)" }.joined(separator: "\n") + "\n\n"
         }
-        if haTrascrizione { testo += "## Trascrizione\n\n\(testoCompleto)\n" }
-        let origine = motoreVerbale.map { "relazione: \($0)" } ?? "solo trascrizione"
-        testo += "\n---\nGenerato con Argo per iPhone · trascrizione sul dispositivo · \(origine)\n"
+        if haTrascrizione { testo += "## " + String(localized: "Trascrizione") + "\n\n\(testoCompleto)\n" }
+        let origine = motoreVerbale.map { String(localized: "relazione: \($0)") } ?? String(localized: "solo trascrizione")
+        testo += "\n---\n" + String(localized: "Generato con Argo per iPhone · trascrizione sul dispositivo · \(origine)") + "\n"
         return testo
     }
 }
@@ -171,7 +171,7 @@ struct Azione: Codable, Hashable, Identifiable {
     var testoCompleto: String {
         var parti = [descrizione]
         if let responsabile, !responsabile.isEmpty { parti.append("(\(responsabile))") }
-        if let scadenza, !scadenza.isEmpty { parti.append("entro \(scadenza)") }
+        if let scadenza, !scadenza.isEmpty { parti.append(String(localized: "entro \(scadenza)")) }
         return parti.joined(separator: " ")
     }
 }

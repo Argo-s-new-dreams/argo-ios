@@ -65,5 +65,5 @@ enum LettoreFoto {
 
 enum ErroreFoto: LocalizedError {
     case salvataggio
-    var errorDescription: String? { "Non riesco a salvare la foto." }
+    var errorDescription: String? { String(localized: "Non riesco a salvare la foto.") }
 }

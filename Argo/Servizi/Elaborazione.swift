@@ -28,7 +28,7 @@ enum Elaborazione {
         guard !inCorso.contains(sessione.id) else { return }
         let id = sessione.id
         inCorso.insert(id)
-        fasi.valori[id] = "Preparo…"
+        fasi.valori[id] = String(localized: "Preparo…")
         tieniSveglio()
         Task { @MainActor in
             await esegui(sessione, eliminaAudioDopo: eliminaAudioDopo) { fasi.valori[id] = $0 }
@@ -93,7 +93,7 @@ enum Elaborazione {
                 } catch {
                     // Interrotto: si ferma tutto e l'audio resta, così i parlanti si possono rifare.
                     if eAnnullamento(error) { throw error }
-                    avvisi.append("Parlanti non riconosciuti (\(error.localizedDescription)). La trascrizione c'è comunque.")
+                    avvisi.append(String(localized: "Parlanti non riconosciuti (\(error.localizedDescription)). La trascrizione c'è comunque."))
                 }
 
                 // Chi è chi: anagrafe voci di Argo desktop + il tuo profilo voce, abbinati uno a uno.
@@ -106,7 +106,7 @@ enum Elaborazione {
                     let riconosciuti = RiconoscitoreVoce.abbina(impronte, candidati: candidati, soglia: soglia)
                     for (parlante, nome) in riconosciuti { sessione.nomiParlanti[parlante] = nome }
                     if let profilo, !riconosciuti.values.contains(profilo.nome) {
-                        avvisi.append("Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti.")
+                        avvisi.append(String(localized: "Non ho riconosciuto la tua voce in questo incontro: puoi dare i nomi a mano in Partecipanti."))
                     }
                 }
 
@@ -119,7 +119,7 @@ enum Elaborazione {
 
             // 2 · Testo delle foto (OCR sul dispositivo)
             for indice in sessione.foto.indices where !sessione.foto[indice].letta {
-                fase("Leggo la foto \(indice + 1) di \(sessione.foto.count)…")
+                fase(String(localized: "Leggo la foto \(indice + 1) di \(sessione.foto.count)…"))
                 let lettura = await LettoreFoto.leggi(sessione.foto[indice].url)
                 sessione.foto[indice].testoOCR = lettura.testo
                 sessione.foto[indice].riferimenti = lettura.riferimenti
@@ -155,8 +155,8 @@ enum Elaborazione {
             sessione.stato = sessione.haTrascrizione ? .trascritta : .errore
             if eAnnullamento(error) {
                 sessione.messaggioErrore = sessione.haTrascrizione
-                    ? "Relazione interrotta prima della fine. Premi «Crea la relazione» per riprendere."
-                    : "Elaborazione interrotta prima della fine. L'audio è ancora sul telefono: premi «Trascrivi e crea la relazione» per riprendere."
+                    ? String(localized: "Relazione interrotta prima della fine. Premi «Crea la relazione» per riprendere.")
+                    : String(localized: "Elaborazione interrotta prima della fine. L'audio è ancora sul telefono: premi «Trascrivi e crea la relazione» per riprendere.")
             } else {
                 sessione.messaggioErrore = error.localizedDescription
             }
@@ -167,5 +167,5 @@ enum Elaborazione {
 
 enum ErroreElaborazione: LocalizedError {
     case audioMancante
-    var errorDescription: String? { "Il file audio di questa sessione non è più disponibile." }
+    var errorDescription: String? { String(localized: "Il file audio di questa sessione non è più disponibile.") }
 }

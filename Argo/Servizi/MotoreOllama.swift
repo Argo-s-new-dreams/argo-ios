@@ -36,7 +36,7 @@ struct MotoreOllama: MotoreVerbale {
     // MARK: Verbale
 
     func genera(da trascrizione: String, fase: @escaping @MainActor (String) -> Void) async throws -> VerbaleGenerato {
-        await fase("Contatto il Mac…")
+        await fase(String(localized: "Contatto il Mac…"))
         let materiale = try await Verbalista.riduci(trascrizione, massimo: caratteriPerBlocco, fase: fase) { blocco in
             try await chat(
                 sistema: Verbalista.istruzioniNote,
@@ -44,7 +44,7 @@ struct MotoreOllama: MotoreVerbale {
                 formato: nil
             )
         }
-        await fase("Il Mac scrive il verbale con \(modello)…")
+        await fase(String(localized: "Il Mac scrive il verbale con \(modello)…"))
         let json = try await chat(
             sistema: Verbalista.istruzioniVerbale + "\nRispondi solo con il JSON richiesto.",
             utente: "Redigi il verbale a partire da questo testo:\n\n\(materiale)",
@@ -162,13 +162,13 @@ enum ErroreOllama: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .macNonRaggiungibile:
-            "Non raggiungo il Mac. Controlla che sia acceso, sulla stessa Wi-Fi e che Ollama accetti connessioni dalla rete."
+            String(localized: "Non raggiungo il Mac. Controlla che sia acceso, sulla stessa Wi-Fi e che Ollama accetti connessioni dalla rete.")
         case .modelloNonTrovato:
-            "Il modello scelto non è installato sul Mac."
+            String(localized: "Il modello scelto non è installato sul Mac.")
         case .rispostaNonValida:
-            "Il Mac ha risposto, ma il verbale non è nel formato atteso. Prova un altro modello."
+            String(localized: "Il Mac ha risposto, ma il verbale non è nel formato atteso. Prova un altro modello.")
         case .http(let codice):
-            "Il Mac ha risposto con un errore (HTTP \(codice))."
+            String(localized: "Il Mac ha risposto con un errore (HTTP \(codice)).")
         }
     }
 }

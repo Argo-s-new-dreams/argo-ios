@@ -29,3 +29,9 @@ jobs:
           xcodebuild -project Argo.xcodeproj -scheme Argo -configuration Debug \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO build | tail -60
+      - name: Controlla le traduzioni (inglese, spagnolo, tedesco)
+        run: |
+          set -o pipefail
+          xcodebuild -exportLocalizations -project Argo.xcodeproj -localizationPath traduzioni \
+            -exportLanguage en -exportLanguage es -exportLanguage de | tail -5
+          python3 strumenti/controlla-traduzioni.py traduzioni
