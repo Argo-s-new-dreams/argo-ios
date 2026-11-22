@@ -85,6 +85,16 @@ uv run --with pyjwt --with cryptography --with requests strumenti/testflight.py 
 Serve una volta sola: il tuo Apple ID collegato in Xcode › Settings › Accounts (firma e caricamento), più una chiave API di App Store Connect (ruolo App Manager, solo per note e gruppi) in `~/.appstoreconnect/private_keys/AuthKey_<ID>.p8` e il file `~/.argo-chiavi/asc.env` con `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_APP_ID`.
 
 
+### Scheda dell'App Store in quattro lingue
+
+I testi della scheda (nome, sottotitolo, descrizione, parole chiave, testo promozionale, novità, indirizzi di supporto e privacy) stanno in `metadata/appstore/<lingua>.json`: `it`, `en-US`, `de-DE`, `es-ES`. Per scriverli in App Store Connect sulla versione in preparazione (la crea se manca):
+
+```bash
+uv run --with pyjwt --with cryptography --with requests strumenti/scheda_appstore.py scrivi 1.1
+```
+
+`prova` controlla i limiti di Apple senza scrivere nulla, `stato` mostra versioni e lingue presenti. L'invio alla revisione resta manuale («Add for Review»).
+
 ### Di notte, da solo, o quando vuoi tu
 
 `strumenti/pubblica-se-serve.sh` pubblica **solo se** su `main` ci sono modifiche dall'ultimo invio **e** una voce nuova nel `CHANGELOG.md` (altrimenti non fa nulla, o avvisa che manca la voce). Scrive il log in `~/Library/Logs/Argo/` e manda una notifica macOS.
