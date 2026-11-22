@@ -24,6 +24,6 @@ for lingua in ("en", "es", "de"):
                     continue
                 if bersaglio is None or not (bersaglio.text or "").strip():
                     mancanti += 1
-                    print(f"[{lingua}] {origine}: {testo!r}")
+                    print(f"[{lingua}] {origine} · {unita.get('id')}: {testo!r}")
 print(f"Testi senza traduzione: {mancanti}")
 sys.exit(1 if mancanti else 0)

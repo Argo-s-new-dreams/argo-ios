@@ -1,6 +1,16 @@
 {
   "sourceLanguage": "it",
   "strings": {
+    "CFBundleDisplayName": {
+      "comment": "Nome dell'app, uguale in tutte le lingue",
+      "extractionState": "manual",
+      "shouldTranslate": false
+    },
+    "CFBundleName": {
+      "comment": "Nome dell'app, uguale in tutte le lingue",
+      "extractionState": "manual",
+      "shouldTranslate": false
+    },
     "NSCameraUsageDescription": {
       "comment": "Info.plist",
       "extractionState": "manual",

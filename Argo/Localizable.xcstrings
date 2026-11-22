@@ -45,6 +45,28 @@
         }
       }
     },
+    "%@ foto": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Fotos"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ photos"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ fotos"
+          }
+        }
+      }
+    },
     "%lld": {
       "shouldTranslate": false
     },
@@ -66,28 +88,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld muestras"
-          }
-        }
-      }
-    },
-    "%lld foto": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld Fotos"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld photos"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld fotos"
           }
         }
       }
@@ -1022,24 +1022,24 @@
         }
       }
     },
-    "Continua a leggere… %lld s": {
+    "Continua a leggere… %@ s": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Weiterlesen… %lld s"
+            "value": "Weiterlesen… %@ s"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep reading… %lld s"
+            "value": "Keep reading… %@ s"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sigue leyendo… %lld s"
+            "value": "Sigue leyendo… %@ s"
           }
         }
       }
