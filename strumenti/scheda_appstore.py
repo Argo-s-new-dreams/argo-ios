@@ -15,8 +15,9 @@ import json, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from testflight import ambiente, chiama  # noqa: E402
+from testflight import API, ambiente, chiama, intestazioni  # noqa: E402
 import os  # noqa: E402
+import requests  # noqa: E402
 
 CARTELLA = Path(__file__).resolve().parent.parent / "metadata/appstore"
 LIMITI = {"name": 30, "subtitle": 30, "promotionalText": 170, "description": 4000, "whatsNew": 4000}
@@ -49,10 +50,14 @@ def versioni():
                   params={"filter[platform]": "IOS", "limit": 20})["data"]
 
 
+def stato_info(i):
+    return i["attributes"].get("state") or i["attributes"].get("appStoreState")
+
+
 def info_modificabile():
     infos = chiama("GET", f"/apps/{os.environ['ASC_APP_ID']}/appInfos")["data"]
     for i in infos:
-        if (i["attributes"].get("state") or i["attributes"].get("appStoreState")) != "READY_FOR_DISTRIBUTION":
+        if stato_info(i) not in ("READY_FOR_DISTRIBUTION", "READY_FOR_SALE"):
             return i
     return infos[0]
 
@@ -62,9 +67,10 @@ def stato():
         loc = chiama("GET", f"/appStoreVersions/{v['id']}/appStoreVersionLocalizations")["data"]
         lingue = ", ".join(sorted(l["attributes"]["locale"] for l in loc))
         print(f"Versione {v['attributes']['versionString']}: {stato_versione(v)} · lingue: {lingue}")
-    i = info_modificabile()
-    loc = chiama("GET", f"/appInfos/{i['id']}/appInfoLocalizations")["data"]
-    print("Informazioni app: " + ", ".join(f"{l['attributes']['locale']} «{l['attributes'].get('name')}»" for l in loc))
+    for i in chiama("GET", f"/apps/{os.environ['ASC_APP_ID']}/appInfos")["data"]:
+        loc = chiama("GET", f"/appInfos/{i['id']}/appInfoLocalizations", params={"limit": 50})["data"]
+        print(f"Informazioni app ({stato_info(i)}): "
+              + ", ".join(f"{l['attributes']['locale']} «{l['attributes'].get('name')}»" for l in loc))
 
 
 def prova():
@@ -73,14 +79,29 @@ def prova():
               f"descrizione {len(d['description'])}/4000 · parole chiave {len(d['keywords'].encode())}/100 byte")
 
 
-def aggiorna(tipo, esistenti, lingua, attributi, relazione):
-    attuale = next((l for l in esistenti if l["attributes"]["locale"] == lingua), None)
-    if attuale:
+def aggiorna(tipo, elenco, lingua, attributi, relazione):
+    """Aggiunge la lingua o, se c'è già, la aggiorna. elenco: percorso GET delle localizzazioni del genitore."""
+    def esistente():
+        tutte = chiama("GET", elenco, params={"limit": 50})["data"]
+        return next((l for l in tutte if l["attributes"]["locale"] == lingua), None)
+
+    def patch(attuale):
         chiama("PATCH", f"/{tipo}/{attuale['id']}",
                json={"data": {"type": tipo, "id": attuale["id"], "attributes": attributi}})
         return "aggiornata"
-    chiama("POST", f"/{tipo}", json={"data": {"type": tipo, "attributes": {"locale": lingua, **attributi},
-                                              "relationships": relazione}})
+
+    attuale = esistente()
+    if attuale:
+        return patch(attuale)
+    r = requests.post(API + f"/{tipo}", headers=intestazioni(), timeout=60,
+                      json={"data": {"type": tipo, "attributes": {"locale": lingua, **attributi},
+                                     "relationships": relazione}})
+    if r.status_code == 409 and "already exists" in r.text:
+        attuale = esistente()
+        if attuale:
+            return patch(attuale)
+    if r.status_code >= 400:
+        sys.exit(f"App Store Connect {r.status_code} ({tipo}, {lingua}): {r.text[:600]}")
     return "aggiunta"
 
 
@@ -97,14 +118,14 @@ def scrivi(nuova=None):
         print(f"➕ Creata la versione {nuova} in App Store Connect.")
     prima = not any(x["id"] != v["id"] for x in tutte)
     info = info_modificabile()
-    loc_info = chiama("GET", f"/appInfos/{info['id']}/appInfoLocalizations")["data"]
-    loc_ver = chiama("GET", f"/appStoreVersions/{v['id']}/appStoreVersionLocalizations")["data"]
+    print(f"Informazioni app: scheda in stato {stato_info(info)}")
     for lingua, d in dati.items():
         a = {k: d[k] for k in INFO if d.get(k)}
-        esito_i = aggiorna("appInfoLocalizations", loc_info, lingua, a,
+        esito_i = aggiorna("appInfoLocalizations", f"/appInfos/{info['id']}/appInfoLocalizations", lingua, a,
                            {"appInfo": {"data": {"type": "appInfos", "id": info["id"]}}})
         b = {k: d[k] for k in VERSIONE if d.get(k) and not (k == "whatsNew" and prima)}
-        esito_v = aggiorna("appStoreVersionLocalizations", loc_ver, lingua, b,
+        esito_v = aggiorna("appStoreVersionLocalizations",
+                           f"/appStoreVersions/{v['id']}/appStoreVersionLocalizations", lingua, b,
                            {"appStoreVersion": {"data": {"type": "appStoreVersions", "id": v["id"]}}})
         print(f"✅ {lingua}: informazioni {esito_i}, scheda della versione {v['attributes']['versionString']} {esito_v}")
     print("Ora in App Store Connect: screenshot per le nuove lingue (se vuoi diversi dall'italiano), poi «Add for Review».")
