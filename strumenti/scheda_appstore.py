@@ -15,9 +15,33 @@ import json, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from testflight import API, ambiente, chiama, intestazioni  # noqa: E402
 import os  # noqa: E402
+import time  # noqa: E402
+
 import requests  # noqa: E402
+import testflight  # noqa: E402
+from testflight import API, ambiente, intestazioni  # noqa: E402
+
+TENTATIVI = 3
+
+
+def _con_tentativi(funzione):
+    """Riprova quando la connessione verso Apple scade o cade (capita): fino a TENTATIVI volte, con una pausa."""
+    def avvolta(*a, **k):
+        for n in range(1, TENTATIVI + 1):
+            try:
+                return funzione(*a, **k)
+            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+                if n == TENTATIVI:
+                    sys.exit(f"App Store Connect non risponde dopo {TENTATIVI} tentativi ({type(e).__name__}): "
+                             "riprova tra qualche minuto, il comando riprende da dove si è fermato.")
+                print(f"   … Apple non risponde, riprovo tra {10 * n} secondi ({n}/{TENTATIVI - 1})", flush=True)
+                time.sleep(10 * n)
+    return avvolta
+
+
+chiama = _con_tentativi(testflight.chiama)
+_post = _con_tentativi(requests.post)
 
 CARTELLA = Path(__file__).resolve().parent.parent / "metadata/appstore"
 LIMITI = {"name": 30, "subtitle": 30, "promotionalText": 170, "description": 4000, "whatsNew": 4000}
@@ -93,7 +117,7 @@ def aggiorna(tipo, elenco, lingua, attributi, relazione):
     attuale = esistente()
     if attuale:
         return patch(attuale)
-    r = requests.post(API + f"/{tipo}", headers=intestazioni(), timeout=60,
+    r = _post(API + f"/{tipo}", headers=intestazioni(), timeout=60,
                       json={"data": {"type": tipo, "attributes": {"locale": lingua, **attributi},
                                      "relationships": relazione}})
     if r.status_code == 409 and "already exists" in r.text:
