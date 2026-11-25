@@ -3,6 +3,18 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
+## [1.1.1] · build (al prossimo invio)
+
+L'iPhone ritrova Argo sul computer anche su un'altra rete o in un altro posto, senza rifare l'abbinamento.
+
+### Corretto
+- **Ritrovarsi su un'altra rete**: l'iPhone salvava gli indirizzi del computer (che cambiano da una rete all'altra) e un nome che poteva contenere il dominio della rete. Ora, se gli indirizzi salvati non rispondono, cerca il computer in rete locale con **Bonjour** (servizio `_argoponte._tcp`) per il suo id, e a ogni sincronizzazione riceve indirizzi e porta aggiornati. Serve Argo desktop dalla 20261125.1224; con le versioni di prima resta il comportamento vecchio.
+- La sicurezza non cambia: l'iPhone accetta solo il computer con l'impronta del certificato ricevuta dal QR e il segreto nel Portachiavi. Non si usa il MAC, che l'iPhone non può leggere e che cambia da una rete all'altra (indirizzo Wi‑Fi privato).
+
+### Da provare
+- Collega l'iPhone a casa, poi porta Mac e iPhone su un'altra rete (ufficio o hotspot): con Argo aperto sul Mac, Impostazioni › Argo sul computer › **Sincronizza ora** deve riuscire senza inquadrare di nuovo il QR.
+- Gli abbinamenti fatti prima ritrovano il computer per nome; dopo la prima sincronizzazione riuscita imparano anche l'id.
+
 ## [1.1] · build (al prossimo invio)
 
 Argo parla quattro lingue: italiano, inglese, spagnolo e tedesco. Gli incontri lunghi non si interrompono più se esci dalla schermata, e in Impostazioni trovi licenze e riconoscimenti.

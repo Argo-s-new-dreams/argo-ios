@@ -1,5 +1,6 @@
 import Foundation
 import CryptoKit
+import Network
 import Security
 import SwiftData
 import UIKit
@@ -9,6 +10,9 @@ import UIKit
 /// - Ogni connessione è HTTPS e accetta solo il certificato con quell'impronta (pinning): niente cloud,
 ///   niente autorità esterne, niente «fidati di tutto».
 /// - Il segreto ricevuto all'abbinamento sta nel Portachiavi, solo su questo iPhone.
+/// - Su un'altra rete gli indirizzi cambiano: se quelli salvati non rispondono, l'iPhone cerca il computer con
+///   Bonjour (servizio «_argoponte._tcp») per id, e ogni /v1/stato aggiorna indirizzi e porta. L'identità del
+///   computer resta l'impronta del certificato, non l'indirizzo.
 struct AbbinamentoPonte: Codable, Equatable {
     var nome: String
     var porta: Int
@@ -17,6 +21,8 @@ struct AbbinamentoPonte: Codable, Equatable {
     var impronta: String
     var collegato: Date
     var ultimaSincronizzazione: Date?
+    /// Id del computer (Argo desktop dalla 20261125): serve a ritrovarlo con Bonjour. nil negli abbinamenti di prima.
+    var id: String? = nil
 }
 
 enum ErrorePonte: LocalizedError {
@@ -45,6 +51,7 @@ enum Ponte {
         let h: [String]
         let f: String
         let c: String
+        let i: String?
     }
 
     static var abbinamento: AbbinamentoPonte? {
@@ -67,7 +74,7 @@ enum Ponte {
               let qr = try? JSONDecoder().decode(ContenutoQR.self, from: dati), qr.v == 1
         else { throw ErrorePonte.qrNonValido }
 
-        var nuovo = AbbinamentoPonte(nome: qr.n, porta: qr.p, indirizzi: qr.h, impronta: qr.f, collegato: .now)
+        var nuovo = AbbinamentoPonte(nome: qr.n, porta: qr.p, indirizzi: qr.h, impronta: qr.f, collegato: .now, id: qr.i)
         let corpo = try JSONEncoder().encode(["codice": qr.c, "nome": UIDevice.current.name])
         let (risposta, indirizzo) = try await richiesta(
             "POST", "/v1/abbina", corpo: corpo, tipo: "application/json", segreto: nil, verso: nuovo, attesa: 10)
@@ -151,15 +158,37 @@ enum Ponte {
     private static func richiestaAutenticata(
         _ metodo: String, _ percorso: String, corpo: Data? = nil, tipo: String? = nil, attesa: TimeInterval
     ) async throws -> (Data, String) {
-        guard let abbinamento, let segreto = Portachiavi.leggi() else { throw ErrorePonte.nonCollegato }
-        let esito = try await richiesta(metodo, percorso, corpo: corpo, tipo: tipo, segreto: segreto,
+        guard var abbinamento, let segreto = Portachiavi.leggi() else { throw ErrorePonte.nonCollegato }
+        let esito: (Data, String)
+        do {
+            esito = try await richiesta(metodo, percorso, corpo: corpo, tipo: tipo, segreto: segreto,
                                         verso: abbinamento, attesa: attesa)
-        // L'indirizzo che ha risposto va in cima: la prossima volta si prova per primo.
-        if esito.1 != abbinamento.indirizzi.first {
-            var aggiornato = abbinamento
-            aggiornato.indirizzi = [esito.1] + abbinamento.indirizzi.filter { $0 != esito.1 }
-            self.abbinamento = aggiornato
+        } catch ErrorePonte.irraggiungibile {
+            // Altra rete o altra porta: si cerca il computer con Bonjour e si riprova una volta.
+            guard let (host, porta) = await ScopertaPonte.trova(id: abbinamento.id, nome: abbinamento.nome)
+            else { throw ErrorePonte.irraggiungibile }
+            abbinamento.porta = porta
+            abbinamento.indirizzi = [host] + abbinamento.indirizzi.filter { $0 != host }
+            self.abbinamento = abbinamento
+            esito = try await richiesta(metodo, percorso, corpo: corpo, tipo: tipo, segreto: segreto,
+                                        verso: abbinamento, attesa: attesa)
         }
+        // L'indirizzo che ha risposto va in cima: la prossima volta si prova per primo.
+        var aggiornato = abbinamento
+        aggiornato.indirizzi = [esito.1] + abbinamento.indirizzi.filter { $0 != esito.1 }
+        // /v1/stato (Argo desktop dalla 20261125) porta gli indirizzi e la porta di adesso, e l'id del computer.
+        if percorso == "/v1/stato" {
+            struct Stato: Decodable { let id: String?; let h: [String]?; let p: Int? }
+            if let stato = try? JSONDecoder().decode(Stato.self, from: esito.0) {
+                if let h = stato.h, !h.isEmpty {
+                    let nuovi = h.filter { $0 != esito.1 }
+                    aggiornato.indirizzi = Array(([esito.1] + nuovi + aggiornato.indirizzi.filter { !nuovi.contains($0) && $0 != esito.1 }).prefix(6))
+                }
+                if let p = stato.p, p > 0 { aggiornato.porta = p }
+                if aggiornato.id == nil, let id = stato.id { aggiornato.id = id }
+            }
+        }
+        if aggiornato != abbinamento { self.abbinamento = aggiornato }
         return esito
     }
 
@@ -202,6 +231,90 @@ enum Ponte {
             }
         }
         throw ErrorePonte.irraggiungibile
+    }
+}
+
+/// Ritrova Argo sul computer in rete locale con Bonjour, per id (o per nome negli abbinamenti di prima).
+/// Restituisce indirizzo e porta di adesso; il canale resta protetto da impronta del certificato e segreto.
+enum ScopertaPonte {
+    static let servizio = "_argoponte._tcp"
+
+    static func trova(id: String?, nome: String, attesa: TimeInterval = 5) async -> (String, Int)? {
+        guard let endpoint = await cerca(id: id, nome: nome, attesa: attesa) else { return nil }
+        return await risolvi(endpoint, attesa: attesa)
+    }
+
+    /// Una sola risposta per ricerca, anche se gli eventi arrivano più volte.
+    private final class UnaVolta<T>: @unchecked Sendable {
+        private let blocco = NSLock()
+        private var continuazione: CheckedContinuation<T, Never>?
+        init(_ c: CheckedContinuation<T, Never>) { continuazione = c }
+        func fine(_ valore: T) {
+            blocco.lock()
+            let c = continuazione
+            continuazione = nil
+            blocco.unlock()
+            c?.resume(returning: valore)
+        }
+    }
+
+    private static func cerca(id: String?, nome: String, attesa: TimeInterval) async -> NWEndpoint? {
+        await withCheckedContinuation { (c: CheckedContinuation<NWEndpoint?, Never>) in
+            let esito = UnaVolta(c)
+            let coda = DispatchQueue(label: "argo.ponte.scoperta")
+            let browser = NWBrowser(for: .bonjourWithTXTRecord(type: servizio, domain: nil), using: .tcp)
+            browser.browseResultsChangedHandler = { risultati, _ in
+                for r in risultati {
+                    if let id, case let .bonjour(txt) = r.metadata, txt["id"] == id {
+                        browser.cancel(); esito.fine(r.endpoint); return
+                    }
+                    if id == nil, case let .service(nomeServizio, _, _, _) = r.endpoint, nomeServizio == "Argo \(nome)" {
+                        browser.cancel(); esito.fine(r.endpoint); return
+                    }
+                }
+            }
+            browser.stateUpdateHandler = { stato in
+                if case .failed = stato { browser.cancel(); esito.fine(nil) }
+            }
+            browser.start(queue: coda)
+            coda.asyncAfter(deadline: .now() + attesa) { browser.cancel(); esito.fine(nil) }
+        }
+    }
+
+    private static func risolvi(_ endpoint: NWEndpoint, attesa: TimeInterval) async -> (String, Int)? {
+        await withCheckedContinuation { (c: CheckedContinuation<(String, Int)?, Never>) in
+            let esito = UnaVolta(c)
+            let coda = DispatchQueue(label: "argo.ponte.risolvi")
+            let parametri = NWParameters.tcp
+            let connessione = NWConnection(to: endpoint, using: parametri)
+            connessione.stateUpdateHandler = { stato in
+                switch stato {
+                case .ready:
+                    var trovato: (String, Int)?
+                    if case let .hostPort(host, porta)? = connessione.currentPath?.remoteEndpoint {
+                        switch host {
+                        case .ipv4(let indirizzo):
+                            trovato = ("\(indirizzo)", Int(porta.rawValue))
+                        case .ipv6(let indirizzo):
+                            // Nell'URL il «%» dell'interfaccia va scritto «%25»
+                            trovato = ("\(indirizzo)".replacingOccurrences(of: "%", with: "%25"), Int(porta.rawValue))
+                        case .name(let nomeHost, _):
+                            trovato = (nomeHost, Int(porta.rawValue))
+                        @unknown default:
+                            trovato = nil
+                        }
+                    }
+                    connessione.cancel()
+                    esito.fine(trovato)
+                case .failed, .cancelled:
+                    esito.fine(nil)
+                default:
+                    break
+                }
+            }
+            connessione.start(queue: coda)
+            coda.asyncAfter(deadline: .now() + attesa) { connessione.cancel(); esito.fine(nil) }
+        }
     }
 }
 

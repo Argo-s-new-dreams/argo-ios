@@ -11,7 +11,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.1"
+    MARKETING_VERSION: "1.1.1"
     CURRENT_PROJECT_VERSION: "20261123.0841"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: "WPR2P5Q2S8"
@@ -69,6 +69,7 @@ targets:
             LSItemContentTypes: [blog.argosnewdreams.argovoci]
         NSCameraUsageDescription: "Argo usa la fotocamera per fotografare biglietti da visita e documenti durante un incontro. Le foto restano nell'app."
         NSMicrophoneUsageDescription: "Argo usa il microfono per registrare le riunioni. L'audio resta sul tuo iPhone."
+        NSBonjourServices: [_argoponte._tcp]
         NSLocalNetworkUsageDescription: "Argo si collega in rete locale ad Argo sul tuo computer, con un canale cifrato, per inviare gli incontri e ricevere l'anagrafe voci, e facoltativamente a Ollama per la relazione."
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
