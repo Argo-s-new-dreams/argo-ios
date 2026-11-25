@@ -3,7 +3,32 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
-## [1.1.1] · build (al prossimo invio)
+## [1.2] · build (al prossimo invio)
+
+Prima prova di Argo Live: fai una domanda a voce e Argo risponde a voce, tutto sull'iPhone. Solo per i tester.
+
+### Aggiunto
+- **Laboratorio › Argo Live · prova** in Impostazioni, visibile solo nelle build di prova (TestFlight e Xcode), mai nell'App Store.
+  - Premi **Parla**, fai una domanda, premi **Fine**: la trascrizione è di iOS (SpeechAnalyzer, sul dispositivo), la risposta la scrive **Gemma 4 E2B** di Google con il motore **LiteRT-LM**, e la legge la voce di iOS una frase alla volta mentre il modello scrive le successive.
+  - Il modello (circa 2,6 GB, Apache 2.0) si scarica una volta da Hugging Face solo se lo chiedi, con controllo SHA-256. Resta sul telefono, escluso dal backup di iCloud. Si elimina dalla stessa schermata.
+  - Lingue della conversazione: italiano, inglese, spagnolo e tedesco. Motore GPU (più veloce) o CPU (più leggero).
+  - Le **misure** di ogni domanda: caricamento del modello, trascrizione, prima parola scritta e detta, token al secondo, memoria usata e disponibile.
+- Licenze di LiteRT-LM e Gemma 4 in Impostazioni › Licenze e riconoscimenti e in `LICENZE-TERZE-PARTI.md`.
+
+### Note
+- È un prototipo per misurare il telefono vero: niente incontri come memoria, niente interruzione a voce, niente cloud. I testi della schermata di prova sono solo in italiano.
+- La conversazione resta solo in memoria: chiudendo la schermata si perde. L'audio non viene mai salvato.
+- Serve un iPhone con almeno 6 GB di memoria (per esempio iPhone 13 Pro, 14 o successivi).
+- Il prototipo era sul ramo `live-prototipo`; dalla 1.2 è nel ramo principale e arriva ai tester interni di TestFlight.
+
+### Da provare
+- Impostazioni › Laboratorio › Argo Live · prova › Scarica (meglio con il Wi-Fi), poi Parla → domanda → Fine
+- Annotare le misure della seconda domanda (la prima include il caricamento del modello)
+- Ripetere con «Usa la GPU» spento e confrontare
+- Provare inglese, spagnolo e tedesco
+- Con le cuffie Bluetooth: Argo risponde nelle cuffie?
+
+## [1.1.1] · build 20261125.2043
 
 L'iPhone ritrova Argo sul computer anche su un'altra rete o in un altro posto, senza rifare l'abbinamento.
 

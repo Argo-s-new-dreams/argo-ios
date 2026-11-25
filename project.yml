@@ -11,7 +11,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.1.1"
+    MARKETING_VERSION: "1.2"
     CURRENT_PROJECT_VERSION: "20261125.2043"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: "WPR2P5Q2S8"
@@ -22,6 +22,10 @@ packages:
   FluidAudio:
     url: https://github.com/FluidInference/FluidAudio.git
     from: 0.12.4
+  # Argo Live (laboratorio): motore LiteRT-LM di Google per Gemma 4 E2B sul telefono (Apache 2.0)
+  LiteRTLM:
+    url: https://github.com/google-ai-edge/LiteRT-LM
+    from: 0.19.1
 
 targets:
   Argo:
@@ -31,6 +35,8 @@ targets:
       - path: Argo
     dependencies:
       - package: FluidAudio
+      - package: LiteRTLM
+        product: LiteRTLM
     settings:
       base:
         PRODUCT_NAME: Argo
@@ -39,6 +45,8 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ENABLE_PREVIEWS: YES
+        # LiteRT-LM ha la libreria per il simulatore solo arm64
+        "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
     info:
       path: Argo/Info.plist
       properties:

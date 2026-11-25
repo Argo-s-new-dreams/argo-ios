@@ -26,7 +26,20 @@ Modifiche: modelli convertiti in Core ML e ottimizzati per Apple Neural Engine d
 Argo non modifica i modelli: li scarica una volta da Hugging Face e li usa sul dispositivo.
 
 ────────────────────────────────────────
-3. Framework Apple
+3. LiteRT-LM (solo nelle build di prova di Argo Live)
+Google LLC — https://github.com/google-ai-edge/LiteRT-LM
+Licenza: Apache License 2.0 (testo completo in fondo)
+Uso in Argo: esegue il modello di Argo Live sul dispositivo.
+
+────────────────────────────────────────
+4. Gemma 4 E2B (solo nelle build di prova di Argo Live)
+Google DeepMind — https://huggingface.co/google/gemma-4-E2B-it
+Formato LiteRT-LM: https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm
+Licenza: Apache License 2.0 (testo completo in fondo)
+Argo non modifica il modello: lo scarica una volta da Hugging Face, solo se lo chiedi, e lo usa sul dispositivo.
+
+────────────────────────────────────────
+5. Framework Apple
 Trascrizione (Speech), lettura del testo nelle foto (Vision) e relazione (Foundation Models)
 sono componenti di iOS, usati secondo i termini di Apple.
 
@@ -34,7 +47,7 @@ sono componenti di iOS, usati secondo i termini di Apple.
 TESTI DELLE LICENZE
 ════════════════════════════════════════
 
-── Apache License 2.0 (FluidAudio, VBx, NemoTextProcessing) ──
+── Apache License 2.0 (FluidAudio, VBx, NemoTextProcessing, LiteRT-LM, Gemma 4) ──
 
 Apache License
                            Version 2.0, January 2004

@@ -26,6 +26,7 @@ struct ImpostazioniView: View {
     @State private var modelliMac: [String] = []
     @State private var esitoProva: EsitoProva?
     @State private var provaInCorso = false
+    @State private var laboratorio = false
 
     private enum EsitoProva { case ok(Int), errore(String) }
 
@@ -73,6 +74,18 @@ struct ImpostazioniView: View {
                     Text("Come la modalità Live di Argo sul Mac: resta solo il testo, nessun archivio audio sul telefono.")
                 }
 
+                if laboratorio {
+                    Section {
+                        NavigationLink { LiveView() } label: {
+                            Label { Text(verbatim: "Argo Live · prova") } icon: { Image(systemName: "waveform") }
+                        }
+                    } header: {
+                        Text(verbatim: "Laboratorio")
+                    } footer: {
+                        Text(verbatim: "Solo nelle build di prova (TestFlight e Xcode). Non compare nell'App Store.")
+                    }
+                }
+
                 Section("Informazioni") {
                     LabeledContent("Versione", value: versione)
                     Link("Argo's New Dreams", destination: URL(string: "https://argosnewdreams.blog")!)
@@ -96,6 +109,7 @@ struct ImpostazioniView: View {
             .sheet(isPresented: $mostraProfiloVoce) {
                 ProfiloVoceView(nome: nomeVoce.isEmpty ? String(localized: "Io") : nomeVoce) { profiloVoce = $0 }
             }
+            .task { laboratorio = await Laboratorio.attivo() }
             .navigationTitle("Impostazioni")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
