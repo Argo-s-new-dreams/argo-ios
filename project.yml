@@ -12,7 +12,7 @@ settings:
   base:
     SWIFT_VERSION: "5.0"
     MARKETING_VERSION: "1.1.1"
-    CURRENT_PROJECT_VERSION: "20261123.0841"
+    CURRENT_PROJECT_VERSION: "20261125.2043"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: "WPR2P5Q2S8"
     CODE_SIGN_STYLE: Automatic
