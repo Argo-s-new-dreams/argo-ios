@@ -5,24 +5,27 @@ Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
 ## [1.2] · build (al prossimo invio)
 
-Prima prova di Argo Live: fai una domanda a voce e Argo risponde a voce, tutto sull'iPhone. Solo per i tester.
+Prima prova di Argo Live: parli con Argo a voce, senza tasti, e Argo risponde a voce, tutto sull'iPhone. Solo per i tester.
 
 ### Aggiunto
 - **Laboratorio › Argo Live · prova** in Impostazioni, visibile solo nelle build di prova (TestFlight e Xcode), mai nell'App Store.
-  - Premi **Parla**, fai una domanda, premi **Fine**: la trascrizione è di iOS (SpeechAnalyzer, sul dispositivo), la risposta la scrive **Gemma 4 E2B** di Google con il motore **LiteRT-LM**, e la legge la voce di iOS una frase alla volta mentre il modello scrive le successive.
+  - **Conversazione continua**: premi **Inizia conversazione** e parla normalmente. Argo ascolta sempre, capisce che hai finito da una pausa (0,9 secondi), risponde a voce e torna ad ascoltare. **Zitto** lo ferma, **Chiudi** chiude il microfono.
+  - **Puoi interromperlo**: se parli mentre risponde (bastano due parole), si zittisce e ti ascolta. Il microfono resta aperto con la cancellazione dell'eco di iOS, così Argo non sente sé stesso.
+  - La trascrizione è di iOS (SpeechAnalyzer, sul dispositivo), la risposta la scrive **Gemma 4 E2B** di Google con il motore **LiteRT-LM**, e la legge la voce di iOS una frase alla volta mentre il modello scrive le successive.
   - Il modello (circa 2,6 GB, Apache 2.0) si scarica una volta da Hugging Face solo se lo chiedi, con controllo SHA-256. Resta sul telefono, escluso dal backup di iCloud. Si elimina dalla stessa schermata.
   - Lingue della conversazione: italiano, inglese, spagnolo e tedesco. Motore GPU (più veloce) o CPU (più leggero).
   - Le **misure** di ogni domanda: caricamento del modello, trascrizione, prima parola scritta e detta, token al secondo, memoria usata e disponibile.
 - Licenze di LiteRT-LM e Gemma 4 in Impostazioni › Licenze e riconoscimenti e in `LICENZE-TERZE-PARTI.md`.
 
 ### Note
-- È un prototipo per misurare il telefono vero: niente incontri come memoria, niente interruzione a voce, niente cloud. I testi della schermata di prova sono solo in italiano.
+- È un prototipo per misurare il telefono vero: niente incontri come memoria, niente cloud. I testi della schermata di prova sono solo in italiano.
 - La conversazione resta solo in memoria: chiudendo la schermata si perde. L'audio non viene mai salvato.
 - Serve un iPhone con almeno 6 GB di memoria (per esempio iPhone 13 Pro, 14 o successivi).
 - Il prototipo era sul ramo `live-prototipo`; dalla 1.2 è nel ramo principale e arriva ai tester interni di TestFlight.
 
 ### Da provare
-- Impostazioni › Laboratorio › Argo Live · prova › Scarica (meglio con il Wi-Fi), poi Parla → domanda → Fine
+- Impostazioni › Laboratorio › Argo Live · prova › Scarica (meglio con il Wi-Fi), poi **Inizia conversazione** e parla come al telefono
+- Interrompere Argo mentre risponde: deve zittirsi e ascoltarti; con l'altoparlante, controllare che non risponda a sé stesso
 - Annotare le misure della seconda domanda (la prima include il caricamento del modello)
 - Ripetere con «Usa la GPU» spento e confrontare
 - Provare inglese, spagnolo e tedesco
