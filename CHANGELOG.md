@@ -15,6 +15,7 @@ Prima prova di Argo Live: parli con Argo a voce, senza tasti, e Argo risponde a 
   - Il modello (circa 2,6 GB, Apache 2.0) si scarica una volta da Hugging Face solo se lo chiedi, con controllo SHA-256. Resta sul telefono, escluso dal backup di iCloud. Si elimina dalla stessa schermata.
   - Lingue della conversazione: italiano, inglese, spagnolo e tedesco. Motore GPU (più veloce) o CPU (più leggero).
   - Le **misure** di ogni domanda: caricamento del modello, trascrizione, prima parola scritta e detta, token al secondo, memoria usata e disponibile.
+- Nella schermata principale, accanto a **Registra**, il pulsante **Parla con Argo** apre subito Argo Live (solo nelle build di prova). Resta anche in Impostazioni › Laboratorio.
 - Licenze di LiteRT-LM e Gemma 4 in Impostazioni › Licenze e riconoscimenti e in `LICENZE-TERZE-PARTI.md`.
 
 ### Note
@@ -24,7 +25,7 @@ Prima prova di Argo Live: parli con Argo a voce, senza tasti, e Argo risponde a 
 - Il prototipo era sul ramo `live-prototipo`; dalla 1.2 è nel ramo principale e arriva ai tester interni di TestFlight.
 
 ### Da provare
-- Impostazioni › Laboratorio › Argo Live · prova › Scarica (meglio con il Wi-Fi), poi **Inizia conversazione** e parla come al telefono
+- **Parla con Argo** (o Impostazioni › Laboratorio › Argo Live · prova) › Scarica (meglio con il Wi-Fi), poi **Inizia conversazione** e parla come al telefono
 - Interrompere Argo mentre risponde: deve zittirsi e ascoltarti; con l'altoparlante, controllare che non risponda a sé stesso
 - Annotare le misure della seconda domanda (la prima include il caricamento del modello)
 - Ripetere con «Usa la GPU» spento e confrontare

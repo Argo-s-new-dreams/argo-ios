@@ -11,6 +11,8 @@ struct ElencoSessioniView: View {
     @State private var mostraRegistra = false
     @State private var mostraImpostazioni = false
     @State private var mostraImporta = false
+    @State private var mostraLive = false
+    @State private var laboratorio = false
     @State private var erroreImport: String?
     @State private var esitoPonte: String?
     @State private var daEliminare: IndexSet?
@@ -85,17 +87,43 @@ struct ElencoSessioniView: View {
                 }
             }
             .safeAreaInset(edge: .bottom) {
-                Button {
-                    mostraRegistra = true
-                } label: {
-                    Label("Registra", systemImage: "record.circle")
-                        .font(.title3.weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 6)
+                HStack(spacing: 12) {
+                    Button {
+                        mostraRegistra = true
+                    } label: {
+                        Label("Registra", systemImage: "record.circle")
+                            .font(.title3.weight(.semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 6)
+                    }
+                    .buttonStyle(.glassProminent)
+                    // Argo Live (laboratorio): solo nelle build di prova (Xcode e TestFlight), mai nell'App Store
+                    if laboratorio {
+                        Button {
+                            mostraLive = true
+                        } label: {
+                            Label("Parla con Argo", systemImage: "waveform")
+                                .font(.title3.weight(.semibold))
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 6)
+                        }
+                        .buttonStyle(.glass)
+                    }
                 }
-                .buttonStyle(.glassProminent)
                 .padding(.horizontal)
                 .padding(.bottom, 8)
+            }
+            .task { laboratorio = await Laboratorio.attivo() }
+            .fullScreenCover(isPresented: $mostraLive) {
+                NavigationStack {
+                    LiveView()
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button("Chiudi", systemImage: "xmark") { mostraLive = false }
+                            }
+                        }
+                }
+                .preferredColorScheme(.dark)
             }
             .fullScreenCover(isPresented: $mostraRegistra) {
                 RegistraView { nomeFile, durata, foto in

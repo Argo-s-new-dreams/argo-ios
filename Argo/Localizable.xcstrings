@@ -2741,6 +2741,28 @@
         }
       }
     },
+    "Parla con Argo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mit Argo sprechen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Talk to Argo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Habla con Argo"
+          }
+        }
+      }
+    },
     "Parlante %@": {
       "localizations": {
         "de": {
