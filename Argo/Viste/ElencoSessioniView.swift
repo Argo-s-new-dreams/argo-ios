@@ -13,10 +13,18 @@ struct ElencoSessioniView: View {
     @State private var mostraImporta = false
     @State private var mostraLive = false
     @State private var laboratorio = false
+    @State private var comandi = ComandiArgo.condivisi
     @State private var erroreImport: String?
     @State private var esitoPonte: String?
     @State private var daEliminare: IndexSet?
     @Environment(\.scenePhase) private var fase
+
+    /// «Ehi Siri, registra con Argo»: apre la registrazione (con l'informativa da confermare).
+    private func apriDaSiri() {
+        guard comandi.registra else { return }
+        comandi.registra = false
+        mostraRegistra = true
+    }
 
     var body: some View {
         NavigationStack(path: $percorso) {
@@ -113,7 +121,11 @@ struct ElencoSessioniView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 8)
             }
-            .task { laboratorio = await Laboratorio.attivo() }
+            .task {
+                laboratorio = await Laboratorio.attivo()
+                apriDaSiri()
+            }
+            .onChange(of: comandi.registra) { _, _ in apriDaSiri() }
             .fullScreenCover(isPresented: $mostraLive) {
                 NavigationStack {
                     LiveView()

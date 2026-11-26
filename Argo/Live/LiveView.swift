@@ -95,6 +95,9 @@ final class SessioneLive {
         [testoFinale, testoVolatile].filter { !$0.isEmpty }.joined(separator: " ")
     }
 
+    /// Una sola conversazione per tutta l'app: la stessa sul telefono e in CarPlay.
+    static let condivisa = SessioneLive()
+
     init() { aggiornaMemoria() }
 
     func aggiornaMemoria() {
@@ -369,7 +372,7 @@ final class SessioneLive {
 /// Prova di Argo Live (laboratorio): conversazione continua a voce, tutta sull'iPhone.
 /// SpeechAnalyzer ascolta, Gemma 4 E2B risponde, la voce di iOS legge. Mostra i tempi di ogni risposta.
 struct LiveView: View {
-    @State private var sessione = SessioneLive()
+    @State private var sessione = SessioneLive.condivisa
     @AppStorage("liveLingua") private var lingua = LiveView.linguaPredefinita
     @AppStorage("liveGPU") private var gpu = true
     @State private var confermaScarico = false
