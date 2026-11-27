@@ -16,7 +16,7 @@ Prima prova di Argo Live: parli con Argo a voce, senza tasti, e Argo risponde a 
   - Lingue della conversazione: italiano, inglese, spagnolo e tedesco. Motore GPU (più veloce) o CPU (più leggero).
   - Le **misure** di ogni domanda: caricamento del modello, trascrizione, prima parola scritta e detta, token al secondo, memoria usata e disponibile.
 - Nella schermata principale, accanto a **Registra**, il pulsante **Parla con Argo** apre subito Argo Live (solo nelle build di prova). Resta anche in Impostazioni › Laboratorio.
-- **Argo Live in CarPlay** (prima versione, da provare nel simulatore CarPlay di Xcode): apri Argo sullo schermo dell'auto e la conversazione parte subito a voce, con la schermata vocale di Apple (Ti ascolto, Ci penso, Argo risponde) e senza testo delle risposte sullo schermo. Serve iOS 26.4 e l'autorizzazione CarPlay che Apple concede app per app: finché non arriva, sull'auto vera Argo non compare.
+- **Argo Live in CarPlay** (prima versione, da provare nel simulatore CarPlay di Xcode): apri Argo sullo schermo dell'auto e la conversazione parte subito a voce, con la schermata vocale di Apple (Ti ascolto, Ci penso, Argo risponde) e senza testo delle risposte sullo schermo. Serve iOS 26.4. Apple ha concesso l'autorizzazione CarPlay: da questa build Argo compare anche sull'auto vera.
 - **«Ehi Siri, registra con Argo»** (anche in auto): apre Argo sulla registrazione; l'informativa ai partecipanti si conferma come sempre sul telefono.
 - Licenze di LiteRT-LM e Gemma 4 in Impostazioni › Licenze e riconoscimenti e in `LICENZE-TERZE-PARTI.md`.
 

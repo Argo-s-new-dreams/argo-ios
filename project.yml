@@ -45,9 +45,9 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ENABLE_PREVIEWS: YES
-        # CarPlay (Argo Live): l'autorizzazione «voice-based conversation» va chiesta ad Apple. Finché non arriva
-        # la usiamo solo nel simulatore (finestra CarPlay di Xcode); le build per il telefono restano senza.
-        "CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]": Argo/CarPlaySimulatore.entitlements
+        # CarPlay (Argo Live): autorizzazione «voice-based conversation» concessa da Apple il 27/11/2026,
+        # vale per tutte le build (simulatore e telefono). Il profilo di distribuzione deve includerla.
+        CODE_SIGN_ENTITLEMENTS: Argo/Argo.entitlements
         # LiteRT-LM ha la libreria per il simulatore solo arm64
         "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
     info:
