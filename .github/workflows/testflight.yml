@@ -1,0 +1,104 @@
+# Invio notturno ad Apple TestFlight da un Mac nel cloud di GitHub: il Mac di Luca può restare spento.
+# Ogni notte (01:30 UTC: 02:30 d'inverno in Italia, 03:30 d'estate) lancia strumenti/pubblica-se-serve.sh, che
+# pubblica solo se dall'ultimo invio ci sono modifiche all'app con la loro voce nel CHANGELOG, poi fa commit e
+# push del numero di build («Build … inviata a TestFlight»). A mano: Actions › TestFlight › Run workflow.
+#
+# Segreti del repo (Settings › Secrets and variables › Actions), mai nel codice:
+#   IOS_CERTIFICATO_P12   certificato «Apple Distribution» esportato dal Portachiavi (.p12), in base64
+#   IOS_CERTIFICATO_PWD   password scelta all'esportazione del .p12
+#   IOS_PROFILO           profilo di distribuzione App Store per blog.argosnewdreams.argo (.mobileprovision), in base64
+#   ASC_CHIAVE_P8         chiave API di App Store Connect (AuthKey_<id>.p8), testo
+#   ASC_KEY_ID, ASC_ISSUER_ID, ASC_APP_ID   identificativi della chiave e dell'app (come in asc.env)
+name: TestFlight
+
+on:
+  schedule:
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+    inputs:
+      forza:
+        description: "Pubblica anche senza novità (stesse note dell'ultima voce)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+jobs:
+  pubblica:
+    runs-on: macos-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          lfs: true
+
+      - name: Xcode 26
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XCODE" ]; then echo "Xcode 26 non trovato sul runner"; exit 1; fi
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+
+      - name: Strumenti
+        run: brew install xcodegen uv git-lfs
+
+      - name: Certificato, profilo e chiave API
+        env:
+          IOS_CERTIFICATO_P12: ${{ secrets.IOS_CERTIFICATO_P12 }}
+          IOS_CERTIFICATO_PWD: ${{ secrets.IOS_CERTIFICATO_PWD }}
+          IOS_PROFILO: ${{ secrets.IOS_PROFILO }}
+          ASC_CHIAVE_P8: ${{ secrets.ASC_CHIAVE_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_APP_ID: ${{ secrets.ASC_APP_ID }}
+        run: |
+          set -euo pipefail
+          for v in IOS_CERTIFICATO_P12 IOS_CERTIFICATO_PWD IOS_PROFILO ASC_CHIAVE_P8 ASC_KEY_ID ASC_ISSUER_ID ASC_APP_ID; do
+            [ -n "${!v}" ] || { echo "Manca il segreto $v"; exit 1; }
+          done
+          PORTACHIAVI="$RUNNER_TEMP/argo.keychain-db"
+          PWD_PORTACHIAVI=$(uuidgen)
+          security create-keychain -p "$PWD_PORTACHIAVI" "$PORTACHIAVI"
+          security set-keychain-settings -lut 21600 "$PORTACHIAVI"
+          security unlock-keychain -p "$PWD_PORTACHIAVI" "$PORTACHIAVI"
+          echo "$IOS_CERTIFICATO_P12" | base64 --decode > "$RUNNER_TEMP/certificato.p12"
+          security import "$RUNNER_TEMP/certificato.p12" -P "$IOS_CERTIFICATO_PWD" -A -t cert -f pkcs12 -k "$PORTACHIAVI"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -k "$PWD_PORTACHIAVI" "$PORTACHIAVI" > /dev/null
+          security list-keychains -d user -s "$PORTACHIAVI" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/certificato.p12"
+          echo "$IOS_PROFILO" | base64 --decode > "$RUNNER_TEMP/profilo.mobileprovision"
+          security cms -D -i "$RUNNER_TEMP/profilo.mobileprovision" > "$RUNNER_TEMP/profilo.plist"
+          UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" "$RUNNER_TEMP/profilo.plist")
+          NOME=$(/usr/libexec/PlistBuddy -c "Print Name" "$RUNNER_TEMP/profilo.plist")
+          for d in "$HOME/Library/MobileDevice/Provisioning Profiles" "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            mkdir -p "$d" && cp "$RUNNER_TEMP/profilo.mobileprovision" "$d/$UUID.mobileprovision"
+          done
+          echo "Profilo: $NOME"
+          echo "ARGO_CI_PROFILO=$NOME" >> "$GITHUB_ENV"
+          mkdir -p "$HOME/.appstoreconnect/private_keys" "$RUNNER_TEMP/chiavi"
+          printf '%s\n' "$ASC_CHIAVE_P8" > "$HOME/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8"
+          printf 'ASC_KEY_ID=%s\nASC_ISSUER_ID=%s\nASC_APP_ID=%s\n' "$ASC_KEY_ID" "$ASC_ISSUER_ID" "$ASC_APP_ID" > "$RUNNER_TEMP/chiavi/asc.env"
+          echo "ARGO_CHIAVI=$RUNNER_TEMP/chiavi" >> "$GITHUB_ENV"
+
+      - name: Pubblica se serve
+        run: |
+          git config user.name "Argo · invio notturno"
+          git config user.email "noreply@argosnewdreams.blog"
+          if [ "${{ inputs.forza }}" = "true" ]; then strumenti/pubblica-se-serve.sh --forza; else strumenti/pubblica-se-serve.sh; fi
+
+      - name: Registro
+        if: always()
+        run: tail -n 60 "$HOME/Library/Logs/Argo/argo-ios.log" 2>/dev/null || true
+
+      - name: Pulizia
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/argo.keychain-db" 2>/dev/null || true
+          rm -rf "$HOME/.appstoreconnect" "$RUNNER_TEMP/chiavi"

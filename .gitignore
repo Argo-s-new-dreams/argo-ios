@@ -4,6 +4,7 @@ Argo/Info.plist
 # Xcode
 DerivedData/
 build/
+project-ci.yml
 xcuserdata/
 *.xcuserstate
 .swiftpm/
