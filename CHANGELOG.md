@@ -3,7 +3,22 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
-## [1.2.1] · build (al prossimo invio)
+## [1.3.0] · build (al prossimo invio)
+
+Taccuino Plus, prima prova: detta a **Peppino** cosa mettere nel CRM, anche in auto, e conferma sul computer.
+
+### Aggiunto
+- **Peppino** («Peppino, prendi nota!»): in *Parla con Argo* accendi **Peppino · Taccuino Plus** e premi **Parla con Peppino**. Vale anche in CarPlay.
+- Peppino chiede **«Mi parli di una registrazione?»**. Se dici sì, elenca le ultime tre registrazioni del telefono (nome, giorno e ora): scegli con «uno», «due», «tre» o il nome, oppure di' «altre». Se dici no, è dettatura libera.
+- Detta cosa caricare nel CRM (un lead nuovo, un richiamo fra due mesi, un'opportunità persa…). Peppino chiede i dati che mancano. Quando hai finito di' **«metti in coda»**: Peppino ti legge le azioni e chiede conferma.
+- Le azioni restano sul telefono **in coda**, dentro un incontro «Peppino · …», e partono col Ponte verso Argo sul computer: lì scegli il record in Dynamics e confermi. Il telefono non scrive mai nel CRM.
+- Se dici «Chiudi Argo» o «Basta così» con qualcosa di dettato, Peppino prima mette in coda e poi chiude.
+
+### Da provare
+- In auto: «Mi parli di una registrazione?» → «sì» → «due» → detta → «metti in coda» → «sì».
+- Che le date dette a voce («fra due mesi») e i nomi arrivino giusti sul computer.
+
+## [1.2.1] · build 20261128.1139
 
 Argo Live in auto: ora la conversazione si chiude quando vuoi, e il microfono si libera.
 

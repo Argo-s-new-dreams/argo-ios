@@ -18,7 +18,7 @@ struct ArgoApp: App {
             principale
 #endif
         }
-        .modelContainer(for: Sessione.self)
+        .modelContainer(Archivio.contenitore)
     }
 
     private var principale: some View {

@@ -30,6 +30,10 @@ final class Sessione {
     var contatti: [Contatto] = []
     /// 0.6 · quando è stata consegnata ad Argo sul computer tramite il Ponte.
     var inviataAdArgo: Date? = nil
+    /// 1.3 · Taccuino Plus: azioni CRM dettate a Tacc, da confermare sul computer (formato argo.azioni).
+    var azioniCRM: [AzioneCRM] = []
+    /// 1.3 · dialogo con Tacc: l'incontro registrato di cui si è parlato, se scelto.
+    var riferimentoTacc: UUID? = nil
 
     init(titolo: String, lingua: String, durata: TimeInterval, nomeFileAudio: String?, foto: [FotoSessione] = []) {
         self.id = UUID()
@@ -176,6 +180,21 @@ struct Azione: Codable, Hashable, Identifiable {
     }
 }
 
+/// Un'azione CRM proposta da Tacc (Taccuino Plus). Campi e tipi come in docs/AZIONI-CRM.md (argo.azioni v1).
+struct AzioneCRM: Codable, Hashable, Identifiable {
+    var id = UUID()
+    var tipo: String
+    var riepilogo: String
+    /// Chi è il record in Dynamics, come l'ha capito il telefono (nome, cognome, azienda, email, opportunita).
+    var destinatario: [String: String] = [:]
+    var campi: [String: String] = [:]
+    var frase: String = ""
+
+    static let tipi: Set<String> = ["lead.crea", "lead.aggiorna", "lead.squalifica", "contatto.aggiorna",
+                                     "opportunita.crea", "opportunita.aggiorna", "opportunita.chiudi_persa",
+                                     "nota.crea", "attivita.crea"]
+}
+
 struct Contatto: Codable, Hashable, Identifiable {
     var id = UUID()
     var nome: String
@@ -197,6 +216,15 @@ enum StatoSessione: String, Codable {
 }
 
 enum Archivio {
+    /// L'archivio degli incontri, uno per tutta l'app: lo usano le schermate e anche Tacc (pure da CarPlay).
+    @MainActor static let contenitore: ModelContainer = {
+        do {
+            return try ModelContainer(for: Sessione.self)
+        } catch {
+            fatalError("Archivio degli incontri non apribile: \(error)")
+        }
+    }()
+
     static var cartellaAudio: URL { cartella("Audio") }
     static var cartellaFoto: URL { cartella("Foto") }
 

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://argosnewdreams.blog/schemi/argo.azioni.v1.json",
+  "title": "argo.azioni · azioni CRM proposte da Peppino o da un plugin, da confermare sul computer",
+  "type": "object",
+  "required": ["formato", "versioneFormato", "creata", "azioni"],
+  "additionalProperties": false,
+  "properties": {
+    "formato": {"const": "argo.azioni"},
+    "versioneFormato": {"const": 1},
+    "creata": {"type": "string", "description": "Data e ora ISO 8601 con fuso"},
+    "origine": {"type": "string", "description": "Chi le ha proposte: \"peppino\" (dialogo sul telefono) o il nome di un plugin"},
+    "modello": {"type": "string", "description": "Modello che ha interpretato il testo, se c'è"},
+    "riferimento": {"type": ["string", "null"], "description": "Id (UUID) dell'incontro registrato di cui si è parlato, se scelto"},
+    "azioni": {"type": "array", "items": {"$ref": "#/$defs/azione"}}
+  },
+  "$defs": {
+    "data": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "destinatario": {
+      "type": "object",
+      "description": "Il record a cui si riferisce l'azione, come l'ha capito il telefono. Il computer lo cerca in Dynamics e fa scegliere.",
+      "additionalProperties": false,
+      "properties": {
+        "tipo": {"enum": ["lead", "contatto", "account", "opportunita"]},
+        "nome": {"type": "string"},
+        "cognome": {"type": "string"},
+        "azienda": {"type": "string"},
+        "email": {"type": "string"},
+        "opportunita": {"type": "string", "description": "Argomento dell'opportunità, se l'azione riguarda un'opportunità esistente"},
+        "id": {"type": ["string", "null"], "description": "Id del record in Dynamics: lo mette il computer quando l'utente sceglie"}
+      }
+    },
+    "azione": {
+      "type": "object",
+      "required": ["id", "tipo", "riepilogo"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "description": "UUID dell'azione"},
+        "tipo": {"enum": [
+          "lead.crea", "lead.aggiorna", "lead.squalifica",
+          "contatto.aggiorna",
+          "opportunita.crea", "opportunita.aggiorna", "opportunita.chiudi_persa",
+          "nota.crea", "attivita.crea"
+        ]},
+        "riepilogo": {"type": "string", "description": "Una frase leggibile, quella che Peppino legge ad alta voce"},
+        "destinatario": {"$ref": "#/$defs/destinatario"},
+        "campi": {"$ref": "#/$defs/campi"},
+        "frase": {"type": "string", "description": "Il pezzo di dialogo o di trascrizione da cui nasce"},
+        "sicurezza": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "campi": {
+      "type": "object",
+      "description": "Solo i campi che servono al tipo di azione; per gli aggiornamenti solo quelli da cambiare.",
+      "additionalProperties": false,
+      "properties": {
+        "nome": {"type": "string"},
+        "cognome": {"type": "string"},
+        "azienda": {"type": "string"},
+        "ruolo": {"type": "string"},
+        "email": {"type": "string"},
+        "telefono": {"type": "string"},
+        "cellulare": {"type": "string"},
+        "argomento": {"type": "string", "description": "Argomento del lead o nome dell'opportunità"},
+        "descrizione": {"type": "string"},
+        "origine": {"enum": ["fiera", "altro"]},
+        "valore_stimato": {"type": "number", "description": "Euro"},
+        "data_chiusura_stimata": {"$ref": "#/$defs/data"},
+        "motivo": {"type": "string", "description": "Perché si chiude o si squalifica"},
+        "titolo": {"type": "string", "description": "Titolo della nota"},
+        "testo": {"type": "string", "description": "Testo della nota"},
+        "tipo_attivita": {"enum": ["telefonata", "task"]},
+        "oggetto": {"type": "string", "description": "Oggetto dell'attività"},
+        "scadenza": {"$ref": "#/$defs/data"}
+      }
+    }
+  }
+}

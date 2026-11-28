@@ -67,6 +67,10 @@ final class SessioneLive {
     static let paroleInterruzione = 2
 
     var statoModello: StatoModello = ModelloLive.presente ? .pronto : .assente
+    /// Taccuino Plus: la conversazione la guida Tacc (azioni per il CRM) invece che Argo libero.
+    var modoTacc = false
+    private(set) var regia: RegiaTacc?
+    private var chiudiDopoSalvataggio = false
     var fase: Fase = .spenta
     var scambi: [ScambioLive] = []
     var misure = MisureLive()
@@ -185,6 +189,7 @@ final class SessioneLive {
             try await motore.nuovaConversazione(lingua: lingua)
             try await avviaAscolto()
             fase = .inAscolto
+            if modoTacc { avviaTacc() }
         } catch {
             await chiudi()
             self.errore = error.localizedDescription
@@ -206,6 +211,8 @@ final class SessioneLive {
         testoFinale = ""
         testoVolatile = ""
         ascoltato = ""
+        regia = nil
+        chiudiDopoSalvataggio = false
         fase = .spenta
         aggiornaMemoria()
     }
@@ -215,7 +222,10 @@ final class SessioneLive {
         interrompiRisposta()
         scambi = []
         try? await motore.nuovaConversazione(lingua: lingua)
-        if attiva { fase = .inAscolto }
+        if attiva {
+            fase = .inAscolto
+            if modoTacc { avviaTacc() }
+        }
     }
 
     /// Zittisce Argo senza chiudere la conversazione.
@@ -312,10 +322,103 @@ final class SessioneLive {
         ascoltato = ""
         fineTurno = Date()
         if Self.comandoChiusura(domanda) {
+            // Con Tacc, prima di chiudere si mette in coda quello che è stato dettato
+            if let regia, regia.passo == .dialogo, regia.dialogoAperto {
+                chiudiDopoSalvataggio = true
+                esegui(regia.ascolta(domanda), domanda: domanda)
+                return
+            }
             Task { await chiudi() }
             return
         }
+        if let regia {
+            esegui(regia.ascolta(domanda), domanda: domanda)
+            return
+        }
         rispondi(domanda)
+    }
+
+    // MARK: Tacc (Taccuino Plus)
+
+    private func avviaTacc() {
+        let regia = RegiaTacc(lingua: lingua)
+        self.regia = regia
+        let saluto = regia.benvenuto()
+        if regia.partenzaLibera, case .nuovoDialogo(let istruzioni, _, _) = regia.avviaDialogoLibero() {
+            esegui(.nuovoDialogo(istruzioni: istruzioni, poi: saluto, domanda: nil), domanda: "")
+        } else {
+            dici(saluto)
+        }
+    }
+
+    /// Una frase fissa di Tacc, detta a voce e scritta nella conversazione.
+    private func dici(_ testo: String, domanda: String = "") {
+        guard !testo.isEmpty else {
+            if fase == .penso || fase == .sentendo { fase = .inAscolto }
+            return
+        }
+        scambi.append(ScambioLive(domanda: domanda, risposta: testo))
+        generazioneFinita = true
+        canale?.pronuncia(testo, lingua: lingua)
+        fase = .parlo
+    }
+
+    private func esegui(_ mossa: RegiaTacc.Mossa, domanda: String) {
+        guard let regia else { return }
+        switch mossa {
+        case .di(let testo):
+            dici(testo, domanda: domanda)
+        case .modello(let testo):
+            rispondi(testo, massimo: 120) { regia.risposta($0) }
+        case .nuovoDialogo(let istruzioni, let poi, let domandaModello):
+            fase = .penso
+            let precedente = rispostaInCorso
+            rispostaInCorso = Task { [weak self] in
+                await precedente?.value
+                guard let self else { return }
+                do {
+                    try await self.motore.nuovaConversazione(lingua: self.lingua, istruzioni: istruzioni)
+                } catch {
+                    self.errore = error.localizedDescription
+                }
+                if let domandaModello {
+                    self.rispondi(domandaModello, massimo: 120) { regia.risposta($0) }
+                } else {
+                    self.dici(poi, domanda: domanda)
+                }
+            }
+        case .estrai:
+            dici(regia.frase(.estraggo), domanda: domanda)
+            generazioneFinita = false
+            let precedente = rispostaInCorso
+            rispostaInCorso = Task { [weak self] in
+                await precedente?.value
+                guard let self else { return }
+                do {
+                    let risposta = try await self.motore.completa(regia.richiestaEstrazione(),
+                                                                  istruzioni: RegiaTacc.istruzioniEstrazione)
+                    if Task.isCancelled { return }
+                    let riepilogo = regia.leggiEstrazione(risposta)
+                    try? await self.motore.nuovaConversazione(lingua: self.lingua,
+                                                              istruzioni: regia.istruzioniDialogo(contesto: regia.scelta))
+                    self.dici(riepilogo)
+                } catch {
+                    if !Task.isCancelled { self.errore = error.localizedDescription }
+                    self.generazioneFinita = true
+                    if self.fase == .penso { self.fase = .inAscolto }
+                }
+            }
+        case .salva(let testo):
+            regia.salva()
+            dici(testo, domanda: domanda)
+            if chiudiDopoSalvataggio {
+                Task { [weak self] in
+                    try? await Task.sleep(for: .milliseconds(500))
+                    while self?.canale?.parla == true { try? await Task.sleep(for: .milliseconds(200)) }
+                    await self?.chiudi()
+                }
+            }
+        }
     }
 
     /// Frasi brevi che chiudono la conversazione a voce (anche in auto, senza toccare niente).
@@ -336,7 +439,7 @@ final class SessioneLive {
         return frasiChiusura.contains(pulito)
     }
 
-    private func rispondi(_ domanda: String) {
+    private func rispondi(_ domanda: String, massimo: Int = 300, alTermine: ((String) -> Void)? = nil) {
         scambi.append(ScambioLive(domanda: domanda, risposta: ""))
         let indice = scambi.count - 1
         misure.primaParola = nil
@@ -349,7 +452,7 @@ final class SessioneLive {
             guard let self else { return }
             var divisore = DivisoreFrasi()
             do {
-                for try await pezzo in try await self.motore.rispondi(domanda, lingua: self.lingua) {
+                for try await pezzo in try await self.motore.rispondi(domanda, lingua: self.lingua, massimo: massimo) {
                     if Task.isCancelled { break }
                     if self.misure.primaParola == nil {
                         self.misure.primaParola = Date().timeIntervalSince(self.fineTurno)
@@ -366,6 +469,7 @@ final class SessioneLive {
                         self.canale?.pronuncia(ultima, lingua: self.lingua)
                         if self.fase == .penso { self.fase = .parlo }
                     }
+                    alTermine?(self.scambi[indice].risposta)
                     if let info = self.motore.misure() {
                         self.misure.prefill = info.lastPrefillTokensPerSecond
                         self.misure.decode = info.lastDecodeTokensPerSecond
@@ -397,6 +501,7 @@ struct LiveView: View {
     @State private var sessione = SessioneLive.condivisa
     @AppStorage("liveLingua") private var lingua = LiveView.linguaPredefinita
     @AppStorage("liveGPU") private var gpu = true
+    @AppStorage("liveTacc") private var tacc = false
     @State private var confermaScarico = false
     @State private var confermaElimina = false
 
@@ -531,8 +636,11 @@ struct LiveView: View {
     private var pulsanti: some View {
         switch sessione.fase {
         case .spenta:
-            Button { Task { await sessione.inizia(lingua: lingua, gpu: gpu) } } label: {
-                Label { Text(verbatim: "Inizia conversazione") } icon: { Image(systemName: "mic.fill") }
+            Button {
+                sessione.modoTacc = tacc
+                Task { await sessione.inizia(lingua: lingua, gpu: gpu) }
+            } label: {
+                Label { Text(verbatim: tacc ? "Parla con Peppino" : "Inizia conversazione") } icon: { Image(systemName: "mic.fill") }
                     .font(.headline)
                     .padding(.horizontal, 18).padding(.vertical, 8)
             }
@@ -588,6 +696,15 @@ struct LiveView: View {
             Picker(selection: $lingua) {
                 ForEach(Self.lingue, id: \.0) { voce in Text(verbatim: voce.1).tag(voce.0) }
             } label: { Text(verbatim: "Lingua della conversazione") }
+            .disabled(sessione.fase != .spenta)
+
+            Toggle(isOn: $tacc) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(verbatim: "Peppino · Taccuino Plus")
+                    Text(verbatim: "Detti cosa mettere nel CRM, anche in auto; le azioni vanno in coda e le confermi sul computer.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+            }
             .disabled(sessione.fase != .spenta)
 
             Toggle(isOn: $gpu) { Text(verbatim: "Usa la GPU") }

@@ -39,21 +39,26 @@ final class MotoreLive {
         motore = nil
     }
 
+    /// Istruzioni della conversazione in corso: quelle di Argo, oppure quelle di Tacc (Taccuino Plus).
+    private var istruzioniAttuali: String?
+
     /// Nuova conversazione nella lingua scelta (dimentica le domande precedenti).
-    func nuovaConversazione(lingua: String) async throws {
+    /// `istruzioni`: messaggio di sistema diverso da quello di Argo (Tacc); nil = Argo.
+    func nuovaConversazione(lingua: String, istruzioni: String? = nil) async throws {
         guard let motore else { throw ErroreLive.modelloNonCaricato }
+        istruzioniAttuali = istruzioni
         let configurazione = ConversationConfig(
-            systemMessage: Message(Self.istruzioni(lingua), role: .system),
+            systemMessage: Message(istruzioni ?? Self.istruzioni(lingua), role: .system),
             thinkingConfig: ThinkingConfig(enableThinking: false)
         )
         conversazione = try await motore.createConversation(with: configurazione)
     }
 
-    /// Risposta a pezzi di testo.
-    func rispondi(_ domanda: String, lingua: String) async throws -> AsyncThrowingStream<String, Error> {
-        if conversazione == nil { try await nuovaConversazione(lingua: lingua) }
+    /// Risposta a pezzi di testo. `massimo`: token della risposta (Tacc risponde più corto).
+    func rispondi(_ domanda: String, lingua: String, massimo: Int = 300) async throws -> AsyncThrowingStream<String, Error> {
+        if conversazione == nil { try await nuovaConversazione(lingua: lingua, istruzioni: istruzioniAttuali) }
         guard let conversazione else { throw ErroreLive.modelloNonCaricato }
-        let sorgente = conversazione.sendMessageStream(Message(domanda), maxOutputTokens: 300)
+        let sorgente = conversazione.sendMessageStream(Message(domanda), maxOutputTokens: massimo)
         return AsyncThrowingStream { continuazione in
             let compito = Task {
                 do {
@@ -71,6 +76,17 @@ final class MotoreLive {
 
     func interrompi() {
         try? conversazione?.cancel()
+    }
+
+    /// Risposta intera, in una conversazione nuova e a sé (per l'estrazione delle azioni di Tacc).
+    /// Sostituisce la conversazione in corso: chi la usa ne riapre una dopo.
+    func completa(_ testo: String, istruzioni: String, massimo: Int = 700) async throws -> String {
+        try await nuovaConversazione(lingua: "", istruzioni: istruzioni)
+        var risposta = ""
+        for try await pezzo in try await rispondi(testo, lingua: "", massimo: massimo) {
+            risposta += pezzo
+        }
+        return risposta
     }
 
     /// Misure dell'ultima risposta secondo LiteRT-LM.

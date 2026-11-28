@@ -118,6 +118,26 @@ struct SessioneView: View {
                     }
                 }
 
+                // Taccuino Plus (laboratorio): azioni dettate a Peppino, si confermano sul computer
+                if !sessione.azioniCRM.isEmpty {
+                    Section {
+                        ForEach(sessione.azioniCRM) { azione in
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(verbatim: azione.riepilogo)
+                                if !azione.frase.isEmpty {
+                                    Text(verbatim: "«\(azione.frase)»").font(.caption).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    } header: {
+                        Text(verbatim: "Azioni per il CRM · in coda")
+                    } footer: {
+                        Text(verbatim: sessione.inviataAdArgo == nil
+                             ? "Invia questo incontro ad Argo sul computer: lì scegli il record in Dynamics e confermi."
+                             : "Consegnate ad Argo sul computer: confermale in Incontri › 📋 Azioni CRM.")
+                    }
+                }
+
                 if !sessione.parlanti.isEmpty {
                     Section {
                         ForEach(sessione.parlanti, id: \.self) { id in

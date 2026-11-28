@@ -76,6 +76,7 @@ final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
         let preferenze = UserDefaults.standard
         let lingua = preferenze.string(forKey: "liveLingua") ?? LiveView.linguaPredefinita
         let gpu = preferenze.object(forKey: "liveGPU") as? Bool ?? true
+        sessione.modoTacc = preferenze.bool(forKey: "liveTacc")
         await sessione.inizia(lingua: lingua, gpu: gpu)
     }
 

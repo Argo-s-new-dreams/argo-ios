@@ -54,8 +54,37 @@ enum Esportatore {
         codificatore.dateEncodingStrategy = .iso8601
         try codificatore.encode(pacchetto).write(to: cartella.appending(path: "sessione.json"))
         try Data(sessione.markdown.utf8).write(to: cartella.appending(path: "relazione.md"))
+        if !sessione.azioniCRM.isEmpty {
+            try azioniCRM(di: sessione).write(to: cartella.appending(path: "azioni.json"))
+        }
 
         return try comprimi(cartella, in: base.appending(path: "\(nome).zip"))
+    }
+
+    /// azioni.json (formato argo.azioni v1, docs/AZIONI-CRM.md): le azioni dettate a Peppino, da confermare sul computer.
+    static func azioniCRM(di sessione: Sessione) throws -> Data {
+        let iso = ISO8601DateFormatter()
+        let azioni: [[String: Any]] = sessione.azioniCRM.map { a in
+            var campi: [String: Any] = [:]
+            for (chiave, valore) in a.campi where !valore.isEmpty {
+                // Il valore dell'opportunità va come numero; se non si legge resta testo e lo corregge il computer
+                if chiave == "valore_stimato", let numero = Double(valore.replacingOccurrences(of: ",", with: ".")) {
+                    campi[chiave] = numero
+                } else {
+                    campi[chiave] = valore
+                }
+            }
+            var voce: [String: Any] = ["id": a.id.uuidString.lowercased(), "tipo": a.tipo, "riepilogo": a.riepilogo,
+                                       "campi": campi]
+            let destinatario = a.destinatario.filter { !$0.value.isEmpty }
+            if !destinatario.isEmpty { voce["destinatario"] = destinatario }
+            if !a.frase.isEmpty { voce["frase"] = a.frase }
+            return voce
+        }
+        var dati: [String: Any] = ["formato": "argo.azioni", "versioneFormato": 1,
+                                   "creata": iso.string(from: sessione.creata), "origine": "peppino", "azioni": azioni]
+        if let riferimento = sessione.riferimentoTacc { dati["riferimento"] = riferimento.uuidString.lowercased() }
+        return try JSONSerialization.data(withJSONObject: dati, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
     }
 
     /// Zip con il meccanismo di sistema (NSFileCoordinator .forUploading), senza librerie esterne.
