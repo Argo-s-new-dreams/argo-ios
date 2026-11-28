@@ -4,7 +4,9 @@ import UIKit
 /// Argo Live in CarPlay (categoria «voice-based conversational», iOS 26.4): appena apri Argo sullo schermo
 /// dell'auto parte la conversazione a voce. Una sola schermata, quella vocale di Apple, che dice cosa sta facendo
 /// Argo; niente testo delle risposte sullo schermo, come chiedono le regole di CarPlay. La conversazione è la
-/// stessa del telefono (SessioneLive.condivisa): si chiude quando chiudi Argo in CarPlay o scolleghi l'auto.
+/// stessa del telefono (SessioneLive.condivisa). Si chiude con il pulsante «Chiudi», a voce («Chiudi Argo»,
+/// «Basta così»…), passando a un'altra app di CarPlay o scollegando l'auto: così il microfono si libera e l'auto
+/// esce dalla modalità telefono. Tornando su Argo riparte da sola; «Riprendi» la riapre.
 /// Solo nelle build di prova (Laboratorio) e con il modello già scaricato sul telefono.
 @MainActor
 final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
@@ -14,7 +16,7 @@ final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
     private var sessione: SessioneLive { SessioneLive.condivisa }
 
     private static let stati: [(String, String, String)] = [
-        ("spenta", "Argo Live è in pausa", "pause.circle"),
+        ("spenta", "Conversazione chiusa", "pause.circle"),
         ("carico", "Preparo Argo…", "hourglass"),
         ("ascolto", "Ti ascolto", "waveform"),
         ("sento", "Ti sento", "waveform.badge.mic"),
@@ -27,6 +29,18 @@ final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
                                   didConnect interfaceController: CPInterfaceController) {
         interfaccia = interfaceController
         Task { await avvia() }
+    }
+
+    /// Passi a un'altra app di CarPlay (Mappe, Musica…): chiudo, così l'auto torna all'audio normale.
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        guard interfaccia != nil else { return }
+        Task { await SessioneLive.condivisa.chiudi() }
+    }
+
+    /// Torni su Argo in CarPlay: la conversazione riparte da sola, come all'apertura.
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        guard voce != nil, sessione.fase == .spenta else { return }
+        Task { await riprendi() }
     }
 
     func templateApplicationScene(_ templateApplicationScene: CPTemplateApplicationScene,
@@ -55,12 +69,30 @@ final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
         voce = modello
         interfaccia?.setRootTemplate(modello, animated: false, completion: nil)
         osserva()
-        if sessione.fase == .spenta {
-            let preferenze = UserDefaults.standard
-            let lingua = preferenze.string(forKey: "liveLingua") ?? LiveView.linguaPredefinita
-            let gpu = preferenze.object(forKey: "liveGPU") as? Bool ?? true
-            await sessione.inizia(lingua: lingua, gpu: gpu)
+        if sessione.fase == .spenta { await riprendi() }
+    }
+
+    private func riprendi() async {
+        let preferenze = UserDefaults.standard
+        let lingua = preferenze.string(forKey: "liveLingua") ?? LiveView.linguaPredefinita
+        let gpu = preferenze.object(forKey: "liveGPU") as? Bool ?? true
+        await sessione.inizia(lingua: lingua, gpu: gpu)
+    }
+
+    /// In alto a destra: «Chiudi» mentre la conversazione è aperta, «Riprendi» quando è chiusa.
+    private func aggiornaPulsanti(aperta: Bool) {
+        guard let voce else { return }
+        let pulsante: CPBarButton
+        if aperta {
+            pulsante = CPBarButton(title: String(localized: "Chiudi")) { _ in
+                Task { await SessioneLive.condivisa.chiudi() }
+            }
+        } else {
+            pulsante = CPBarButton(title: String(localized: "Riprendi")) { [weak self] _ in
+                Task { await self?.riprendi() }
+            }
         }
+        voce.trailingNavigationBarButtons = [pulsante]
     }
 
     /// Un messaggio fisso sulla schermata vocale (quando Live non può partire).
@@ -105,5 +137,6 @@ final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
             }
         }
         voce?.activateVoiceControlState(withIdentifier: id)
+        aggiornaPulsanti(aperta: !(id == "spenta" || id == "errore"))
     }
 }

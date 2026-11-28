@@ -34,11 +34,63 @@
     "CFBundleDisplayName": {
       "comment": "Nome dell'app, uguale in tutte le lingue",
       "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "CFBundleName": {
       "comment": "Nome dell'app, uguale in tutte le lingue",
       "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argo"
+          }
+        }
+      },
       "shouldTranslate": false
     },
     "NSCameraUsageDescription": {

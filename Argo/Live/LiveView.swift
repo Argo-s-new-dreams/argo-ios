@@ -311,7 +311,29 @@ final class SessioneLive {
         testoVolatile = ""
         ascoltato = ""
         fineTurno = Date()
+        if Self.comandoChiusura(domanda) {
+            Task { await chiudi() }
+            return
+        }
         rispondi(domanda)
+    }
+
+    /// Frasi brevi che chiudono la conversazione a voce (anche in auto, senza toccare niente).
+    static let frasiChiusura: Set<String> = [
+        "chiudi", "chiudi argo", "chiudi la conversazione", "fine", "fine conversazione", "basta", "basta così",
+        "basta grazie", "stop", "stop argo", "ciao argo", "arrivederci", "a posto così", "abbiamo finito",
+        "close", "goodbye", "bye", "bye argo", "goodbye argo", "end conversation", "stop conversation", "that's all",
+        "adiós", "adiós argo", "termina", "terminar", "para", "cierra", "fin",
+        "tschüss", "tschüss argo", "beenden", "schluss", "stopp", "auf wiedersehen", "das war's",
+    ]
+
+    static func comandoChiusura(_ testo: String) -> Bool {
+        let pulito = testo.lowercased()
+            .components(separatedBy: CharacterSet.punctuationCharacters.subtracting(CharacterSet(charactersIn: "'")))
+            .joined()
+            .split(whereSeparator: \.isWhitespace).joined(separator: " ")
+        guard pulito.split(separator: " ").count <= 4 else { return false }
+        return frasiChiusura.contains(pulito)
     }
 
     private func rispondi(_ domanda: String) {

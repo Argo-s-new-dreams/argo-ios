@@ -3,7 +3,19 @@
 Tutte le modifiche rilevanti di Argo per iPhone.
 Versioni: `MARKETING_VERSION` (semver) + build `AAAAMMGG.HHMM` (ora di Roma).
 
-## [1.2] · build (al prossimo invio)
+## [1.2.1] · build (al prossimo invio)
+
+Argo Live in auto: ora la conversazione si chiude quando vuoi, e il microfono si libera.
+
+### Aggiunto
+- **Pulsante «Chiudi»** in alto a destra sulla schermata di Argo in CarPlay. A conversazione chiusa diventa **«Riprendi»**.
+- **Chiudere a voce**, in auto e sul telefono: di' «Chiudi Argo», «Basta così», «Fine conversazione» o «Ciao Argo» (anche in inglese, spagnolo e tedesco). Se Argo sta parlando, usa due parole («Basta così», «Chiudi Argo»): una sola non lo interrompe.
+
+### Corretto
+- Passando a un'altra app di CarPlay (Mappe, Musica…) la conversazione si chiude: l'auto esce dalla modalità telefono e il volume torna quello della radio. Tornando su Argo riparte da sola.
+- In CarPlay il nome dell'app compariva come «CFBundleDisplayName»: ora è **Argo**.
+
+## [1.2] · build 20261128.0738
 
 Prima prova di Argo Live: parli con Argo a voce, senza tasti, e Argo risponde a voce, tutto sull'iPhone. Solo per i tester.
 

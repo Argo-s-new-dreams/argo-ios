@@ -11,7 +11,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.2"
+    MARKETING_VERSION: "1.2.1"
     CURRENT_PROJECT_VERSION: "20261128.0738"
     # Imposta qui il tuo Team ID (Xcode › Settings › Accounts) oppure sceglilo in Xcode
     DEVELOPMENT_TEAM: "WPR2P5Q2S8"
