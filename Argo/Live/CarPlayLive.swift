@@ -82,6 +82,7 @@ final class CarPlayLive: UIResponder, CPTemplateApplicationSceneDelegate {
     /// In alto a destra: «Chiudi» mentre la conversazione è aperta, «Riprendi» quando è chiusa.
     private func aggiornaPulsanti(aperta: Bool) {
         guard let voce else { return }
+        guard #available(iOS 26.4, *) else { return }
         let pulsante: CPBarButton
         if aperta {
             pulsante = CPBarButton(title: String(localized: "Chiudi")) { _ in
