@@ -13,7 +13,10 @@ name: TestFlight
 
 on:
   schedule:
+    # GitHub a volte salta le esecuzioni programmate: la seconda fa da riserva
+    # (pubblica-se-serve.sh non invia due volte la stessa versione)
     - cron: "30 1 * * *"
+    - cron: "17 4 * * *"
   workflow_dispatch:
     inputs:
       forza:
